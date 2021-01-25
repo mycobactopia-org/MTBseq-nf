@@ -1,0 +1,7 @@
+*/**/*fastq.gz
+*/**/*fasta
+*/**/*gbk
+
+.idea
+work
+*.nextflow*
