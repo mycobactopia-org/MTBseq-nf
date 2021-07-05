@@ -6,7 +6,7 @@ Project with aim to create a nextflow wrapper for mtbseq workflow.
 
 Heavily based on [ngs-fzb/MTBseq_source](https://github.com/ngs-fzb/MTBseq_source)
 
-Contributions are warmly aceppted!
+Contributions are warmly accepted!
 
 We would like to Thank the developers of MTBseq:
 
