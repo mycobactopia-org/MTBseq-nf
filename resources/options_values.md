@@ -1,4 +1,4 @@
-
+All credits to this manual goes to the developers of MTBseq, please check the original [MANUAL](https://github.com/ngs-fzb/MTBseq_source/blob/master/MANUAL.md)
 
 ## [OPTIONS & VALUES]
 
