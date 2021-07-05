@@ -8,13 +8,4 @@ Heavily based on [ngs-fzb/MTBseq_source](https://github.com/ngs-fzb/MTBseq_sourc
 
 Contributions are warmly accepted!
 
-We would like to Thank the developers of MTBseq:
-
-* Thomas A. Kohl (source code, core logic)
-* Robin Koch (source code, package building)
-* Christian Utpatel (source code, core logic)
-* Maria R. De Filippo (source code, beta test)
-* Viola Schleusener (performance comparison, beta test)
-* Patrick Beckert (annotation data, beta test)
-* Daniela M. Cirillo (Head)
-* Stefan Niemann (Head)
+We would like to Thank the developers of MTBseq!
