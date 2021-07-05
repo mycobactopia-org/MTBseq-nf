@@ -9,25 +9,31 @@ params.resultsDir = "${params.outdir}/tbamend"
 params.saveMode = 'copy'
 params.shouldPublish = true
 
-// TODO: Add the tbjoin workflow
 process TBAMEND {
-    tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
     container 'quay.io/biocontainers/mtbseq:1.0.3--pl526_1'
     cpus 8
     memory "15 GB"
 
     input:
-    // TODO
+    tuple path(samples), val(project_name), path(Joint/[PROJECT]_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples.tab)
+    path(gatk_jar)
 
     output:
-    // TODO
+    path("Amend")
 
     script:
 
-    // TODO
+    """
 
+    gatk-register ${gatk_jar}
+
+    MTBseq --step TBamend --thread ${task.cpus}
+
+    """
     stub:
-
-    // TODO
+    """
+    mkdir Amend
+    touch Amend/${project_name}
+    """
 }
