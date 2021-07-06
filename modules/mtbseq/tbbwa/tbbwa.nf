@@ -1,10 +1,9 @@
 nextflow.enable.dsl = 2
 
-params.resultsDir = "${params.outdir}/mtbseq"
+params.resultsDir = "${params.outdir}/tb_bwa"
 params.saveMode = 'copy'
 params.shouldPublish = true
 
-// TODO: Add the tbjoin workflow
 process TB_BWA {
     tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
@@ -13,12 +12,12 @@ process TB_BWA {
     memory "15 GB"
 
     input:
-    tuple val(genomeFileName), path("${genomeFileName}_somelib_R?.fastq.gz")
+    tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
     path(gatk_jar)
     env USER
 
     output:
-    path("${genomeFileName}")
+    path("${genomeFileName}/Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
 
     script:
 
@@ -27,21 +26,17 @@ process TB_BWA {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-   
-    MTBseq --step TBfull --thread ${task.cpus}
-    
-    mv  Amend ./${genomeFileName}/
+    MTBseq --step TBbwa --thread ${task.cpus}
     mv  Bam ./${genomeFileName}/
-    mv  Called ./${genomeFileName}/
-    mv  Classification ./${genomeFileName}/
-    mv  GATK_Bam ./${genomeFileName}/
-    mv  Groups ./${genomeFileName}/
-    mv  Joint ./${genomeFileName}/
-    mv  Mpileup ./${genomeFileName}/
-    mv  Position_Tables ./${genomeFileName}/
-    mv  Statistics ./${genomeFileName}/
     """
 
+    stub:
+
+    """
+    mkdir ${genomeFileName}
+    touch ${genomeFileName}/bam
+    echo "MTBseq --step TBbwa --thread ${task.cpus}"
+    """
 
 }
 
