@@ -1,10 +1,10 @@
 nextflow.enable.dsl = 2
 
-params.resultsDir = "${params.outdir}/tb_bwa"
+params.resultsDir = "${params.outdir}/tbbwa"
 params.saveMode = 'copy'
 params.shouldPublish = true
 
-process TB_BWA {
+process TBBWA {
     tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
     container 'quay.io/biocontainers/mtbseq:1.0.3--pl526_1'
@@ -34,7 +34,11 @@ process TB_BWA {
 
     """
     mkdir ${genomeFileName}
-    touch ${genomeFileName}/bam
+    mkdir ${genomeFileName}/Bam
+    mkdir ${genomeFileName}/Bam/${genomeFileName}
+    touch ${genomeFileName}/Bam/${genomeFileName}/${genomeFileName}_${params.library_name}.bam
+    touch ${genomeFileName}/Bam/${genomeFileName}/${genomeFileName}_${params.library_name}.bai
+    touch ${genomeFileName}/Bam/${genomeFileName}/${genomeFileName}_${params.library_name}.bamlog
     echo "MTBseq --step TBbwa --thread ${task.cpus}"
     """
 
