@@ -13,21 +13,33 @@ params.shouldPublish = true
 process TBPILE {
     tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
-    container 'quay.io/biocontainers/mtbseq:1.0.3--pl526_1'
-    cpus 8
-    memory "15 GB"
 
     input:
-    // TODO
+    tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_*gatk.bam")
+    path(gatk_jar)
+    env USER
 
     output:
-    // TODO
+    path("${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}_*.gatk.{mpileup,mpileuplog}")
 
     script:
 
-    // TODO
+    """
+
+    gatk-register ${gatk_jar}
+
+    mkdir ${genomeFileName}
+    MTBseq --step TBpile --thread ${task.cpus}
+    mv  Mpileup ./${genomeFileName}/
+    """
 
     stub:
 
-    // TODO
-}
+    """
+    mkdir ${genomeFileName}
+    mkdir ${genomeFileName}/Mpileup
+    mkdir ${genomeFileName}/Mpileup/${genomeFileName}
+    touch ${genomeFileName}/Mpileup/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.mpileup
+    touch ${genomeFileName}/Mpileup/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.mpileuplog
+    echo "MTBseq --step TBpile --thread ${task.cpus}"
+    """
