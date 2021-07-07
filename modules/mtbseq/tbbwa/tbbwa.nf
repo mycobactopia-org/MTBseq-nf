@@ -33,9 +33,9 @@ process TBBWA {
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Bam
     mkdir ${genomeFileName}/Bam/${genomeFileName}
-    touch ${genomeFileName}/Bam/${genomeFileName}/${genomeFileName}_${params.library_name}.bam
-    touch ${genomeFileName}/Bam/${genomeFileName}/${genomeFileName}_${params.library_name}.bai
-    touch ${genomeFileName}/Bam/${genomeFileName}/${genomeFileName}_${params.library_name}.bamlog
+    touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bam
+    touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bai
+    touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bamlog
     echo "MTBseq --step TBbwa --thread ${task.cpus}"
     """
 

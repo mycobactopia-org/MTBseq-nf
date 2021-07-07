@@ -38,12 +38,12 @@ process TBREFINE {
     """
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/GATK_bam
-    mkdir ${genomeFileName}/GATK_bam/${genomeFileName}
-    touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.bam
-    touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.bai
-    touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.bamlog
-    touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.grp
-    touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.intervals
+    mkdir ${genomeFileName}/GATK_bam/
+    touch ${genomeFileName}/GATK_bam/${genomeFileName}_${params.library_name}.gatk.bam
+    touch ${genomeFileName}/GATK_bam/${genomeFileName}_${params.library_name}.gatk.bai
+    touch ${genomeFileName}/GATK_bam/${genomeFileName}_${params.library_name}.gatk.bamlog
+    touch ${genomeFileName}/GATK_bam/${genomeFileName}_${params.library_name}.gatk.grp
+    touch ${genomeFileName}/GATK_bam/${genomeFileName}_${params.library_name}.gatk.intervals
     echo "MTBseq --step TBrefine --thread ${task.cpus}"
     """
 }

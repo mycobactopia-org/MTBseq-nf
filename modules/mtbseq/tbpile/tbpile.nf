@@ -38,9 +38,8 @@ process TBPILE {
     """
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Mpileup
-    mkdir ${genomeFileName}/Mpileup/${genomeFileName}
-    touch ${genomeFileName}/Mpileup/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.mpileup
-    touch ${genomeFileName}/Mpileup/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.mpileuplog
+    touch ${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}.gatk.mpileup
+    touch ${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}.gatk.mpileuplog
     echo "MTBseq --step TBpile --thread ${task.cpus}"
     """
 
