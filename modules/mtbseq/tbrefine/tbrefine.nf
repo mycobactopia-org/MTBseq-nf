@@ -44,6 +44,6 @@ process TBREFINE {
     touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.bamlog
     touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.grp
     touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.intervals
-    echo "MTBseq --step TBbwa --thread ${task.cpus}"
+    echo "MTBseq --step TBrefine --thread ${task.cpus}"
     """
 }
