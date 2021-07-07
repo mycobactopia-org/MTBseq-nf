@@ -9,25 +9,37 @@ params.resultsDir = "${params.outdir}/tbvariants"
 params.saveMode = 'copy'
 params.shouldPublish = true
 
-// TODO: Add the tbjoin workflow
 process TBVARIANTS {
     tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
-    container 'quay.io/biocontainers/mtbseq:1.0.3--pl526_1'
-    cpus 8
-    memory "15 GB"
 
     input:
-    // TODO
+    tuple val(genomeFileName), path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab")
+    path(gatk_jar)
+    env USER
 
     output:
-    // TODO
+    path("${genomeFileName}/Called/${genomeFileName}_${params.library_name}*gatk_position_{uncovered,variants}*.tab")
 
     script:
 
-    // TODO
+    """
+
+    gatk-register ${gatk_jar}
+
+    mkdir ${genomeFileName}
+    MTBseq --step TBvariants --thread ${task.cpus}
+    mv  Called ./${genomeFileName}/
+    """
 
     stub:
 
-    // TODO
+    """
+    mkdir ${genomeFileName}
+    mkdir ${genomeFileName}/Called
+    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered.tab
+    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_variants.tab
+    echo "MTBseq --step TBlist --thread ${task.cpus}"
+    """
+
 }
