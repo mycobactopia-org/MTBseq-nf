@@ -13,21 +13,37 @@ params.shouldPublish = true
 process TBREFINE {
     tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
-    container 'quay.io/biocontainers/mtbseq:1.0.3--pl526_1'
-    cpus 8
-    memory "15 GB"
 
     input:
-    // TODO
+    tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_*.bam")
+    path(gatk_jar)
+    env USER
 
     output:
-    // TODO
+    path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}_*.gatk.{bam,bai,bamlog,grp,intervals}")
 
     script:
 
-    // TODO
+    """
+
+    gatk-register ${gatk_jar}
+
+    mkdir ${genomeFileName}
+    MTBseq --step TBrefine --thread ${task.cpus}
+    mv  GATK_bam ./${genomeFileName}/
+    """
 
     stub:
 
-    // TODO
+    """
+    mkdir ${genomeFileName}
+    mkdir ${genomeFileName}/GATK_bam
+    mkdir ${genomeFileName}/GATK_bam/${genomeFileName}
+    touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.bam
+    touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.bai
+    touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.bamlog
+    touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.grp
+    touch ${genomeFileName}/GATK_bam/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.intervals
+    echo "MTBseq --step TBbwa --thread ${task.cpus}"
+    """
 }
