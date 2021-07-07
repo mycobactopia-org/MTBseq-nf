@@ -15,7 +15,7 @@ process TBREFINE {
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
 
     input:
-    tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_*.bam")
+    tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}_*.bam")
     path(gatk_jar)
     env USER
 

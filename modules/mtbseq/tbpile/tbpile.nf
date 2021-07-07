@@ -15,7 +15,7 @@ process TBPILE {
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
 
     input:
-    tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_*gatk.bam")
+    tuple val(genomeFileName), path("GATK_Bam/${genomeFileName}_${params.library_name}_*gatk.bam")
     path(gatk_jar)
     env USER
 
@@ -43,3 +43,5 @@ process TBPILE {
     touch ${genomeFileName}/Mpileup/${genomeFileName}/${genomeFileName}_${params.library_name}.gatk.mpileuplog
     echo "MTBseq --step TBpile --thread ${task.cpus}"
     """
+
+}
