@@ -13,21 +13,33 @@ params.shouldPublish = true
 process TBSTRAINS {
     tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
-    container 'quay.io/biocontainers/mtbseq:1.0.3--pl526_1'
-    cpus 8
-    memory "15 GB"
 
     input:
-    // TODO
+    tuple val(genomeFileName), path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab")
+    path(gatk_jar)
+    env USER
 
     output:
-    // TODO
+    path("${genomeFileName}/Classification/Strain_Classification.tab")
 
     script:
 
-    // TODO
+    """
+
+    gatk-register ${gatk_jar}
+
+    mkdir ${genomeFileName}
+    MTBseq --step TBstrains --thread ${task.cpus}
+    mv  Classification ./${genomeFileName}/
+    """
 
     stub:
 
-    // TODO
+    """
+    mkdir ${genomeFileName}
+    mkdir ${genomeFileName}/Classification
+    touch ${genomeFileName}/Classification/Strain_Classification.tab
+    echo "MTBseq --step TBstrains --thread ${task.cpus}"
+    """
+
 }
