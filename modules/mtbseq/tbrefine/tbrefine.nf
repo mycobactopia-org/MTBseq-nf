@@ -15,12 +15,13 @@ process TBREFINE {
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
 
     input:
-    tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}_*.bam")
+    tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.bam")
     path(gatk_jar)
     env USER
 
     output:
-    path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}_*.gatk.{bam,bai,bamlog,grp,intervals}")
+    path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*.gatk.{bam,bai,bamlog,grp,intervals}")
+    tuple val(genomeFileName), path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*gatk.bam"), emit: next_step
 
     script:
 
@@ -30,20 +31,19 @@ process TBREFINE {
 
     mkdir ${genomeFileName}
     MTBseq --step TBrefine --thread ${task.cpus}
-    mv  GATK_bam ./${genomeFileName}/
+    mv  GATK_Bam ./${genomeFileName}/
     """
 
     stub:
 
     """
     mkdir ${genomeFileName}
-    mkdir ${genomeFileName}/GATK_bam
-    mkdir ${genomeFileName}/GATK_bam/
-    touch ${genomeFileName}/GATK_bam/${genomeFileName}_${params.library_name}.gatk.bam
-    touch ${genomeFileName}/GATK_bam/${genomeFileName}_${params.library_name}.gatk.bai
-    touch ${genomeFileName}/GATK_bam/${genomeFileName}_${params.library_name}.gatk.bamlog
-    touch ${genomeFileName}/GATK_bam/${genomeFileName}_${params.library_name}.gatk.grp
-    touch ${genomeFileName}/GATK_bam/${genomeFileName}_${params.library_name}.gatk.intervals
+    mkdir ${genomeFileName}/GATK_Bam
+    touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bam
+    touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bai
+    touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bamlog
+    touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.grp
+    touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.intervals
     echo "MTBseq --step TBrefine --thread ${task.cpus}"
     """
 }

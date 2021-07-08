@@ -21,6 +21,7 @@ process TBLIST {
 
     output:
     path("${genomeFileName}/Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab")
+    tuple val(genomeFileName), path("${genomeFileName}/Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: next_step
 
     script:
 
