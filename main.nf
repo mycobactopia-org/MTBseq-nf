@@ -7,6 +7,14 @@ nextflow.enable.dsl = 2
 
 include { MTBSEQ } from "./modules/mtbseq/mtbseq.nf"
 
+include { TBBWA } from './modules/mtbseq/tbbwa/tbbwa.nf'
+include { TBREFINE } from './modules/mtbseq/tbrefine/tbrefine.nf'
+include { TBPILE } from './modules/mtbseq/tbpile/tbpile.nf'
+include { TBLIST } from './modules/mtbseq/tblist/tblist.nf'
+include { TBVARIANTS } from './modules/mtbseq/tbvariants/tbvariants.nf'
+include { TBSTATS } from './modules/mtbseq/tbstats/tbstats.nf'
+include { TBSTRAINS } from './modules/mtbseq/tbstrains/tbstrains.nf'
+
 workflow mtbseq {
     reads_ch = Channel.fromFilePairs(params.reads)
     gatk38_jar_ch = Channel.value(params.gatk38_jar)
@@ -19,4 +27,16 @@ workflow mtbseq {
 
 }
 
+workflow per_sample {
+    reads_ch = Channel.fromFilePairs(params.reads)
 
+    TBBWA(reads_ch, params.gatk38_jar, params.user)
+    TBREFINE(TBBWA.out.next_step, params.gatk38_jar, params.user)
+    TBPILE(TBREFINE.out.next_step, params.gatk38_jar, params.user)
+    TBLIST(TBPILE.out.next_step, params.gatk38_jar, params.user)
+    TBVARIANTS(TBLIST.out.next_step, params.gatk38_jar, params.user)
+    TBSTATS(TBBWA.out.next_step,TBLIST.out.next_step, params.gatk38_jar, params.user)
+    TBSTRAINS(TBLIST.out.next_step, params.gatk38_jar, params.user)
+
+
+}
