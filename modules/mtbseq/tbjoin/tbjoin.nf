@@ -11,23 +11,33 @@ params.shouldPublish = true
 
 // TODO: Add the tbjoin workflow
 process TBJOIN {
-    tag "${genomeFileName}"
+    tag "${params.mtbseq_project_name}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
-    container 'quay.io/biocontainers/mtbseq:1.0.3--pl526_1'
-    cpus 8
-    memory "15 GB"
 
     input:
-    // TODO
+    path(samples_file)
+    path("Position_Tables/*")
+    path(gatk_jar)
+    env USER
 
     output:
-    // TODO
+    path ("Joint/${params.mtbseq_project_name}_joint*samples.{tab,log}")
+    tuple path(samples_file), val("${params.mtbseq_project_name}"), path("Joint/${params.mtbseq_project_name}_joint*samples.tab"), emit: next_step
 
     script:
+    """
+    gatk-register ${gatk_jar}
 
-    // TODO
-
+    mkdir Joint
+    MTBseq --step TBjoin --samples ${samples} --project ${params.mtbseq_project_name}
+    """
     stub:
 
-    // TODO
+    """
+    mkdir Joint
+    touch Joint/${params.mtbseq_project_name}_joint_samples.tab
+    touch Joint/${params.mtbseq_project_name}_joint_samples.log
+
+    echo "MTBseq --step TBjoin --samples ${samples_file} --project ${params.mtbseq_project_name}"
+    """
 }
