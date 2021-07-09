@@ -11,23 +11,30 @@ params.shouldPublish = true
 
 // TODO: Add the tbjoin workflow
 process TBGROUPS {
-    tag "${genomeFileName}"
+    tag "${project_name}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
-    container 'quay.io/biocontainers/mtbseq:1.0.3--pl526_1'
-    cpus 8
-    memory "15 GB"
 
     input:
-    // TODO
+    tuple val(project_name), path("Amend/${params.mtbseq_project_name}*_joint_*_samples_amended_*_phylo_*.tab")
+    path(gatk_jar)
+    env USER
 
     output:
-    // TODO
+
+    path("Groups/${params.mtbseq_project_name}_joint_*_samples_amended_*_phylo_*.{matrix,groups}")
 
     script:
-
-    // TODO
+    """
+    gatk-register ${gatk_jar}
+    mkdir Groups
+    MTBseq --step TBgroups --project ${project_name}
+    """
 
     stub:
-
-    // TODO
+    """
+    mkdir Groups
+    touch Groups/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window].matrix
+    touch Groups/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window]_[distance].groups
+    echo "MTBseq --step TBgroups  --project ${project_name}"
+    """
 }
