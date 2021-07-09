@@ -20,6 +20,7 @@ process TBVARIANTS {
 
     output:
     path("${genomeFileName}/Called/${genomeFileName}_${params.library_name}*gatk_position_{uncovered,variants}*.tab")
+    path("${genomeFileName}/Called/${genomeFileName}_${params.library_name}*gatk_position_variants*.tab"), emit: tbjoin_input
 
     script:
 
