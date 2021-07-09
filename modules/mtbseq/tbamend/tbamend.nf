@@ -10,17 +10,17 @@ params.saveMode = 'copy'
 params.shouldPublish = true
 
 process TBAMEND {
+    tag "${project_name}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
-    container 'quay.io/biocontainers/mtbseq:1.0.3--pl526_1'
-    cpus 8
-    memory "15 GB"
 
     input:
-    tuple path(samples), val(project_name), path(Joint/[PROJECT]_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples.tab)
+    tuple path(samples_file), val(project_name), path("${params.mtbseq_project_name}_*_samples.tab")
     path(gatk_jar)
+    env USER
 
     output:
-    path("Amend")
+    path("Amend/*")
+    path  ("Amend/*_joint_*_samples_amended_*_phylo_*.tab"), emit: next_step
 
     script:
 
@@ -28,12 +28,22 @@ process TBAMEND {
 
     gatk-register ${gatk_jar}
 
-    MTBseq --step TBamend --thread ${task.cpus}
+    mkdir Amend
+    MTBseq --step TBamend --samples ${samples_file} --project ${project_name}
 
     """
     stub:
     """
     mkdir Amend
-    touch Amend/${project_name}
+    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended.tab
+    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo.tab
+    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo.fasta
+    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_plainIDs.fasta
+    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window].tab
+    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window].fasta
+    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window]_plainIDs.fasta
+    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window]_removed.tab
+
+    echo "MTBseq --step TBamend --samples ${samples_file} --project ${project_name}"
     """
 }
