@@ -29,7 +29,7 @@ process TBSTRAINS {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBstrains --thread ${task.cpus}
+    MTBseq --step TBstrains
     mv  Classification ./${genomeFileName}/
     """
 
@@ -39,7 +39,7 @@ process TBSTRAINS {
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Classification
     touch ${genomeFileName}/Classification/Strain_Classification.tab
-    echo "MTBseq --step TBstrains --thread ${task.cpus}"
+    echo "MTBseq --step TBstrains"
     """
 
 }

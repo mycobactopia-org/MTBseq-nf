@@ -29,7 +29,7 @@ process TBPILE {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBpile --thread ${task.cpus}
+    MTBseq --step TBpile --threads ${task.cpus}
     mv  Mpileup ./${genomeFileName}/
     """
 
@@ -40,7 +40,7 @@ process TBPILE {
     mkdir ${genomeFileName}/Mpileup
     touch ${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}.gatk.mpileup
     touch ${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}.gatk.mpileuplog
-    echo "MTBseq --step TBpile --thread ${task.cpus}"
+    echo "MTBseq --step TBpile --threads ${task.cpus}"
     """
 
 }

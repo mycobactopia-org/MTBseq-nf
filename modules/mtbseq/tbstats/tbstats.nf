@@ -29,7 +29,7 @@ process TBSTATS {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBstats --thread ${task.cpus}
+    MTBseq --step TBstats
     mv  Statistics ./${genomeFileName}/
     """
 
@@ -39,7 +39,7 @@ process TBSTATS {
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Statistics
     touch ${genomeFileName}/Statistics/Mapping_and_Variant_Statistics.tab
-    echo "MTBseq --step TBstats --thread ${task.cpus}"
+    echo "MTBseq --step TBstats"
     """
 
 }

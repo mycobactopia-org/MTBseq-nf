@@ -29,7 +29,7 @@ process TBVARIANTS {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBvariants --thread ${task.cpus}
+    MTBseq --step TBvariants
     mv  Called ./${genomeFileName}/
     """
 
@@ -40,7 +40,7 @@ process TBVARIANTS {
     mkdir ${genomeFileName}/Called
     touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered.tab
     touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_variants.tab
-    echo "MTBseq --step TBstats --thread ${task.cpus}"
+    echo "MTBseq --step TBstats"
     """
 
 }

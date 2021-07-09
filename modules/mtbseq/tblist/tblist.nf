@@ -30,7 +30,7 @@ process TBLIST {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBlist --thread ${task.cpus}
+    MTBseq --step TBlist --threads ${task.cpus}
     mv  Position_Tables ./${genomeFileName}/
     """
 
@@ -40,7 +40,7 @@ process TBLIST {
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Position_Tables
     touch ${genomeFileName}/Position_Tables/${genomeFileName}_${params.library_name}.gatk_position_table.tab
-    echo "MTBseq --step TBlist --thread ${task.cpus}"
+    echo "MTBseq --step TBlist --threads ${task.cpus}"
     """
 
 }

@@ -30,7 +30,7 @@ process TBREFINE {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBrefine --thread ${task.cpus}
+    MTBseq --step TBrefine --threads ${task.cpus}
     mv  GATK_Bam ./${genomeFileName}/
     """
 
@@ -44,6 +44,6 @@ process TBREFINE {
     touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bamlog
     touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.grp
     touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.intervals
-    echo "MTBseq --step TBrefine --thread ${task.cpus}"
+    echo "MTBseq --step TBrefine --threads ${task.cpus}"
     """
 }
