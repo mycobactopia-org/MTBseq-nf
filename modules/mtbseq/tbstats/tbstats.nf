@@ -15,8 +15,7 @@ process TBSTATS {
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
 
     input:
-    tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.bam")
-    tuple val(genomeFileName), path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab")
+    tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.bam"), path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab")
     path(gatk_jar)
     env USER
 
