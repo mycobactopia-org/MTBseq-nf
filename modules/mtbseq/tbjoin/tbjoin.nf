@@ -16,6 +16,7 @@ process TBJOIN {
 
     input:
     path(samples_file)
+    path("Called/*")
     path("Position_Tables/*")
     path(gatk_jar)
     env USER

@@ -16,6 +16,8 @@ process TBBWA {
     output:
     path("${genomeFileName}/Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
     tuple val(genomeFileName), path("${genomeFileName}/Bam/${genomeFileName}_${params.library_name}*.bam"), emit: next_step
+    val(genomeFileName), emit:genomes_names
+
     script:
 
     """

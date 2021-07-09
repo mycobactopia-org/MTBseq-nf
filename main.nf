@@ -14,6 +14,9 @@ include { TBLIST } from './modules/mtbseq/tblist/tblist.nf'
 include { TBVARIANTS } from './modules/mtbseq/tbvariants/tbvariants.nf'
 include { TBSTATS } from './modules/mtbseq/tbstats/tbstats.nf'
 include { TBSTRAINS } from './modules/mtbseq/tbstrains/tbstrains.nf'
+include { TBJOIN } from './modules/mtbseq/tbjoin/tbjoin.nf'
+include { TBAMEND } from './modules/mtbseq/tbamend/tbamend.nf'
+include { TBGROUPS } from './modules/mtbseq/tbgroups/tbgroups.nf'
 
 workflow mtbseq {
     reads_ch = Channel.fromFilePairs(params.reads)
@@ -38,5 +41,28 @@ workflow per_sample {
     TBSTATS(TBBWA.out.next_step,TBLIST.out.next_step, params.gatk38_jar, params.user)
     TBSTRAINS(TBLIST.out.next_step, params.gatk38_jar, params.user)
 
+
+
+}
+
+workflow cohort {
+    reads_ch = Channel.fromFilePairs(params.reads)
+
+    TBBWA(reads_ch, params.gatk38_jar, params.user)
+    TBREFINE(TBBWA.out.next_step, params.gatk38_jar, params.user)
+    TBPILE(TBREFINE.out.next_step, params.gatk38_jar, params.user)
+    TBLIST(TBPILE.out.next_step, params.gatk38_jar, params.user)
+    TBVARIANTS(TBLIST.out.next_step, params.gatk38_jar, params.user)
+    TBSTATS(TBBWA.out.next_step,TBLIST.out.next_step, params.gatk38_jar, params.user)
+    TBSTRAINS(TBLIST.out.next_step, params.gatk38_jar, params.user)
+
+    samples_tsv_file = TBBWA.out.genomes_names
+            .collect()
+            .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
+            .collectFile(name: 'samples.tsv', newLine: false, storeDir: "${params.outdir}")
+
+    TBJOIN(samples_tsv_file,TBVARIANTS.out[0].collect(), TBLIST.out[0].collect(), params.gatk38_jar, params.user)
+    TBAMEND(TBJOIN.out.next_step, params.gatk38_jar, params.user)
+    TBGROUPS(TBAMEND.out.next_step, params.gatk38_jar, params.user)
 
 }
