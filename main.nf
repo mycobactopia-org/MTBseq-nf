@@ -30,6 +30,12 @@ workflow mtbseq {
 
 }
 
-include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample/per_sample.nf"
+include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample_analysis.nf"
 
 include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf"
+
+workflow {
+
+    COHORT_ANALYSIS()
+
+}

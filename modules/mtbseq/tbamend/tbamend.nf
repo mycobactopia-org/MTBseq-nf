@@ -20,7 +20,7 @@ process TBAMEND {
 
     output:
     path("Amend/*")
-    tuple val(project_name), path  ("Amend/*_joint_*_samples_amended_*_phylo_*.tab"), emit: next_step
+    tuple val(project_name), path  ("Amend/*_joint_*_samples_amended_*_phylo_*.tab"), emit: samples_amended
 
     script:
 
