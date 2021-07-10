@@ -36,6 +36,8 @@ process TBVARIANTS {
     stub:
 
     """
+    sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Called
     touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered.tab

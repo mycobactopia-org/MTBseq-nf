@@ -37,6 +37,8 @@ process TBREFINE {
     stub:
 
     """
+    sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/GATK_Bam
     touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bam

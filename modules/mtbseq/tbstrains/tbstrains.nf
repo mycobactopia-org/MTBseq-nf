@@ -36,6 +36,8 @@ process TBSTRAINS {
     stub:
 
     """
+    sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Classification
     touch ${genomeFileName}/Classification/Strain_Classification.tab

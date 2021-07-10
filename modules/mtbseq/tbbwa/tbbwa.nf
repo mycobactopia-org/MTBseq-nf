@@ -32,6 +32,8 @@ process TBBWA {
     stub:
 
     """
+    sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Bam
     mkdir ${genomeFileName}/Bam/${genomeFileName}

@@ -35,6 +35,8 @@ process TBJOIN {
     stub:
 
     """
+    sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
     mkdir Joint
     touch Joint/${params.mtbseq_project_name}_joint_samples.tab
     touch Joint/${params.mtbseq_project_name}_joint_samples.log
