@@ -34,6 +34,8 @@ process TBAMEND {
     """
     stub:
     """
+    sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
     mkdir Amend
     touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended.tab
     touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo.tab
