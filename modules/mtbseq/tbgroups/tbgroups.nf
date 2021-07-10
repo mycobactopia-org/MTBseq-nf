@@ -32,6 +32,8 @@ process TBGROUPS {
 
     stub:
     """
+    sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
     mkdir Groups
     touch Groups/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window].matrix
     touch Groups/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window]_[distance].groups

@@ -36,6 +36,8 @@ process TBPILE {
     stub:
 
     """
+    sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Mpileup
     touch ${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}.gatk.mpileup
