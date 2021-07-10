@@ -1,24 +1,22 @@
 nextflow.enable.dsl = 2
 
-params.resultsDir = "${params.outdir}/mtbseq"
+params.resultsDir = "${params.outdir}/tbbwa"
 params.saveMode = 'copy'
 params.shouldPublish = true
 
-// TODO: Add the tbjoin workflow
-process TB_BWA {
+process TBBWA {
     tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
-    container 'quay.io/biocontainers/mtbseq:1.0.3--pl526_1'
-    cpus 8
-    memory "15 GB"
 
     input:
-    tuple val(genomeFileName), path("${genomeFileName}_somelib_R?.fastq.gz")
+    tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
     path(gatk_jar)
     env USER
 
     output:
-    path("${genomeFileName}")
+    path("${genomeFileName}/Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
+    tuple val(genomeFileName), path("${genomeFileName}/Bam/${genomeFileName}_${params.library_name}*.bam"), emit: bam
+    val(genomeFileName), emit:genomes_names
 
     script:
 
@@ -27,21 +25,21 @@ process TB_BWA {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-   
-    MTBseq --step TBfull --thread ${task.cpus}
-    
-    mv  Amend ./${genomeFileName}/
+    MTBseq --step TBbwa --threads ${task.cpus}
     mv  Bam ./${genomeFileName}/
-    mv  Called ./${genomeFileName}/
-    mv  Classification ./${genomeFileName}/
-    mv  GATK_Bam ./${genomeFileName}/
-    mv  Groups ./${genomeFileName}/
-    mv  Joint ./${genomeFileName}/
-    mv  Mpileup ./${genomeFileName}/
-    mv  Position_Tables ./${genomeFileName}/
-    mv  Statistics ./${genomeFileName}/
     """
 
+    stub:
+
+    """
+    mkdir ${genomeFileName}
+    mkdir ${genomeFileName}/Bam
+    mkdir ${genomeFileName}/Bam/${genomeFileName}
+    touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bam
+    touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bai
+    touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bamlog
+    echo "MTBseq --step TBbwa --threads ${task.cpus}"
+    """
 
 }
 

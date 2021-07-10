@@ -7,6 +7,17 @@ nextflow.enable.dsl = 2
 
 include { MTBSEQ } from "./modules/mtbseq/mtbseq.nf"
 
+include { TBBWA } from './modules/mtbseq/tbbwa/tbbwa.nf'
+include { TBREFINE } from './modules/mtbseq/tbrefine/tbrefine.nf'
+include { TBPILE } from './modules/mtbseq/tbpile/tbpile.nf'
+include { TBLIST } from './modules/mtbseq/tblist/tblist.nf'
+include { TBVARIANTS } from './modules/mtbseq/tbvariants/tbvariants.nf'
+include { TBSTATS } from './modules/mtbseq/tbstats/tbstats.nf'
+include { TBSTRAINS } from './modules/mtbseq/tbstrains/tbstrains.nf'
+include { TBJOIN } from './modules/mtbseq/tbjoin/tbjoin.nf'
+include { TBAMEND } from './modules/mtbseq/tbamend/tbamend.nf'
+include { TBGROUPS } from './modules/mtbseq/tbgroups/tbgroups.nf'
+
 workflow mtbseq {
     reads_ch = Channel.fromFilePairs(params.reads)
     gatk38_jar_ch = Channel.value(params.gatk38_jar)
@@ -19,4 +30,12 @@ workflow mtbseq {
 
 }
 
+include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample_analysis.nf"
 
+include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf"
+
+workflow {
+
+    COHORT_ANALYSIS()
+
+}
