@@ -1,6 +1,6 @@
 # Mtbseq-nf
 
-OBS: This still a Work in progress!
+**NOTE**: This still a Work in progress!
 
 Project with aim to create a nextflow wrapper for mtbseq workflow.
 
