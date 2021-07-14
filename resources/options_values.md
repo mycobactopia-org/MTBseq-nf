@@ -7,22 +7,22 @@ functional modules and supplying parameters used in the analysis.
 
 
  [OPTIONS]
-     [VALUES]  
- 
+     [VALUES]
+
 ### Steps
  **--step**  The OPTION **--step**> is essential and requires a user specified VALUE. MTBseq has a modular architecture with functional modules encapsulating distinct steps in the analysis pipeline. Using the **--step** OPTION, you can specify whether the full pipeline is executed, call a specific pipeline step only or as starting point for the pipeline. During execution, MTBseq will only create output files not already present in the working environment. If you choose a specific pipeline step, make sure that the output files of previous steps needed as input are present. In the following, all possible VALUES for this OPTION are described:
  #### TBfull
-Description: 
-      For executing the whole pipeline. If you choose this VALUE, make sure that you specify all analysis parameters for which you do not want to use the preset defaults using the appropriate OPTIONS.    
- 
+Description:
+      For executing the whole pipeline. If you choose this VALUE, make sure that you specify all analysis parameters for which you do not want to use the preset defaults using the appropriate OPTIONS.
+
 ####   TBbwa
 Description:
 For mapping next generation sequencing read files to a reference genome, using BWA mem. This is the first step within the pipeline. Depending on the library type (single-end or paired-end), this module will align single end or paired end FASTQ files to a reference genome. Please ensure that FASTQ files used as input follow the required naming scheme described above.
 
-By default, MTBseq uses the Mycobacterium tuberculosis H37Rv genome (NC_000962.3) as a reference and maps reads with the BWA mem program with default settings. After mapping, files (.sam) are converted into binary mapping files (.bam). The mapping is sorted, indexed and putative PCR duplicates are removed, using the program SAMTOOLS. 
+By default, MTBseq uses the Mycobacterium tuberculosis H37Rv genome (NC_000962.3) as a reference and maps reads with the BWA mem program with default settings. After mapping, files (.sam) are converted into binary mapping files (.bam). The mapping is sorted, indexed and putative PCR duplicates are removed, using the program SAMTOOLS.
 
  Wherever possible, multi-threading is activated by the user provided VALUES for the **--threads** OPTION.
- 
+
                  Input:
                  [SampleID]_[LibID]_[*]_[Direction].fastq.gz
                  Output:
@@ -33,7 +33,7 @@ By default, MTBseq uses the Mycobacterium tuberculosis H37Rv genome (NC_000962.3
 Description:
 for realignment around insertions and deletions and base call recalibration, using the program GATK. The GATK program is invoked with the parameters:
                  `--downsample_to_coverage 10000 --defaultBaseQualities 12 --maximum_cycle_value 600 --noOriginalAlignmentTags`
-                 
+
 For base call recalibration, MTBseq employs a set of known resistance associated variants if _Mycobacterium tuberculosis_ H37Rv was used as reference genome. The calibration list is stored in the directory "var/res/MTB_Base_Calibration_List.vcf" of the package. For other reference genomes, the file needs to be specified with the **--basecalib** OPTION or this step will be skipped.
 
                  Input:
@@ -53,7 +53,7 @@ For creating pileup files (.mpileup) from refined mapping files (.gatk.bam), usi
                  Output:
                  Mpileup/[SampleID]_[LibID]_[*].gatk.mpileup
                  Mpileup/[SampleID]_[LibID]_[*].gatk.mpileuplog
-                 
+
 #### TBlist
 Description:
 For creating position lists from pileup files (.gatk.mpileup). Position list files capture the essential data from a mapping in a table format with 21 columns, containing the nucleotide counts in mapped reads for each position of the reference genome. This step will take into account the **--threads** and the **--minbqual**> OPTIONS. The columns in the position list file are listed in table 1.
@@ -64,7 +64,7 @@ For creating position lists from pileup files (.gatk.mpileup). Position list fil
                  Position_Tables/[SampleID]_[LibID]_[*].gatk_position_table.tab
 
 #### TBvariants
-Description: 
+Description:
 For variant detection from position lists. Variant calling can be run in different detection modes using the OPTIONS **--all_vars**, **--snp_vars**, and **--lowfreq_vars** (with the respective changes to the detection algorithm explained in detail in the description for these OPTIONS). In the default mode, a variant is called if it is supported by a minimum number of 4 reads in both forward and reverse direction, by a minimum number of 4 reads indicating the allele with a phred score of at least 20, and if the allele is indicated by a minimum frequency of 75% in mapped reads. These thresholds can all be set using the respective modifiers ( **--mincovf**, **--mincovr**, **--minphred20**, **--minfreq**). In addition, positions fulfilling these thresholds will be counted as 'unambigous' in the calculation of quality values for the dataset. The parameters used by the pipeline will be recorded in the file names by dedicated fields, and the detection mode will be recorded in the output files as a binary string (e.g. "outmode100" indicates **--all_vars** but not **--snp_vars** and **--lowfreq_vars** active).
 
         Input:
@@ -82,7 +82,7 @@ For calculating an overview of mapping quality and detected variants for a datas
         Position_Tables/[SampleID]_[LibID]_[*].gatk_position_table.tab
         Output:
         Statistics/Mapping_and_Variant_Statistics.tab
-        
+
 #### TBstrains
 Description:
 For lineage classification based on a set of phylogenetic SNPs (Homolka et al., 2012; Coll et al., 2014; Merker et al., 2015). This module creates a tabular delimited file within the "Classification" directory. Within this file, the majority lineage is reported for each dataset. This entry also gives an indication of the data quality for the positions used to infer the phylogenetic classification. The column indicating the quality will contain the label _good_ if all phylogenetic positions contained in the set are covered at least 10fold and show a frequency of at least 75%, _bad_ if any phylogenetic position does not meet these, and _ugly_ if any phylogenetic position does not have a clear base call.
@@ -96,7 +96,7 @@ Description:
 For creating a comparative SNP analysis of a set of samples specified by the user with the **--samples** OPTION. The comparative analysis can be run in different detection modes using the OPTIONS **--snp_vars**, and **--lowfreq_vars** (with the respective changes to the detection algorithm explained in detail in the description for these OPTIONS). For the joint analysis, first a scaffold of all variant positions is built from the individual variant files. Second, for all positions with a variant detected for any of the input samples, the allele information is recalculated from the original mappings to produce a comprehensive table. Output files will be created starting with the project name specified with the **--project** OPTION, otherwise the default file name will start with “NONE”.
 
 The first line within the tabular delimited file joint variant table is a sample header line. The second line starts with position specific columns and continuing with sample specific entries shown in table 3.
-         
+
         Input:
         samples.txt
         --project
@@ -111,12 +111,12 @@ Description:
 For post-processing of joint variant tables. If you call this step directly, you need to specify the correct **--project** OPTION. This step will produce a comprehensive variant table including calculated summary values for each position. In addition, the set of positions will be processed in consecutive filtering steps. In the first step, positions will be excluded if less than a minimum percentage of samples have unambiguous base calls at this position, with this threshold set by the **--unambig** OPTION.
 In addition, all samples need to have either a SNP or wild type base at the position, and positions within repetitive regions of the reference genome or within a resistance associated genes are excluded.
 This filtering step results in output files carrying the "\_amended_[unambig]\_phylo" ending; a full table (ending in .tab), a FASTA file containing the aligned alleles of all samples for the given position (.fasta), and a corresponding FASTA file with the headers consisting solely of the respective sample ID (\_plainIDs.fasta).
-The second filtering step removes positions that are located within a maximum distance to each other in the same sample, with this threshold set by the **--window** OPTION. 
+The second filtering step removes positions that are located within a maximum distance to each other in the same sample, with this threshold set by the **--window** OPTION.
 Output files from this filtering step are generated with the same naming scheme as for the first step and carry the selected window threshold as additional field. In addition, positions not passing the window criteria are reported in the output file carrying the tag "removed".
 
         Input
         samples.txt
-        --project           
+        --project
         Joint/[PROJECT]_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples.tab
         Output
         Amend/[PROJECT]_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended.tab
@@ -148,7 +148,7 @@ Description: for inferring likely related isolates based on pairwise distance of
  **--ref** This OPTION sets the reference genome for the read mapping. By default, the genome of <i>Mycobacterium tuberculosis</i> H37Rv (NC_000962.3) is set as reference. User supplied FASTA files for other reference genomes should be placed in the directory /MTBseq_source/var/ref/, and the respective name given without .fasta extension. Please be aware that for other reference genomes, you need to provide the respective annotation files as well or annotations will be skipped.
 
  **--resilist** This OPTION sets a list of known variant positions associated to drug resistance for resistance prediction. Give the full path to the file. The required structure of the file can be seen here: /MTBseq_source/var/res/MTB_Resistance_Mediating.txt
- 
+
  **--intregions** This OPTION sets a list of interesting regions to be used for annotation of detected variants. Give the full path to the file. The required structure of the file can be seen here: /MTBseq_source/var/res/MTB_Extended_Resistance_Mediating.txt
 
  **--categories** This OPTION specifies a gene categories file to annotate essential and non-essential genes as well as repetitive regions. SNPs in repetitive regions will be excluded for phylogenetic analysis. Give the full path to the file. The required structure of the file can be seen here: /MTBseq_source/var/cat/MTB_Gene_Categories.txt
