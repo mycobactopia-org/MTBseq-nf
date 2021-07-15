@@ -37,14 +37,14 @@ process TBAMEND {
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Amend
-    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended.tab
-    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo.tab
-    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo.fasta
-    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_plainIDs.fasta
-    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window].tab
-    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window].fasta
-    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window]_plainIDs.fasta
-    touch Amend/${params.mtbseq_project_name}_joint_[mincovf]_[mincovr]_[minfreq]_[minphred20]_samples_amended_[unambig]_phylo_[window]_removed.tab
+    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples6_amended.tab
+    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples6_amended_u95_phylo.tab
+    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples6_amended_u95_phylo.fasta
+    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples6_amended_u95_phylo.plainIDs.fasta
+    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples6_amended_u95_phylo_w12.tab
+    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples6_amended_u95_phylo_w12.fasta
+    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples6_amended_u95_phylo_w12.plainIDs.fasta
+    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples6_amended_u95_phylo_w12_removed.tab
 
     echo "MTBseq --step TBamend --samples ${samples_file} --project ${project_name}"
     """
