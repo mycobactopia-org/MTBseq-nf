@@ -38,8 +38,8 @@ process TBJOIN {
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Joint
-    touch Joint/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples6.tab
-    touch Joint/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples6.log
+    touch Joint/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples5.tab
+    touch Joint/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples5.log
 
     echo "MTBseq --step TBjoin --samples ${samples_file} --project ${params.mtbseq_project_name}"
     """

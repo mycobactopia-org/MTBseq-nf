@@ -35,7 +35,7 @@ process TBGROUPS {
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Groups
-    touch Groups/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples6_amended_u95_phylo_w12.matrix
+    touch Groups/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.matrix
     touch Groups/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples35_amended_u95_phylo_w12_d12.groups
     echo "MTBseq --step TBgroups  --project ${project_name}"
     """
