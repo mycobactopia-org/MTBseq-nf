@@ -40,8 +40,8 @@ process TBVARIANTS {
 
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Called
-    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered.tab
-    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_variants.tab
+    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered_cf4_cr4_fr75_ph4_outmode000.tab
+    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_variants_cf4_cr4_fr75_ph4_outmode000.tab
     echo "MTBseq --step TBstats"
     """
 
