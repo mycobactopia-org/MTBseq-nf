@@ -186,3 +186,28 @@ Description: for inferring likely related isolates based on pairwise distance of
 
  **--version** This OPTION will show you the current version of MTBseq.
  **--check** This OPTION will check the dependencies of MTBseq.
+
+### Parameters Table
+| Parameter     | Process using it                           | Global Value |
+|:-------------:|:------------------------------------------:|:------------:|
+| project       | TBjoin, TBamend and TBgroups               | NONE         |
+| ref           | TBfull ??                                  | NC_000962.3  |
+| resilist      | ??                                         | OPTIONAL     |
+| intregions    | ??                                         | OPTIONAL     |
+| categories    | ??                                         | OPTIONAL     |
+| basecalib     | ??                                         | OPTIONAL     |
+| all\_vars     | TBvariants,TBstats,TBjoin and TBstrains    | not active   |
+| snp\_vars     | TBvariants, TBstats, TBjoin, and TBstrains | not active   |
+| lowfreq\_vars | TBvariants, TBstats, TBjoin, and TBstrains | not active   |
+| minbqual      | TBlist                                     | 13           |
+| mincovf       | TBvariants, TBjoin, TBamend, and TBstrains | 4            |
+| mincovr       | TBvariants, TBjoin, TBamend, and TBstrains | 4            |
+| minphred      | TBvariants, TBjoin, TBamend, and TBstrains | 4            |
+| minfreq       | TBvariants, TBjoin, TBamend, and TBstrains | 75           |
+| unambig       | TBamend                                    | 95           |
+| window        | TBamend                                    | 12           |
+| distance      | TBgroups                                   | 12           |
+| quiet         | All                                        | OPTIONAL     |
+| threads       | Bbwa, TBmerge, TBrefine, TBpile and TBlist | 1            |
+
+
