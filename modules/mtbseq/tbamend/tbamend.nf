@@ -13,6 +13,9 @@ params.mincovf = 4
 params.mincovr = 4
 params.minphred = 4
 params.minfreq = 75
+params.unambig = 95
+params.window = 12
+params.distance = 12
 
 process TBAMEND {
     tag "${project_name}"
@@ -39,8 +42,10 @@ process TBAMEND {
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}
-
+        --minfreq ${params.minfreq} \
+        --unambig ${params.unambig} \
+        --window ${params.window} \
+        --distance ${params.distance}
     """
     stub:
     """
@@ -61,6 +66,9 @@ process TBAMEND {
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}"
+        --minfreq ${params.minfreq} \
+        --unambig ${params.unambig} \
+        --window ${params.window} \
+        --distance ${params.distance} "
     """
 }
