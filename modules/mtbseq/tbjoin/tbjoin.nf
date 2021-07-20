@@ -8,6 +8,12 @@ nextflow.enable.dsl = 2
 params.resultsDir = "${params.outdir}/tbjoin"
 params.saveMode = 'copy'
 params.shouldPublish = true
+params.project_name = "mtbseq"
+params.mincovf = 4
+params.mincovr = 4
+params.minphred = 4
+params.minfreq = 75
+
 
 // TODO: Add the tbjoin workflow
 process TBJOIN {
@@ -23,14 +29,19 @@ process TBJOIN {
 
     output:
     path ("Joint/${params.mtbseq_project_name}_joint*samples.{tab,log}")
-    tuple path(samples_file), val("${params.mtbseq_project_name}"), path("Joint/${params.mtbseq_project_name}_joint*samples.tab"), emit: joint_samples
+    tuple path(samples_file), path("Joint/${params.mtbseq_project_name}_joint*samples.tab"), emit: joint_samples
 
     script:
     """
     gatk-register ${gatk_jar}
 
     mkdir Joint
-    MTBseq --step TBjoin --samples ${samples} --project ${params.mtbseq_project_name}
+    MTBseq --step TBjoin --samples ${samples} \
+        --project ${params.mtbseq_project_name} \
+        --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq}
     """
     stub:
 
@@ -38,9 +49,14 @@ process TBJOIN {
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Joint
-    touch Joint/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples5.tab
-    touch Joint/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples5.log
+    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.tab
+    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.log
 
-    echo "MTBseq --step TBjoin --samples ${samples_file} --project ${params.mtbseq_project_name}"
+    echo "MTBseq --step TBjoin --samples ${samples_file} \
+        --project ${params.project_name} \
+        --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq}"
     """
 }
