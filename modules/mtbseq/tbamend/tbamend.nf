@@ -9,6 +9,8 @@ params.resultsDir = "${params.outdir}/tbamend"
 params.saveMode = 'copy'
 params.shouldPublish = true
 params.project_name = "mtbseq"
+params.mincovf = 4
+
 
 process TBAMEND {
     tag "${project_name}"
@@ -30,7 +32,9 @@ process TBAMEND {
     gatk-register ${gatk_jar}
 
     mkdir Amend
-    MTBseq --step TBamend --samples ${samples_file} --project ${params.project_name}
+    MTBseq --step TBamend --samples ${samples_file} \
+        --project ${params.project_name} \
+        --mincovf ${params.mincovf}
 
     """
     stub:
@@ -38,15 +42,17 @@ process TBAMEND {
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Amend
-    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended.tab
-    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo.tab
-    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo.fasta
-    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo.plainIDs.fasta
-    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.tab
-    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.fasta
-    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.plainIDs.fasta
-    touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12_removed.tab
+    touch Amend/${project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5_amended.tab
+    touch Amend/${project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5_amended_u95_phylo.tab
+    touch Amend/${project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5_amended_u95_phylo.fasta
+    touch Amend/${project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5_amended_u95_phylo.plainIDs.fasta
+    touch Amend/${project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.tab
+    touch Amend/${project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.fasta
+    touch Amend/${project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.plainIDs.fasta
+    touch Amend/${project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5_amended_u95_phylo_w12_removed.tab
 
-    echo "MTBseq --step TBamend --samples ${samples_file} --project ${params.project_name}"
+    echo "MTBseq --step TBamend --samples ${samples_file} \
+        --project ${params.project_name} \
+        --mincovf ${params.mincovf}"
     """
 }

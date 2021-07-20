@@ -8,6 +8,9 @@ nextflow.enable.dsl = 2
 params.resultsDir = "${params.outdir}/tbjoin"
 params.saveMode = 'copy'
 params.shouldPublish = true
+params.project_name = "mtbseq"
+params.mincovf = 4
+
 
 // TODO: Add the tbjoin workflow
 process TBJOIN {
@@ -30,7 +33,9 @@ process TBJOIN {
     gatk-register ${gatk_jar}
 
     mkdir Joint
-    MTBseq --step TBjoin --samples ${samples} --project ${params.mtbseq_project_name}
+    MTBseq --step TBjoin --samples ${samples} \
+        --project ${params.mtbseq_project_name} \
+        --mincovf ${params.mincovf}
     """
     stub:
 
@@ -38,9 +43,11 @@ process TBJOIN {
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Joint
-    touch Joint/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples5.tab
-    touch Joint/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples5.log
+    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5.tab
+    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5.log
 
-    echo "MTBseq --step TBjoin --samples ${samples_file} --project ${params.mtbseq_project_name}"
+    echo "MTBseq --step TBjoin --samples ${samples_file} \
+        --project ${params.project_name} \
+        --mincovf ${params.mincovf}"
     """
 }

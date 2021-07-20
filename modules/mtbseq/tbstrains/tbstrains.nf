@@ -8,6 +8,8 @@ nextflow.enable.dsl = 2
 params.resultsDir = "${params.outdir}/tbstrains"
 params.saveMode = 'copy'
 params.shouldPublish = true
+params.mincovf = 4
+
 
 // TODO: Add the tbjoin workflow
 process TBSTRAINS {
@@ -29,7 +31,7 @@ process TBSTRAINS {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBstrains
+    MTBseq --step TBstrains --mincovf ${params.mincovf}
     mv  Classification ./${genomeFileName}/
     """
 
@@ -41,7 +43,7 @@ process TBSTRAINS {
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Classification
     touch ${genomeFileName}/Classification/Strain_Classification.tab
-    echo "MTBseq --step TBstrains"
+    echo "MTBseq --step TBstrains --mincovf ${params.mincovf}"
     """
 
 }
