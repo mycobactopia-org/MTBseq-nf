@@ -10,6 +10,9 @@ params.saveMode = 'copy'
 params.shouldPublish = true
 params.project_name = "mtbseq"
 params.mincovf = 4
+params.mincovr = 4
+params.minphred = 4
+params.minfreq = 75
 
 
 // TODO: Add the tbjoin workflow
@@ -35,7 +38,10 @@ process TBJOIN {
     mkdir Joint
     MTBseq --step TBjoin --samples ${samples} \
         --project ${params.mtbseq_project_name} \
-        --mincovf ${params.mincovf}
+        --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq}
     """
     stub:
 
@@ -43,11 +49,14 @@ process TBJOIN {
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Joint
-    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5.tab
-    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr4_fr75_ph4_samples5.log
+    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.tab
+    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.log
 
     echo "MTBseq --step TBjoin --samples ${samples_file} \
         --project ${params.project_name} \
-        --mincovf ${params.mincovf}"
+        --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq}"
     """
 }

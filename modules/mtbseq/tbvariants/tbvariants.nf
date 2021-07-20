@@ -9,6 +9,9 @@ params.resultsDir = "${params.outdir}/tbvariants"
 params.saveMode = 'copy'
 params.shouldPublish = true
 params.mincovf = 4
+params.mincovr = 4
+params.minphred = 4
+params.minfreq = 75
 
 process TBVARIANTS {
     tag "${genomeFileName}"
@@ -30,8 +33,12 @@ process TBVARIANTS {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBvariants --mincovf ${params.mincovf}
-    mv  Called ./${genomeFileName}/
+    MTBseq --step TBvariants \
+        --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq}
+    mv  Called ./${genomeFileName}
     """
 
     stub:
@@ -41,9 +48,12 @@ process TBVARIANTS {
 
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Called
-    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered_cf${params.mincovf}_cr4_fr75_ph4_outmode000.tab
-    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_variants_cf${params.mincovf}_cr4_fr75_ph4_outmode000.tab
-    echo "MTBseq --step TBvariants --mincovf ${params.mincovf}"
+    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+    echo "MTBseq --step TBvariants --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq}"
     """
 
 }
