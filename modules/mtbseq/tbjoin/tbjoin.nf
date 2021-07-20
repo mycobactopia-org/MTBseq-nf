@@ -23,7 +23,7 @@ process TBJOIN {
 
     output:
     path ("Joint/${params.mtbseq_project_name}_joint*samples.{tab,log}")
-    tuple path(samples_file), val("${params.mtbseq_project_name}"), path("Joint/${params.mtbseq_project_name}_joint*samples.tab"), emit: joint_samples
+    tuple path(samples_file), path("Joint/${params.mtbseq_project_name}_joint*samples.tab"), emit: joint_samples
 
     script:
     """

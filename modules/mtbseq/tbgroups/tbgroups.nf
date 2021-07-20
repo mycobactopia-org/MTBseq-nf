@@ -8,6 +8,7 @@ nextflow.enable.dsl = 2
 params.resultsDir = "${params.outdir}/tbgroups"
 params.saveMode = 'copy'
 params.shouldPublish = true
+params.project_name = "mtbseq"
 
 // TODO: Add the tbjoin workflow
 process TBGROUPS {
@@ -15,7 +16,7 @@ process TBGROUPS {
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
 
     input:
-    tuple val(project_name), path("Amend/${params.mtbseq_project_name}*_joint_*_samples_amended_*_phylo_*.tab")
+    path("Amend/${params.mtbseq_project_name}*_joint_*_samples_amended_*_phylo_*.tab")
     path(gatk_jar)
     env USER
 
@@ -27,7 +28,7 @@ process TBGROUPS {
     """
     gatk-register ${gatk_jar}
     mkdir Groups
-    MTBseq --step TBgroups --project ${project_name}
+    MTBseq --step TBgroups --project ${params.project_name}
     """
 
     stub:
@@ -35,8 +36,8 @@ process TBGROUPS {
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Groups
-    touch Groups/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.matrix
-    touch Groups/${params.mtbseq_project_name}_joint_cf4_cr4_fr75_ph4_samples35_amended_u95_phylo_w12_d12.groups
-    echo "MTBseq --step TBgroups  --project ${project_name}"
+    touch Groups/${params.project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.matrix
+    touch Groups/${params.project_name}_joint_cf4_cr4_fr75_ph4_samples35_amended_u95_phylo_w12_d12.groups
+    echo "MTBseq --step TBgroups  --project ${params.project_name}"
     """
 }

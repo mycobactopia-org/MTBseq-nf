@@ -8,19 +8,20 @@ nextflow.enable.dsl = 2
 params.resultsDir = "${params.outdir}/tbamend"
 params.saveMode = 'copy'
 params.shouldPublish = true
+params.project_name = "mtbseq"
 
 process TBAMEND {
     tag "${project_name}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
 
     input:
-    tuple path(samples_file), val(project_name), path("${params.mtbseq_project_name}_*_samples.tab")
+    tuple path(samples_file), path("${params.mtbseq_project_name}_*_samples.tab")
     path(gatk_jar)
     env USER
 
     output:
     path("Amend/*")
-    tuple val(project_name), path  ("Amend/*_joint_*_samples_amended_*_phylo_*.tab"), emit: samples_amended
+    path  ("Amend/*_joint_*_samples_amended_*_phylo_*.tab"), emit: samples_amended
 
     script:
 
@@ -29,7 +30,7 @@ process TBAMEND {
     gatk-register ${gatk_jar}
 
     mkdir Amend
-    MTBseq --step TBamend --samples ${samples_file} --project ${project_name}
+    MTBseq --step TBamend --samples ${samples_file} --project ${params.project_name}
 
     """
     stub:
@@ -46,6 +47,6 @@ process TBAMEND {
     touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.plainIDs.fasta
     touch Amend/${project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12_removed.tab
 
-    echo "MTBseq --step TBamend --samples ${samples_file} --project ${project_name}"
+    echo "MTBseq --step TBamend --samples ${samples_file} --project ${params.project_name}"
     """
 }
