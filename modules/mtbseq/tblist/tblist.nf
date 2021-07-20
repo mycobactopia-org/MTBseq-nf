@@ -8,6 +8,7 @@ nextflow.enable.dsl = 2
 params.resultsDir = "${params.outdir}/tblist"
 params.saveMode = 'copy'
 params.shouldPublish = true
+params.minbqual = 13
 
 // TODO: Add the tbjoin workflow
 process TBLIST {
@@ -30,7 +31,7 @@ process TBLIST {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBlist --threads ${task.cpus}
+    MTBseq --step TBlist --threads ${task.cpus} --minbqual ${params.minbqual}
     mv  Position_Tables ./${genomeFileName}/
     """
 
@@ -42,7 +43,7 @@ process TBLIST {
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Position_Tables
     touch ${genomeFileName}/Position_Tables/${genomeFileName}_${params.library_name}.gatk_position_table.tab
-    echo "MTBseq --step TBlist --threads ${task.cpus}"
+    echo "MTBseq --step TBlist --threads ${task.cpus} --minbqual ${params.minbqual}"
     """
 
 }
