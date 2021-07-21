@@ -24,8 +24,8 @@ workflow mtbseq {
     gatk38_jar_ch = Channel.value(params.gatk38_jar)
     env_user_ch = Channel.value("root")
 
-//    TRIMMOMATIC(reads_ch)
-    TBFULL(reads_ch,
+    TRIMMOMATIC(reads_ch)
+    MTBSEQ(TRIMMOMATIC.out,
             gatk38_jar_ch,
             env_user_ch)
 
@@ -35,6 +35,7 @@ include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample
 
 include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf"
 
+inclyde { TBFULL_ANALYSIS } from "./workflows/tbfull_analysis/tbfull_analysis.nf"
 workflow {
 
     COHORT_ANALYSIS()

@@ -25,8 +25,8 @@ process TBFULL {
     output:
     val("${genomeFileName}")
     path("${genomeFileName}")
-    path("${genomeFileName}/Called/*tab")
-    path("${genomeFileName}/Position_Tables/*tab")
+    path("${genomeFileName}/Called/*tab"), emit: variants_table
+    path("${genomeFileName}/Position_Tables/*tab"), emit: position_table
 
     script:
 
