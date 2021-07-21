@@ -44,6 +44,13 @@ process TBFULL {
 
     stub:
     """
+    echo " MTBseq --step TBfull --threads ${task.cpus} \
+    --minbqual ${params.minbqual} \
+    --mincovf ${params.mincovf} \
+    --mincovr ${params.mincovr} \
+    --minphred ${params.minphred} \
+    --minfreq ${params.minfreq} "
+
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir ${genomeFileName}
@@ -71,11 +78,6 @@ process TBFULL {
     mkdir ${genomeFileName}/Statistics
     touch ${genomeFileName}/Statistics/Mapping_and_Variant_Statistics.tab
 
-    echo " MTBseq --step TBfull --threads ${task.cpus} \
-        --minbqual ${params.minbqual} \
-        --mincovf ${params.mincovf} \
-        --mincovr ${params.mincovr} \
-        --minphred ${params.minphred} \
-        --minfreq ${params.minfreq} "
     """
+
 }

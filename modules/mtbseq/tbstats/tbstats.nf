@@ -36,12 +36,14 @@ process TBSTATS {
     stub:
 
     """
+    echo "MTBseq --step TBstats"
+
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Statistics
     touch ${genomeFileName}/Statistics/Mapping_and_Variant_Statistics.tab
-    echo "MTBseq --step TBstats"
+
     """
 
 }

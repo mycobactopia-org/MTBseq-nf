@@ -46,17 +46,19 @@ process TBJOIN {
     stub:
 
     """
-    sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
-
-    mkdir Joint
-    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.tab
-    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.log
-
     echo "MTBseq --step TBjoin --samples ${samples_file} \
         --project ${params.project_name} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
         --minfreq ${params.minfreq}"
+
+    sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
+    mkdir Joint
+    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.tab
+    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.log
+
     """
+
 }

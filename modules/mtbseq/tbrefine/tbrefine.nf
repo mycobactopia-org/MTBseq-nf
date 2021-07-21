@@ -37,6 +37,8 @@ process TBREFINE {
     stub:
 
     """
+    echo "MTBseq --step TBrefine --threads ${task.cpus}"
+
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir ${genomeFileName}
@@ -46,6 +48,5 @@ process TBREFINE {
     touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bamlog
     touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.grp
     touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.intervals
-    echo "MTBseq --step TBrefine --threads ${task.cpus}"
     """
 }

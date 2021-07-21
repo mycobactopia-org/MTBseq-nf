@@ -29,6 +29,10 @@ process TBVARIANTS {
     script:
 
     """
+    echo "MTBseq --step TBvariants --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq}"
 
     gatk-register ${gatk_jar}
 
@@ -50,10 +54,7 @@ process TBVARIANTS {
     mkdir ${genomeFileName}/Called
     touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
     touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
-    echo "MTBseq --step TBvariants --mincovf ${params.mincovf} \
-        --mincovr ${params.mincovr} \
-        --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}"
+
     """
 
 }

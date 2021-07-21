@@ -49,6 +49,16 @@ process TBAMEND {
     """
     stub:
     """
+    echo "MTBseq --step TBamend --samples ${samples_file} \
+    --project ${params.project_name} \
+    --mincovf ${params.mincovf} \
+    --mincovr ${params.mincovr} \
+    --minphred ${params.minphred} \
+    --minfreq ${params.minfreq} \
+    --unambig ${params.unambig} \
+    --window ${params.window} \
+    --distance ${params.distance} "
+
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Amend
@@ -61,14 +71,6 @@ process TBAMEND {
     touch Amend/${project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5_amended_u95_phylo_w12.plainIDs.fasta
     touch Amend/${project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5_amended_u95_phylo_w12_removed.tab
 
-    echo "MTBseq --step TBamend --samples ${samples_file} \
-        --project ${params.project_name} \
-        --mincovf ${params.mincovf} \
-        --mincovr ${params.mincovr} \
-        --minphred ${params.minphred} \
-        --minfreq ${params.minfreq} \
-        --unambig ${params.unambig} \
-        --window ${params.window} \
-        --distance ${params.distance} "
     """
+
 }
