@@ -17,6 +17,7 @@ include { TBSTRAINS } from './modules/mtbseq/tbstrains/tbstrains.nf' addParams(p
 include { TBJOIN } from './modules/mtbseq/tbjoin/tbjoin.nf' addParams(params.TBJOIN)
 include { TBAMEND } from './modules/mtbseq/tbamend/tbamend.nf' addParams(params.TBAMEND)
 include { TBGROUPS } from './modules/mtbseq/tbgroups/tbgroups.nf' addParams(params.TBGROUPS)
+include { TBFULL }  from './modules/mtbseq/tbfull/tbfull.nf' addParams(params.TBFULL)
 
 workflow mtbseq {
     reads_ch = Channel.fromFilePairs(params.reads)

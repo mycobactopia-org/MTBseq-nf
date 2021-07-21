@@ -14,11 +14,11 @@ params.minphred = 4
 params.minfreq = 75
 
 process TBFULL {
-    tag "${genomeName}"
+    tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
 
     input:
-    tuple val(genomeFileName), path("${genomeFileName}_${params.mtbseq_library_name}_R?.fastq.gz")
+    tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
     path(gatk_jar)
     env USER
 
