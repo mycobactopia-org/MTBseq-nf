@@ -7,12 +7,12 @@ nextflow.enable.dsl = 2
 
 include { MTBSEQ } from "./modules/mtbseq/mtbseq.nf"
 
-include { TBBWA } from './modules/mtbseq/tbbwa/tbbwa.nf' addParams(params.TBBWA)
-include { TBREFINE } from './modules/mtbseq/tbrefine/tbrefine.nf' addParams(params.TBREFINE)
-include { TBPILE } from './modules/mtbseq/tbpile/tbpile.nf' addParams(params.TBPILE)
+include { TBBWA } from './modules/mtbseq/tbbwa/tbbwa.nf'
+include { TBREFINE } from './modules/mtbseq/tbrefine/tbrefine.nf'
+include { TBPILE } from './modules/mtbseq/tbpile/tbpile.nf'
 include { TBLIST } from './modules/mtbseq/tblist/tblist.nf' addParams(params.TBLIST)
 include { TBVARIANTS } from './modules/mtbseq/tbvariants/tbvariants.nf' addParams(params.TBVARIANTS)
-include { TBSTATS } from './modules/mtbseq/tbstats/tbstats.nf' addParams(params.TBSTATS)
+include { TBSTATS } from './modules/mtbseq/tbstats/tbstats.nf'
 include { TBSTRAINS } from './modules/mtbseq/tbstrains/tbstrains.nf' addParams(params.TBSTRAINS)
 include { TBJOIN } from './modules/mtbseq/tbjoin/tbjoin.nf' addParams(params.TBJOIN)
 include { TBAMEND } from './modules/mtbseq/tbamend/tbamend.nf' addParams(params.TBAMEND)
@@ -24,8 +24,8 @@ workflow mtbseq {
     gatk38_jar_ch = Channel.value(params.gatk38_jar)
     env_user_ch = Channel.value("root")
 
-    TRIMMOMATIC(reads_ch)
-    MTBSEQ(TRIMMOMATIC.out,
+//    TRIMMOMATIC(reads_ch)
+    TBFULL(reads_ch,
             gatk38_jar_ch,
             env_user_ch)
 
