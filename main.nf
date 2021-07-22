@@ -17,6 +17,7 @@ include { TBSTRAINS } from './modules/mtbseq/tbstrains/tbstrains.nf' addParams(p
 include { TBJOIN } from './modules/mtbseq/tbjoin/tbjoin.nf' addParams(params.TBJOIN)
 include { TBAMEND } from './modules/mtbseq/tbamend/tbamend.nf' addParams(params.TBAMEND)
 include { TBGROUPS } from './modules/mtbseq/tbgroups/tbgroups.nf' addParams(params.TBGROUPS)
+include { TBFULL }  from './modules/mtbseq/tbfull/tbfull.nf' addParams(params.TBFULL)
 
 workflow mtbseq {
     reads_ch = Channel.fromFilePairs(params.reads)
@@ -34,6 +35,7 @@ include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample
 
 include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf"
 
+include { TBFULL_ANALYSIS } from "./workflows/tbfull_analysis/tbfull_analysis.nf"
 workflow {
 
     COHORT_ANALYSIS()

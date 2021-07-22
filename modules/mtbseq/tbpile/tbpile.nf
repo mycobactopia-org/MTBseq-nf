@@ -36,13 +36,15 @@ process TBPILE {
     stub:
 
     """
+    echo "MTBseq --step TBpile --threads ${task.cpus}"
+
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Mpileup
     touch ${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}.gatk.mpileup
     touch ${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}.gatk.mpileuplog
-    echo "MTBseq --step TBpile --threads ${task.cpus}"
+
     """
 
 }

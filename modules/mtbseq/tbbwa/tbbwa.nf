@@ -32,6 +32,8 @@ process TBBWA {
     stub:
 
     """
+    echo "MTBseq --step TBbwa --threads ${task.cpus}"
+
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir ${genomeFileName}
@@ -40,7 +42,7 @@ process TBBWA {
     touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bam
     touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bai
     touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bamlog
-    echo "MTBseq --step TBbwa --threads ${task.cpus}"
+
     """
 
 }

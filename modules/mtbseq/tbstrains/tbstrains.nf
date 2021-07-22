@@ -30,6 +30,10 @@ process TBSTRAINS {
     script:
 
     """
+    echo "MTBseq --step TBstrains --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq}"
 
     gatk-register ${gatk_jar}
 
@@ -49,10 +53,7 @@ process TBSTRAINS {
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Classification
     touch ${genomeFileName}/Classification/Strain_Classification.tab
-    echo "MTBseq --step TBstrains --mincovf ${params.mincovf} \
-        --mincovr ${params.mincovr} \
-        --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}"
+
     """
 
 }

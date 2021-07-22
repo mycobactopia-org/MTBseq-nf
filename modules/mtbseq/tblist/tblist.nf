@@ -38,12 +38,14 @@ process TBLIST {
     stub:
 
     """
+    echo "MTBseq --step TBlist --threads ${task.cpus} --minbqual ${params.minbqual}"
+
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Position_Tables
     touch ${genomeFileName}/Position_Tables/${genomeFileName}_${params.library_name}.gatk_position_table.tab
-    echo "MTBseq --step TBlist --threads ${task.cpus} --minbqual ${params.minbqual}"
+
     """
 
 }
