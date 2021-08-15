@@ -30,7 +30,7 @@ process TBREFINE {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBrefine --threads ${task.cpus}
+    MTBseq --step TBrefine --threads ${task.cpus} 2>err.log 1>out.log
     mv  GATK_Bam ./${genomeFileName}/
     """
 

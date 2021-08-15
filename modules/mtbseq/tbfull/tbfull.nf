@@ -39,7 +39,8 @@ process TBFULL {
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}
+        --minfreq ${params.minfreq} \
+        2>err.log 1>out.log
     """
 
     stub:

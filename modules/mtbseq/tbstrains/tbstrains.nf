@@ -30,10 +30,6 @@ process TBSTRAINS {
     script:
 
     """
-    echo "MTBseq --step TBstrains --mincovf ${params.mincovf} \
-        --mincovr ${params.mincovr} \
-        --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}"
 
     gatk-register ${gatk_jar}
 
@@ -41,7 +37,8 @@ process TBSTRAINS {
     MTBseq --step TBstrains --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}
+        --minfreq ${params.minfreq} \
+        2>err.log 1>out.log
     mv  Classification ./${genomeFileName}/
     """
 
@@ -49,6 +46,11 @@ process TBSTRAINS {
 
     """
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
+    echo "MTBseq --step TBstrains --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq}"
 
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Classification

@@ -31,7 +31,7 @@ process TBLIST {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBlist --threads ${task.cpus} --minbqual ${params.minbqual}
+    MTBseq --step TBlist --threads ${task.cpus} --minbqual ${params.minbqual} 2>err.log 1>out.log
     mv  Position_Tables ./${genomeFileName}/
     """
 
