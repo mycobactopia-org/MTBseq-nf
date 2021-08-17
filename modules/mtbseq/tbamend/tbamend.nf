@@ -45,7 +45,8 @@ process TBAMEND {
         --minfreq ${params.minfreq} \
         --unambig ${params.unambig} \
         --window ${params.window} \
-        --distance ${params.distance}
+        --distance ${params.distance} \
+        2>${task.process}_${project_name}_err.log 1>${task.process}_${project_name}_out.log
     """
     stub:
     """

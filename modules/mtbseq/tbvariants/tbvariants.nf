@@ -29,10 +29,6 @@ process TBVARIANTS {
     script:
 
     """
-    echo "MTBseq --step TBvariants --mincovf ${params.mincovf} \
-        --mincovr ${params.mincovr} \
-        --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}"
 
     gatk-register ${gatk_jar}
 
@@ -41,13 +37,19 @@ process TBVARIANTS {
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}
+        --minfreq ${params.minfreq} \
+        2>${task.process}_${genomeFileName}_err.log 1>${task.process}_${genomeFileName}_out.log
     mv  Called ./${genomeFileName}
     """
 
     stub:
 
     """
+    echo "MTBseq --step TBvariants --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq}"
+
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir ${genomeFileName}

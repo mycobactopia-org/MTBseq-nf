@@ -17,7 +17,7 @@ params.minfreq = 75
 
 // TODO: Add the tbjoin workflow
 process TBJOIN {
-    tag "${params.mtbseq_project_name}"
+    tag "${params.project_name}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
 
     input:
@@ -28,8 +28,8 @@ process TBJOIN {
     env USER
 
     output:
-    path ("Joint/${params.mtbseq_project_name}_joint*samples.{tab,log}")
-    tuple path(samples_file), path("Joint/${params.mtbseq_project_name}_joint*samples.tab"), emit: joint_samples
+    path ("Joint/${params.project_name}_joint*samples.{tab,log}")
+    tuple path(samples_file), path("Joint/${params.project_name}_joint*samples.tab"), emit: joint_samples
 
     script:
     """
@@ -41,7 +41,8 @@ process TBJOIN {
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}
+        --minfreq ${params.minfreq} \
+        2>${task.process}_${params.project_name}_err.log 1>${task.process}_${mtbseq_project_name}_out.log
     """
     stub:
 

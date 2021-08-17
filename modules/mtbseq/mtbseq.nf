@@ -33,7 +33,7 @@ process MTBSEQ {
 
     mkdir ${genomeFileName}
    
-    MTBseq --step TBfull --thread ${task.cpus}
+    MTBseq --step TBfull --thread ${task.cpus} 2>${task.process}_${genomeFileName}_err.log 1>${task.process}_${genomeFileName}_out.log
     
     mv  Amend ./${genomeFileName}/
     mv  Bam ./${genomeFileName}/

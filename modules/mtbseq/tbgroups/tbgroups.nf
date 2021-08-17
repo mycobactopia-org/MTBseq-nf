@@ -28,7 +28,7 @@ process TBGROUPS {
     """
     gatk-register ${gatk_jar}
     mkdir Groups
-    MTBseq --step TBgroups --project ${params.project_name}
+    MTBseq --step TBgroups --project ${params.project_name} 2>${task.process}_${params.project_name}_err.log 1>${task.process}_${params.project_name}}_out.log
     """
 
     stub:
