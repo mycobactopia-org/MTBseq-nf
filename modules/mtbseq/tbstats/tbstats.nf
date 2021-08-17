@@ -29,7 +29,7 @@ process TBSTATS {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBstats 2>err.log 1>out.log
+    MTBseq --step TBstats 2>${task.process}_${genomeFileName}_err.log 1>${task.process}_${genomeFileName}_out.log
     mv  Statistics ./${genomeFileName}/
     """
 
