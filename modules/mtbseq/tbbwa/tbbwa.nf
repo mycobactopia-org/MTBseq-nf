@@ -11,7 +11,7 @@ process TBBWA {
     input:
     tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
     path(gatk_jar)
-    env USER
+    env(USER)
 
     output:
     path("${genomeFileName}/Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
