@@ -1,12 +1,12 @@
 nextflow.enable.dsl = 2
 
-params.resultsDir = "${params.outdir}/tbbwa"
-params.saveMode = 'copy'
-params.shouldPublish = true
+params.results_dir = "${params.outdir}/tbbwa"
+params.save_mode = 'copy'
+params.should_publish = true
 
 process TBBWA {
     tag "${genomeFileName}"
-    publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
+    publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
     tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")

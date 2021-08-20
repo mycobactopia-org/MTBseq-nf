@@ -5,9 +5,9 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-params.resultsDir = "${params.outdir}/tbjoin"
-params.saveMode = 'copy'
-params.shouldPublish = true
+params.results_dir = "${params.outdir}/tbjoin"
+params.save_mode = 'copy'
+params.should_publish = true
 params.project_name = "mtbseq"
 params.mincovf = 4
 params.mincovr = 4
@@ -18,7 +18,7 @@ params.minfreq = 75
 // TODO: Add the tbjoin workflow
 process TBJOIN {
     tag "${params.project_name}"
-    publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
+    publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
     path(samples_file)
