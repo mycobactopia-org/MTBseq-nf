@@ -5,7 +5,7 @@ include { TBJOIN } from '../../modules/mtbseq/tbjoin/tbjoin.nf'
 include { TBAMEND } from '../../modules/mtbseq/tbamend/tbamend.nf'
 include { TBGROUPS } from '../../modules/mtbseq/tbgroups/tbgroups.nf'
 
-workflow COHORT_ANALYSIS {
+workflow TBFULL_ANALYSIS {
     reads_ch = Channel.fromFilePairs(params.reads)
 
     TBFULL(reads_ch, params.gatk38_jar, params.user)
