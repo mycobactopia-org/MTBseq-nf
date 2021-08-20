@@ -1,13 +1,4 @@
 nextflow.enable.dsl = 2
-// NOTE: To properly setup the gatk inside the docker image
-// - Download the gatk-3.8.0 tar file from here https://console.cloud.google.com/storage/browser/gatk-software/package-archive/gatk;tab=objects?prefix=&forceOnObjectsSortingFiltering=false
-// - tar -xvf GATK_TAR_FILE
-// - gatk-register gatk_folder/gatk_jar
-
-
-params.results_dir = "${params.outdir}/tbrefine"
-params.save_mode = 'copy'
-params.should_publish = true
 
 process TBREFINE {
     tag "${genomeFileName}"
