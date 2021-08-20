@@ -24,7 +24,6 @@ process TBBWA {
 
     gatk-register ${gatk_jar}
 
-    mkdir ${genomeFileName}
 
     MTBseq --step TBbwa \
     --threads ${task.cpus} \
@@ -32,6 +31,7 @@ process TBBWA {
     2>>.command.err
 
 
+    mkdir ${genomeFileName}
     mv  Bam ./${genomeFileName}/
     """
 
