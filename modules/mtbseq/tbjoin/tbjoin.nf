@@ -15,7 +15,6 @@ params.minphred = 4
 params.minfreq = 75
 
 
-// TODO: Add the tbjoin workflow
 process TBJOIN {
     tag "${params.project_name}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish

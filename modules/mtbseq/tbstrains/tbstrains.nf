@@ -14,7 +14,6 @@ params.minphred = 4
 params.minfreq = 75
 
 
-// TODO: Add the tbjoin workflow
 process TBSTRAINS {
     tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish

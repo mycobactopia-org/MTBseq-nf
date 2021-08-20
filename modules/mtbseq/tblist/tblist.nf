@@ -10,7 +10,6 @@ params.saveMode = 'copy'
 params.shouldPublish = true
 params.minbqual = 13
 
-// TODO: Add the tbjoin workflow
 process TBLIST {
     tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish

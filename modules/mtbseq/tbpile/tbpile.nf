@@ -9,7 +9,6 @@ params.resultsDir = "${params.outdir}/tbpile"
 params.saveMode = 'copy'
 params.shouldPublish = true
 
-// TODO: Add the tbjoin workflow
 process TBPILE {
     tag "${genomeFileName}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish

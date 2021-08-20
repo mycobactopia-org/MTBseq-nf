@@ -10,7 +10,6 @@ params.saveMode = 'copy'
 params.shouldPublish = true
 params.project_name = "mtbseq"
 
-// TODO: Add the tbjoin workflow
 process TBGROUPS {
     tag "${project_name}"
     publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
