@@ -34,18 +34,10 @@ include { TBGROUPS } from './modules/mtbseq/tbgroups/tbgroups.nf' addParams(para
 
 
 workflow test {
-//    reads_ch = Channel.fromFilePairs(params.reads)
+    reads_ch = Channel.fromFilePairs("/scratch/*{R1,R2}*gz")
 //    reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
 
-
-    reads_ch = Channel.of(
-        ["5765", ["${baseDir}/../5765_R1.p.fastq.gz", "${baseDir}/../5765_R2.p.fastq.gz"]],
-        ["5800", ["${baseDir}/../5800_R1.p.fastq.gz", "${baseDir}/../5800_R2.p.fastq.gz"]]
-    )
-
     env_user_ch = Channel.value("root")
-
-    reads_ch.view()
 
     TBBWA(reads_ch,
           params.gatk38_jar,
