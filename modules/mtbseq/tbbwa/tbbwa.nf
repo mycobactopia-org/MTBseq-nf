@@ -28,8 +28,7 @@ process TBBWA {
 
     MTBseq --step TBbwa \
     --threads ${task.cpus} \
-    1>>.command.out \
-    1>>.command.log
+    1>>.command.out
 
     mv  Bam ./${genomeFileName}/
     """
