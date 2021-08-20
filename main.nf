@@ -5,7 +5,21 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-include { MTBSEQ } from "./modules/mtbseq/mtbseq.nf"
+include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample_analysis.nf"
+
+include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf"
+
+include { TBFULL_ANALYSIS } from "./workflows/tbfull_analysis/tbfull_analysis.nf"
+
+workflow {
+
+    COHORT_ANALYSIS()
+
+}
+
+//=======================================
+// TESTING
+//=======================================
 
 include { TBBWA } from './modules/mtbseq/tbbwa/tbbwa.nf' addParams(params.TBBWA)
 include { TBREFINE } from './modules/mtbseq/tbrefine/tbrefine.nf' addParams(params.TBREFINE)
@@ -19,26 +33,14 @@ include { TBAMEND } from './modules/mtbseq/tbamend/tbamend.nf' addParams(params.
 include { TBGROUPS } from './modules/mtbseq/tbgroups/tbgroups.nf' addParams(params.TBGROUPS)
 include { TBFULL }  from './modules/mtbseq/tbfull/tbfull.nf' addParams(params.TBFULL)
 
-workflow mtbseq {
-    reads_ch = Channel.fromFilePairs(params.reads)
-    gatk38_jar_ch = Channel.value(params.gatk38_jar)
+
+workflow test {
+//    reads_ch = Channel.fromFilePairs(params.reads)
+    read_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
     env_user_ch = Channel.value("root")
 
-    TRIMMOMATIC(reads_ch)
-    MTBSEQ(TRIMMOMATIC.out,
-            gatk38_jar_ch,
-            env_user_ch)
-
-}
-
-include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample_analysis.nf"
-
-include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf"
-
-include { TBFULL_ANALYSIS } from "./workflows/tbfull_analysis/tbfull_analysis.nf"
-
-workflow {
-
-    COHORT_ANALYSIS()
+    TBBWA(reads_ch,
+          params.gatk38_jar,
+          env_user_ch)
 
 }

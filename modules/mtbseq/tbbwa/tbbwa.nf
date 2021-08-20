@@ -25,7 +25,12 @@ process TBBWA {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
-    MTBseq --step TBbwa --threads ${task.cpus} 2>${task.process}_${genomeFileName}_err.log 1>${task.process}_${genomeFileName}_out.log
+
+    MTBseq --step TBbwa \
+    --threads ${task.cpus} \
+    1>${task.process}_${genomeFileName}_out.log \
+    2>${task.process}_${genomeFileName}_err.log
+
     mv  Bam ./${genomeFileName}/
     """
 
@@ -35,6 +40,9 @@ process TBBWA {
     echo "MTBseq --step TBbwa --threads ${task.cpus}"
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
+    touch ${task.process}_${genomeFileName}_out.log
+    touch ${task.process}_${genomeFileName}_err.log
 
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Bam
