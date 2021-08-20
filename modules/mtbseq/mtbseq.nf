@@ -5,14 +5,14 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-params.resultsDir = "${params.outdir}/mtbseq"
-params.saveMode = 'copy'
-params.shouldPublish = true
+params.results_dir = "${params.outdir}/mtbseq"
+params.save_mode = 'copy'
+params.should_publish = true
 
 // TODO: Add the tbjoin workflow
 process MTBSEQ {
     tag "${genomeFileName}"
-    publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
+    publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
     container 'quay.io/biocontainers/mtbseq:1.0.3--pl526_1'
     cpus 8
     memory "15 GB"

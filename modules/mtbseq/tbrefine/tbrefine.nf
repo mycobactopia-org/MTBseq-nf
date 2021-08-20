@@ -5,14 +5,14 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-params.resultsDir = "${params.outdir}/tbrefine"
-params.saveMode = 'copy'
-params.shouldPublish = true
+params.results_dir = "${params.outdir}/tbrefine"
+params.save_mode = 'copy'
+params.should_publish = true
 
 // TODO: Add the tbjoin workflow
 process TBREFINE {
     tag "${genomeFileName}"
-    publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
+    publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
     tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.bam")
