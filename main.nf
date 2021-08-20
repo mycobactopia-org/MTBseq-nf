@@ -37,10 +37,8 @@ workflow test {
     reads_ch = Channel.fromFilePairs("/scratch/*{R1,R2}*gz")
 //    reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
 
-    env_user_ch = Channel.value("root")
-
     TBBWA(reads_ch,
           params.gatk38_jar,
-          env_user_ch)
+          params.user)
 
 }
