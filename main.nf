@@ -41,7 +41,7 @@ workflow test {
     reads_ch = Channel.of([
         ["5765", ["${baseDir}/../5765_R1.p.fastq.gz", "${baseDir}/../5765_R2.p.fastq.gz"]],
         ["5800", ["${baseDir}/../5800_R1.p.fastq.gz", "${baseDir}/../5800_R2.p.fastq.gz"]]
-    )
+    ])
 
     env_user_ch = Channel.value("root")
 
