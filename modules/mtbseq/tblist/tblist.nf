@@ -5,14 +5,14 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-params.resultsDir = "${params.outdir}/tblist"
-params.saveMode = 'copy'
-params.shouldPublish = true
+params.results_dir = "${params.outdir}/tblist"
+params.save_mode = 'copy'
+params.should_publish = true
 params.minbqual = 13
 
 process TBLIST {
     tag "${genomeFileName}"
-    publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
+    publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
     tuple val(genomeFileName), path("Mpileup/${genomeFileName}_${params.library_name}*.gatk.mpileup")

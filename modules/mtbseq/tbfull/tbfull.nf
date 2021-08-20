@@ -4,9 +4,9 @@ nextflow.enable.dsl = 2
 // - tar -xvf GATK_TAR_FILE
 // - gatk-register gatk_folder/gatk_jar
 
-params.resultsDir = "${params.outdir}/tbfull"
-params.saveMode = 'copy'
-params.shouldPublish = true
+params.results_dir = "${params.outdir}/tbfull"
+params.save_mode = 'copy'
+params.should_publish = true
 params.minbqual = 13
 params.mincovf = 4
 params.mincovr = 4
@@ -15,7 +15,7 @@ params.minfreq = 75
 
 process TBFULL {
     tag "${genomeFileName}"
-    publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
+    publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
     tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")

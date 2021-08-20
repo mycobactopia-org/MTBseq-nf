@@ -5,14 +5,14 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-params.resultsDir = "${params.outdir}/tbgroups"
-params.saveMode = 'copy'
-params.shouldPublish = true
+params.results_dir = "${params.outdir}/tbgroups"
+params.save_mode = 'copy'
+params.should_publish = true
 params.project_name = "mtbseq"
 
 process TBGROUPS {
     tag "${project_name}"
-    publishDir params.resultsDir, mode: params.saveMode, enabled: params.shouldPublish
+    publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
     path("Amend/${params.mtbseq_project_name}*_joint_*_samples_amended_*_phylo_*.tab")
