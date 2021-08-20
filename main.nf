@@ -43,6 +43,4 @@ workflow test {
           params.gatk38_jar,
           env_user_ch)
 
-
-
 }
