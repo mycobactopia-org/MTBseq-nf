@@ -23,8 +23,6 @@ process TBREFINE {
 
     gatk-register ${gatk_jar}
 
-    mkdir ${genomeFileName}
-
     mkdir GATK_Bam
 
     MTBseq --step TBrefine \
@@ -33,6 +31,7 @@ process TBREFINE {
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
+    mkdir ${genomeFileName}
     mv  GATK_Bam ./${genomeFileName}/
     """
 
