@@ -31,6 +31,7 @@ process TBAMEND {
     gatk-register ${gatk_jar}
 
     mkdir Amend
+
     MTBseq --step TBamend \
     --threads ${task.cpus} \
     --samples ${samples_file} \
