@@ -1,19 +1,22 @@
 nextflow.enable.dsl = 2
 
-include { TBBWA } from '../../modules/mtbseq/tbbwa/tbbwa.nf'
-include { TBREFINE } from '../../modules/mtbseq/tbrefine/tbrefine.nf'
-include { TBPILE } from '../../modules/mtbseq/tbpile/tbpile.nf'
-include { TBLIST } from '../../modules/mtbseq/tblist/tblist.nf'
-include { TBVARIANTS } from '../../modules/mtbseq/tbvariants/tbvariants.nf'
-include { TBSTATS } from '../../modules/mtbseq/tbstats/tbstats.nf'
-include { TBSTRAINS } from '../../modules/mtbseq/tbstrains/tbstrains.nf'
-include { TBJOIN } from '../../modules/mtbseq/tbjoin/tbjoin.nf'
-include { TBAMEND } from '../../modules/mtbseq/tbamend/tbamend.nf'
-include { TBGROUPS } from '../../modules/mtbseq/tbgroups/tbgroups.nf'
+include { TBBWA } from '../../modules/mtbseq/tbbwa/tbbwa.nf' addParams (params.TBBWA)
+include { TBREFINE } from '../../modules/mtbseq/tbrefine/tbrefine.nf' addParams (params.TBREFINE)
+include { TBPILE } from '../../modules/mtbseq/tbpile/tbpile.nf' addParams (params.TBPILE)
+include { TBLIST } from '../../modules/mtbseq/tblist/tblist.nf' addParams (params.TBLIST)
+include { TBVARIANTS } from '../../modules/mtbseq/tbvariants/tbvariants.nf' addParams (params.TBVARIANTS)
+include { TBSTATS } from '../../modules/mtbseq/tbstats/tbstats.nf' addParams (params.TBSTATS)
+include { TBSTRAINS } from '../../modules/mtbseq/tbstrains/tbstrains.nf' addParams (params.TBSTRAINS)
+include { TBJOIN } from '../../modules/mtbseq/tbjoin/tbjoin.nf' addParams (params.TBJOIN)
+include { TBAMEND } from '../../modules/mtbseq/tbamend/tbamend.nf' addParams (params.TBAMEND)
+include { TBGROUPS } from '../../modules/mtbseq/tbgroups/tbgroups.nf' addParams (params.TBGROUPS)
 
 workflow COHORT_ANALYSIS {
     reads_ch = Channel.fromFilePairs(params.reads)
 
+    //------------
+    // TODO: Replace this section with the PER_SAMPLE_ANALYSIS
+    //------------
     TBBWA(reads_ch, params.gatk38_jar, params.user)
     TBREFINE(TBBWA.out.bam, params.gatk38_jar, params.user)
     TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user)
@@ -21,6 +24,7 @@ workflow COHORT_ANALYSIS {
     TBVARIANTS(TBLIST.out.position_table, params.gatk38_jar, params.user)
     TBSTATS(TBBWA.out.bam.join(TBLIST.out.position_table), params.gatk38_jar, params.user)
     TBSTRAINS(TBLIST.out.position_table, params.gatk38_jar, params.user)
+    //------------
 
     samples_tsv_file = TBBWA.out.genomes_names
             .collect()

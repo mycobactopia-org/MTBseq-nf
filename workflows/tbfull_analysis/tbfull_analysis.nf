@@ -1,14 +1,15 @@
 nextflow.enable.dsl = 2
 
-include { TBFULL } from '../../modules/mtbseq/tbfull/tbfull.nf'
-include { TBJOIN } from '../../modules/mtbseq/tbjoin/tbjoin.nf'
-include { TBAMEND } from '../../modules/mtbseq/tbamend/tbamend.nf'
-include { TBGROUPS } from '../../modules/mtbseq/tbgroups/tbgroups.nf'
+include { TBFULL } from '../../modules/mtbseq/tbfull/tbfull.nf' addParams (params.TBFULL)
+include { TBJOIN } from '../../modules/mtbseq/tbjoin/tbjoin.nf' addParams (params.TBJOIN)
+include { TBAMEND } from '../../modules/mtbseq/tbamend/tbamend.nf' addParams (params.TBAMEND)
+include { TBGROUPS } from '../../modules/mtbseq/tbgroups/tbgroups.nf' addParams (params.TBGROUPS)
 
 workflow TBFULL_ANALYSIS {
     reads_ch = Channel.fromFilePairs(params.reads)
 
     TBFULL(reads_ch, params.gatk38_jar, params.user)
+
     samples_tsv_file = TBFULL.out.genomes_names
             .collect()
             .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }

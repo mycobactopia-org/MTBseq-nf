@@ -1,8 +1,4 @@
 nextflow.enable.dsl = 2
-// NOTE: To properly setup the gatk inside the docker image
-// - Download the gatk-3.8.0 tar file from here https://console.cloud.google.com/storage/browser/gatk-software/package-archive/gatk;tab=objects?prefix=&forceOnObjectsSortingFiltering=false
-// - tar -xvf GATK_TAR_FILE
-// - gatk-register gatk_folder/gatk_jar
 
 params.results_dir = "${params.outdir}/tbfull"
 params.save_mode = 'copy'
@@ -20,7 +16,7 @@ process TBFULL {
     input:
     tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
     path(gatk_jar)
-    env USER
+    env(USER)
 
     output:
     val("${genomeFileName}")
@@ -34,13 +30,18 @@ process TBFULL {
 
     gatk-register ${gatk_jar}
 
-    MTBseq --step TBfull --thread ${task.cpus} \
-        --minbqual ${params.minbqual} \
-        --mincovf ${params.mincovf} \
-        --mincovr ${params.mincovr} \
-        --minphred ${params.minphred} \
-        --minfreq ${params.minfreq} \
-        2>${task.process}_${genomeFileName}_err.log 1>${task.process}_${genomeFileName}_out.log
+    MTBseq --step TBfull \
+    --thread ${task.cpus} \
+    --minbqual ${params.minbqual} \
+    --mincovf ${params.mincovf} \
+    --mincovr ${params.mincovr} \
+    --minphred ${params.minphred} \
+    --minfreq ${params.minfreq} \
+    1>>.command.out \
+    2>>.command.err \
+    || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
+
+
     """
 
     stub:

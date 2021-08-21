@@ -1,5 +1,9 @@
 nextflow.enable.dsl = 2
 
+params.results_dir = "${params.outdir}/tbrefine"
+params.save_mode = 'copy'
+params.should_publish = true
+
 process TBREFINE {
     tag "${genomeFileName}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
@@ -7,7 +11,7 @@ process TBREFINE {
     input:
     tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.bam")
     path(gatk_jar)
-    env USER
+    env(USER)
 
     output:
     path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*.gatk.{bam,bai,bamlog,grp,intervals}")
@@ -19,8 +23,13 @@ process TBREFINE {
 
     gatk-register ${gatk_jar}
 
+    MTBseq --step TBrefine \
+    --threads ${task.cpus}
+    1>>.command.out \
+    2>>.command.err \
+    || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
+
     mkdir ${genomeFileName}
-    MTBseq --step TBrefine --threads ${task.cpus} 2>${task.process}_${genomeFileName}_err.log 1>${task.process}_${genomeFileName}_out.log
     mv  GATK_Bam ./${genomeFileName}/
     """
 
