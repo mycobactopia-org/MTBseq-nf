@@ -22,6 +22,8 @@ process TBPILE {
 
     gatk-register ${gatk_jar}
 
+    mkdir Mpileup
+
     MTBseq --step TBpile \
     --threads ${task.cpus} \
     1>>.command.out \

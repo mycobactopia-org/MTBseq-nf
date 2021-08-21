@@ -24,6 +24,7 @@ process TBBWA {
 
     gatk-register ${gatk_jar}
 
+    mkdir Bam
 
     MTBseq --step TBbwa \
     --threads ${task.cpus} \

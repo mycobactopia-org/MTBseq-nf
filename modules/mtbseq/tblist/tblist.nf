@@ -24,6 +24,7 @@ process TBLIST {
 
     gatk-register ${gatk_jar}
 
+    mkdir Position_Tables
 
     MTBseq --step TBlist
     --threads ${task.cpus} \

@@ -27,6 +27,8 @@ process TBVARIANTS {
 
     gatk-register ${gatk_jar}
 
+    mkdir Called
+
     MTBseq --step TBvariants \
     --threads ${task.cpus} \
     --mincovf ${params.mincovf} \

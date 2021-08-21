@@ -21,6 +21,8 @@ process TBSTATS {
     """
     gatk-register ${gatk_jar}
 
+    mkdir Statistics
+
     MTBseq --step TBstats \
     --threads ${task.cpus} \
     1>>.command.out \

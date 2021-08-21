@@ -24,6 +24,7 @@ process TBREFINE {
     gatk-register ${gatk_jar}
 
     mkdir ${genomeFileName}
+
     mkdir GATK_Bam
 
     MTBseq --step TBrefine \
