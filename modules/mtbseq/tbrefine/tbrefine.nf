@@ -23,7 +23,8 @@ process TBREFINE {
 
     gatk-register ${gatk_jar}
 
-    mkdir ${genomeFileName}_Bam
+    mkdir ${genomeFileName}
+    mkdir GATK_Bam
 
     MTBseq --step TBrefine \
     --threads ${task.cpus} \
