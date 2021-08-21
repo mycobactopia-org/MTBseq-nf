@@ -14,8 +14,7 @@ process TBREFINE {
     env(USER)
 
     output:
-    path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*.gatk.{bam,bai,bamlog,grp,intervals}")
-    tuple val(genomeFileName), path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*gatk.bam"), emit: gatk_bam
+    tuple val(genomeFileName), path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*gatk.{bam,bai,bamlog,grp,intervals}"), emit: gatk_bam
 
     script:
 
