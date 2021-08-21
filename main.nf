@@ -34,13 +34,27 @@ include { TBGROUPS } from './modules/mtbseq/tbgroups/tbgroups.nf' addParams(para
 
 
 workflow test {
-    reads_ch = Channel.fromFilePairs("/scratch/*{R1,R2}*gz")
-//    reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
+    reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
+    // reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
 
     // env_user_ch = Channel.value(params.user)
 
     TBBWA(reads_ch,
           params.gatk38_jar,
           params.user)
+
+    TBREFINE(TBBWA.out.bam,
+             params.gatk38_jar,
+             params.user)
+
+    TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user)
+
+    TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user)
+    TBVARIANTS(TBLIST.out.position_table, params.gatk38_jar, params.user)
+    TBSTATS(
+        TBBWA.out.bam.join(TBLIST.out.position_table),
+        params.gatk38_jar,
+        params.user)
+    TBSTRAINS(TBLIST.out.position_table, params.gatk38_jar, params.user)
 
 }

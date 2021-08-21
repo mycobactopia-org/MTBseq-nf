@@ -7,20 +7,24 @@ params.should_publish = true
 process TBPILE {
     tag "${genomeFileName}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
+    stageInMode 'copy'
 
     input:
-    tuple val(genomeFileName), path("GATK_Bam/${genomeFileName}_${params.library_name}_*gatk.bam")
+    tuple val(genomeFileName), path("GATK_Bam/*")
     path(gatk_jar)
     env(USER)
 
     output:
     path("${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}*.gatk.{mpileup,mpileuplog}")
     tuple val(genomeFileName), path("${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}*.gatk.mpileup"), emit: mpileup
+
     script:
 
     """
 
     gatk-register ${gatk_jar}
+
+    mkdir Mpileup
 
     MTBseq --step TBpile \
     --threads ${task.cpus} \

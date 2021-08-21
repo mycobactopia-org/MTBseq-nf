@@ -27,6 +27,8 @@ process TBSTRAINS {
 
     gatk-register ${gatk_jar}
 
+    mkdir Classification
+
     MTBseq --step TBstrains \
     --threads ${task.cpus} \
     --mincovf ${params.mincovf} \

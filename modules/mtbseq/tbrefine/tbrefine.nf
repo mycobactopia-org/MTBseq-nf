@@ -14,8 +14,7 @@ process TBREFINE {
     env(USER)
 
     output:
-    path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*.gatk.{bam,bai,bamlog,grp,intervals}")
-    tuple val(genomeFileName), path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*gatk.bam"), emit: gatk_bam
+    tuple val(genomeFileName), path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*gatk.{bam,bai,bamlog,grp,intervals}"), emit: gatk_bam
 
     script:
 
@@ -23,8 +22,10 @@ process TBREFINE {
 
     gatk-register ${gatk_jar}
 
+    mkdir GATK_Bam
+
     MTBseq --step TBrefine \
-    --threads ${task.cpus}
+    --threads ${task.cpus} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq

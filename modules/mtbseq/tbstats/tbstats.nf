@@ -1,6 +1,7 @@
 nextflow.enable.dsl = 2
 
-params.results_dir = "${params.outdir}/tbstats" params.save_mode = 'copy'
+params.results_dir = "${params.outdir}/tbstats"
+params.save_mode = 'copy'
 params.should_publish = true
 
 process TBSTATS {
@@ -19,6 +20,8 @@ process TBSTATS {
 
     """
     gatk-register ${gatk_jar}
+
+    mkdir Statistics
 
     MTBseq --step TBstats \
     --threads ${task.cpus} \
