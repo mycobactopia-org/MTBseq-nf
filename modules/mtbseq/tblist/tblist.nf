@@ -26,7 +26,7 @@ process TBLIST {
 
     mkdir Position_Tables
 
-    MTBseq --step TBlist
+    MTBseq --step TBlist \
     --threads ${task.cpus} \
     --minbqual ${params.minbqual} \
     1>>.command.out \
