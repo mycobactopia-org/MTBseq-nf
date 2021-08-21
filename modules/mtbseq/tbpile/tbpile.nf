@@ -10,7 +10,7 @@ process TBPILE {
     stageInMode 'copy'
 
     input:
-    tuple val(genomeFileName), path("GATK_Bam/${genomeFileName}_${params.library_name}_*gatk.bam")
+    tuple val(genomeFileName), path("GATK_Bam")
     path(gatk_jar)
     env(USER)
 
