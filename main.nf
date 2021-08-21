@@ -34,7 +34,7 @@ include { TBGROUPS } from './modules/mtbseq/tbgroups/tbgroups.nf' addParams(para
 
 
 workflow test {
-    reads_ch = Channel.fromFilePairs("/scratch/*{R1,R2}*gz")
+    reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
     // reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
 
     // env_user_ch = Channel.value(params.user)
