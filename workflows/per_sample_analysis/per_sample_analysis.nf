@@ -20,4 +20,8 @@ workflow PER_SAMPLE_ANALYSIS {
         TBVARIANTS(TBLIST.out.position_table, params.gatk38_jar, params.user)
         TBSTATS(TBBWA.out.bam.join(TBLIST.out.position_table), params.gatk38_jar, params.user)
         TBSTRAINS(TBLIST.out.position_table, params.gatk38_jar, params.user)
+
+    emit:
+        position_variants = TBVARIANTS.out.tbjoin_input.collect()
+        position_tables = TBLIST.out.tbjoin_input.collect()
 }
