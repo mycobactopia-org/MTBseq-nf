@@ -9,7 +9,7 @@ include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample
 
 include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf"
 
-include { TBFULL_ANALYSIS } from "./workflows/tbfull_analysis/tbfull_analysis.nf"
+include { BATCH_ANALYSIS } from "./workflows/batch_analysis/batch_analysis.nf"
 
 workflow {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
