@@ -18,7 +18,7 @@ process TBAMEND {
 
     input:
     path("Joint/*")
-    path(samplesheet_tsv),
+    path(samplesheet_tsv)
     path(gatk_jar)
     env(USER)
 

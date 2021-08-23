@@ -11,7 +11,7 @@ process TBGROUPS {
 
     input:
     path("Amend/*")
-    path(samplesheet_tsv),
+    path(samplesheet_tsv)
     path(gatk_jar)
     env(USER)
 
