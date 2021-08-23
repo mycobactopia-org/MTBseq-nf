@@ -19,8 +19,7 @@ process TBFULL {
     env(USER)
 
     output:
-    val("${genomeFileName}")
-    path("${genomeFileName}")
+    tuple val("${genomeFileName}"), path("${genomeFileName}")
     path("${genomeFileName}/Called/*tab"), emit: variants_table
     path("${genomeFileName}/Position_Tables/*tab"), emit: position_table
 
@@ -41,6 +40,18 @@ process TBFULL {
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
+
+    mkdir ${genomeFileName}
+    mv Amend ${genomeFileName}
+    mv Bam ${genomeFileName}
+    mv Called ${genomeFileName}
+    mv Classification ${genomeFileName}
+    mv GATK_Bam ${genomeFileName}
+    mv Groups ${genomeFileName}
+    mv Joint ${genomeFileName}
+    mv Mpileup ${genomeFileName}
+    mv Position_Tables ${genomeFileName}
+    mv Statistics ${genomeFileName}
 
     """
 
