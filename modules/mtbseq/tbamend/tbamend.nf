@@ -17,13 +17,13 @@ process TBAMEND {
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    tuple path(samples_file), path("Joint/${params.project_name}_*_samples.tab")
+    tuple path(samples_file), path("Joint/*")
     path(gatk_jar)
     env(USER)
 
     output:
     path("Amend/*")
-    path  ("Amend/*_joint_*_samples_amended_*_phylo_*.tab"), emit: samples_amended
+    path("Amend/*_joint_*_samples_amended_*_phylo_*.tab"), emit: samples_amended
 
     script:
 

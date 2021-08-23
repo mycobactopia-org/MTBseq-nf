@@ -13,7 +13,7 @@ process TBVARIANTS {
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    tuple val(genomeFileName), path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab")
+    tuple val(genomeFileName), path("Position_Tables/*")
     path(gatk_jar)
     env(USER)
 
