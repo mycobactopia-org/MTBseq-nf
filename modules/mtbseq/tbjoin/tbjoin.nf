@@ -49,7 +49,7 @@ process TBJOIN {
     stub:
 
     """
-    echo "MTBseq --step TBjoin --samples ${samples_file} \
+    echo "MTBseq
         --project ${params.project_name} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \

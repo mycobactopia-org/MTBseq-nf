@@ -28,13 +28,13 @@ workflow COHORT_ANALYSIS {
         samples_tsv_file = TBBWA.out.genomes_names
                 .collect()
                 .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
-                .collectFile(name: 'samples.tsv', newLine: false, storeDir: "${params.outdir}")
+                .collectFile(name: params.samplesheet_name, newLine: false, storeDir: "${params.outdir}")
 
-        TBJOIN(samples_tsv_file,
-               TBVARIANTS.out.tbjoin_input.collect(),
-               TBLIST.out.tbjoin_input.collect(),
-               params.gatk38_jar,
-               params.user)
+    TBJOIN("${params.outdir}/${params.samplesheet_name}",
+           TBVARIANTS.out.tbjoin_input.collect(),
+           TBLIST.out.tbjoin_input.collect(),
+           params.gatk38_jar,
+           params.user)
 
         TBAMEND(TBJOIN.out.joint_samples, params.gatk38_jar, params.user)
         TBGROUPS(TBAMEND.out.samples_amended, params.gatk38_jar, params.user)
