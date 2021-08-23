@@ -33,7 +33,7 @@ process TBJOIN {
 
     MTBseq --step TBjoin \
     --threads ${task.cpus} \
-    --samples ${samples} \
+    --samples ${samples_file} \
     --project ${params.mtbseq_project_name} \
     --mincovf ${params.mincovf} \
     --mincovr ${params.mincovr} \
