@@ -5,6 +5,7 @@ include { TBJOIN } from '../../modules/mtbseq/tbjoin/tbjoin.nf' addParams (param
 include { TBAMEND } from '../../modules/mtbseq/tbamend/tbamend.nf' addParams (params.TBAMEND)
 include { TBGROUPS } from '../../modules/mtbseq/tbgroups/tbgroups.nf' addParams (params.TBGROUPS)
 
+//FIXME
 workflow BATCH_ANALYSIS {
 
     take:
