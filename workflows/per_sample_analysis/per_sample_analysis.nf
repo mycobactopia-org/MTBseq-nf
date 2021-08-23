@@ -22,6 +22,7 @@ workflow PER_SAMPLE_ANALYSIS {
         TBSTRAINS(TBLIST.out.position_table, params.gatk38_jar, params.user)
 
     emit:
+        genome_names = reads_ch.map{ it -> it[0]}
         position_variants = TBVARIANTS.out.tbjoin_input.collect()
         position_tables = TBLIST.out.tbjoin_input.collect()
 }

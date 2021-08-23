@@ -13,26 +13,18 @@ include { TBGROUPS } from '../../modules/mtbseq/tbgroups/tbgroups.nf' addParams 
 
 workflow COHORT_ANALYSIS {
     take:
-        reads_ch
+        genome_names
+        position_variants
+        position_tables
 
     main:
-
-        TBBWA(reads_ch, params.gatk38_jar, params.user)
-        TBREFINE(TBBWA.out.bam, params.gatk38_jar, params.user)
-        TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user)
-        TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user)
-        TBVARIANTS(TBLIST.out.position_table, params.gatk38_jar, params.user)
-        TBSTATS(TBBWA.out.bam.join(TBLIST.out.position_table), params.gatk38_jar, params.user)
-        TBSTRAINS(TBLIST.out.position_table, params.gatk38_jar, params.user)
-
-        samples_tsv_file = TBBWA.out.genomes_names
+        samples_tsv_file = genomes_names
                 .collect()
                 .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
                 .collectFile(name: params.samplesheet_name, newLine: false, storeDir: "${params.outdir}")
 
-    //TODO: Consume the emitted channels from per_sample_analysis workflow
-        TBJOIN(TBVARIANTS.out.tbjoin_input.collect(),
-               TBLIST.out.tbjoin_input.collect(),
+        TBJOIN(position_variants.collect(),
+               position_tables.collect(),
                samples_tsv_file,
                params.gatk38_jar,
                params.user)

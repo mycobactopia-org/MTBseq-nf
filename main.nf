@@ -5,7 +5,7 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-// include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample_analysis.nf"
+include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample_analysis.nf"
 
 include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf"
 
@@ -15,8 +15,7 @@ workflow {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
     // reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
 
-
-    COHORT_ANALYSIS()
+    COHORT_ANALYSIS(reads_ch)
 
 }
 
@@ -29,6 +28,9 @@ workflow test {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
     // reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
 
+    PER_SAMPLE_ANALYSIS(reads_ch)
 
-    COHORT_ANALYSIS(reads_ch)
+    COHORT_ANALYSIS(PER_SAMPLE_ANALYSIS.out.genome_names,
+                    PER_SAMPLE_ANALYSIS.out.position_variants,
+                    PER_SAMPLE_ANALYSIS.out.position_tables)
 }
