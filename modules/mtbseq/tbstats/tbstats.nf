@@ -10,6 +10,7 @@ process TBSTATS {
 
     input:
     tuple val(genomeFileName), path("Bam/*")
+    tuple val(genomeFileName), path("Position_Tables/*")
     path(gatk_jar)
     env(USER)
 
