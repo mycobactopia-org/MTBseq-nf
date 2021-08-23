@@ -15,7 +15,6 @@ process TBGROUPS {
     env(USER)
 
     output:
-
     path("Groups/${params.project_name}_joint_*_samples_amended_*_phylo_*.{matrix,groups}")
 
     script:

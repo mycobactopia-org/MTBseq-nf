@@ -23,7 +23,7 @@ process TBAMEND {
 
     output:
     path("Amend/*")
-    path("Amend/*_joint_*_samples_amended_*_phylo_*.tab"), emit: samples_amended
+    path("Amend/*_phylo_w*.tab"), emit: samples_amended
 
     script:
 
