@@ -12,6 +12,9 @@ include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf
 include { TBFULL_ANALYSIS } from "./workflows/tbfull_analysis/tbfull_analysis.nf"
 
 workflow {
+    reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
+    // reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
+
 
     COHORT_ANALYSIS()
 
@@ -21,22 +24,11 @@ workflow {
 // TESTING
 //=======================================
 
-include { TBFULL } from './modules/mtbseq/tbfull/tbfull.nf' addParams(params.TBFULL)
-
-include { TBJOIN } from './modules/mtbseq/tbjoin/tbjoin.nf' addParams(params.TBJOIN)
-include { TBAMEND } from './modules/mtbseq/tbamend/tbamend.nf' addParams(params.TBAMEND)
-include { TBGROUPS } from './modules/mtbseq/tbgroups/tbgroups.nf' addParams(params.TBGROUPS)
-
 
 workflow test {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
     // reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
 
 
-    TBFULL(reads_ch,
-           params.gatk38_jar,
-           params.user)
-
-    // PER_SAMPLE_ANALYSIS(reads_ch) // DONE
-
+    COHORT_ANALYSIS(reads_ch)
 }

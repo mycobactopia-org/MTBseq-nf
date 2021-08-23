@@ -12,27 +12,31 @@ include { TBAMEND } from '../../modules/mtbseq/tbamend/tbamend.nf' addParams (pa
 include { TBGROUPS } from '../../modules/mtbseq/tbgroups/tbgroups.nf' addParams (params.TBGROUPS)
 
 workflow COHORT_ANALYSIS {
-    reads_ch = Channel.fromFilePairs(params.reads)
+    take:
+        reads_ch
 
-    //------------
-    // TODO: Replace this section with the PER_SAMPLE_ANALYSIS
-    //------------
-    TBBWA(reads_ch, params.gatk38_jar, params.user)
-    TBREFINE(TBBWA.out.bam, params.gatk38_jar, params.user)
-    TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user)
-    TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user)
-    TBVARIANTS(TBLIST.out.position_table, params.gatk38_jar, params.user)
-    TBSTATS(TBBWA.out.bam.join(TBLIST.out.position_table), params.gatk38_jar, params.user)
-    TBSTRAINS(TBLIST.out.position_table, params.gatk38_jar, params.user)
-    //------------
+    main:
 
-    samples_tsv_file = TBBWA.out.genomes_names
-            .collect()
-            .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
-            .collectFile(name: 'samples.tsv', newLine: false, storeDir: "${params.outdir}")
+        TBBWA(reads_ch, params.gatk38_jar, params.user)
+        TBREFINE(TBBWA.out.bam, params.gatk38_jar, params.user)
+        TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user)
+        TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user)
+        TBVARIANTS(TBLIST.out.position_table, params.gatk38_jar, params.user)
+        TBSTATS(TBBWA.out.bam.join(TBLIST.out.position_table), params.gatk38_jar, params.user)
+        TBSTRAINS(TBLIST.out.position_table, params.gatk38_jar, params.user)
 
-    TBJOIN(samples_tsv_file,TBVARIANTS.out.tbjoin_input.collect(), TBLIST.out.tbjoin_input.collect(), params.gatk38_jar, params.user)
-    TBAMEND(TBJOIN.out.joint_samples, params.gatk38_jar, params.user)
-    TBGROUPS(TBAMEND.out.samples_amended, params.gatk38_jar, params.user)
+        samples_tsv_file = TBBWA.out.genomes_names
+                .collect()
+                .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
+                .collectFile(name: 'samples.tsv', newLine: false, storeDir: "${params.outdir}")
+
+        TBJOIN(samples_tsv_file,
+               TBVARIANTS.out.tbjoin_input.collect(),
+               TBLIST.out.tbjoin_input.collect(),
+               params.gatk38_jar,
+               params.user)
+
+        TBAMEND(TBJOIN.out.joint_samples, params.gatk38_jar, params.user)
+        TBGROUPS(TBAMEND.out.samples_amended, params.gatk38_jar, params.user)
 
 }
