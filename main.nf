@@ -21,13 +21,8 @@ workflow {
 // TESTING
 //=======================================
 
-include { TBBWA } from './modules/mtbseq/tbbwa/tbbwa.nf' addParams(params.TBBWA)
-include { TBREFINE } from './modules/mtbseq/tbrefine/tbrefine.nf' addParams(params.TBREFINE)
-include { TBPILE } from './modules/mtbseq/tbpile/tbpile.nf' addParams(params.TBPILE)
-include { TBLIST } from './modules/mtbseq/tblist/tblist.nf' addParams(params.TBLIST)
-include { TBVARIANTS } from './modules/mtbseq/tbvariants/tbvariants.nf' addParams(params.TBVARIANTS)
-include { TBSTATS } from './modules/mtbseq/tbstats/tbstats.nf' addParams(params.TBSTATS)
-include { TBSTRAINS } from './modules/mtbseq/tbstrains/tbstrains.nf' addParams(params.TBSTRAINS)
+include { TBFULL } from './modules/mtbseq/tbfull/tbfull.nf' addParams(params.TBFULL)
+
 include { TBJOIN } from './modules/mtbseq/tbjoin/tbjoin.nf' addParams(params.TBJOIN)
 include { TBAMEND } from './modules/mtbseq/tbamend/tbamend.nf' addParams(params.TBAMEND)
 include { TBGROUPS } from './modules/mtbseq/tbgroups/tbgroups.nf' addParams(params.TBGROUPS)
@@ -37,28 +32,9 @@ workflow test {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
     // reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
 
-    // env_user_ch = Channel.value(params.user)
-    //
 
-    // TBBWA(reads_ch,
-    //       params.gatk38_jar,
-    //       params.user)
+    TBFULL(reads_ch)
 
-    // TBREFINE(TBBWA.out.bam,
-    //          params.gatk38_jar,
-    //          params.user)
-
-    // TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user)
-
-    // TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user)
-    // TBVARIANTS(TBLIST.out.position_table, params.gatk38_jar, params.user)
-    // TBSTATS(
-    //     TBBWA.out.bam.join(TBLIST.out.position_table),
-    //     params.gatk38_jar,
-    //     params.user)
-    // TBSTRAINS(TBLIST.out.position_table, params.gatk38_jar, params.user)
-
-
-    PER_SAMPLE_ANALYSIS(reads_ch)
+    // PER_SAMPLE_ANALYSIS(reads_ch) // DONE
 
 }
