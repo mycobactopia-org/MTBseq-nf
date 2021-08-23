@@ -12,8 +12,8 @@ include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf
 // include { BATCH_ANALYSIS } from "./workflows/batch_analysis/batch_analysis.nf"
 
 workflow {
-    reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
-    // reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
+    reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
+    // reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
 
     COHORT_ANALYSIS(reads_ch)
 
@@ -26,7 +26,6 @@ workflow {
 
 workflow test {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
-    // reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
 
     PER_SAMPLE_ANALYSIS(reads_ch)
 
