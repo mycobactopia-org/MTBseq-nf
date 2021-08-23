@@ -10,13 +10,13 @@ process TBGROUPS {
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    path("Amend/${params.mtbseq_project_name}*_joint_*_samples_amended_*_phylo_*.tab")
+    path("Amend/${params.project_name}*_joint_*_samples_amended_*_phylo_*.tab")
     path(gatk_jar)
     env(USER)
 
     output:
 
-    path("Groups/${params.mtbseq_project_name}_joint_*_samples_amended_*_phylo_*.{matrix,groups}")
+    path("Groups/${params.project_name}_joint_*_samples_amended_*_phylo_*.{matrix,groups}")
 
     script:
     """

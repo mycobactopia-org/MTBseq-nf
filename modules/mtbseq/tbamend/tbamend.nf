@@ -17,7 +17,7 @@ process TBAMEND {
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    tuple path(samples_file), path("${params.mtbseq_project_name}_*_samples.tab")
+    tuple path(samples_file), path("${params.project_name}_*_samples.tab")
     path(gatk_jar)
     env(USER)
 

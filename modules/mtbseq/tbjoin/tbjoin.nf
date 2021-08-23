@@ -23,7 +23,7 @@ process TBJOIN {
 
     output:
     path ("Joint/${params.project_name}_joint*samples*.{tab,log}")
-    tuple path(samplesheet_tsv), path("Joint/${params.project_name}_joint*samples.tab"), emit: joint_samples
+    tuple path(samplesheet_tsv), path("Joint/${params.project_name}_joint*samples*.tab"), emit: joint_samples
 
     script:
     """
@@ -34,7 +34,7 @@ process TBJOIN {
     MTBseq --step TBjoin \
     --threads ${task.cpus} \
     --samples ${samplesheet_tsv} \
-    --project ${params.mtbseq_project_name} \
+    --project ${params.project_name} \
     --mincovf ${params.mincovf} \
     --mincovr ${params.mincovr} \
     --minphred ${params.minphred} \
@@ -59,8 +59,8 @@ process TBJOIN {
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Joint
-    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.tab
-    touch Joint/${params.mtbseq_project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.log
+    touch Joint/${params.project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.tab
+    touch Joint/${params.project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.log
 
     """
 
