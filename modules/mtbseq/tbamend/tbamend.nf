@@ -17,13 +17,13 @@ process TBAMEND {
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    tuple path(samples_file), path("Joint/*")
+    path("Joint/*")
+    path(samplesheet_tsv),
     path(gatk_jar)
     env(USER)
 
     output:
-    path("Amend/*"),  emit: samples_amended
-    // path("Amend/*_phylo_w*.tab"), emit: samples_amended
+    path("Amend/*"), emit: samples_amended
 
     script:
 
@@ -34,7 +34,7 @@ process TBAMEND {
 
     MTBseq --step TBamend \
     --threads ${task.cpus} \
-    --samples ${samples_file} \
+    --samples ${samplesheet_tsv} \
     --project ${params.project_name} \
     --mincovf ${params.mincovf} \
     --mincovr ${params.mincovr} \
@@ -51,7 +51,7 @@ process TBAMEND {
     """
     stub:
     """
-    echo "MTBseq --step TBamend --samples ${samples_file} \
+    echo "MTBseq --step TBamend --samples ${samplesheet_tsv} \
     --project ${params.project_name} \
     --mincovf ${params.mincovf} \
     --mincovr ${params.mincovr} \

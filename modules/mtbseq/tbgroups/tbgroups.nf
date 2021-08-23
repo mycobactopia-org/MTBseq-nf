@@ -11,10 +11,12 @@ process TBGROUPS {
 
     input:
     path("Amend/*")
+    path(samplesheet_tsv),
     path(gatk_jar)
     env(USER)
 
     output:
+    path("Groups/*")
     path("Groups/${params.project_name}_joint_*_samples_amended_*_phylo_*.{matrix,groups}")
 
     script:
@@ -25,6 +27,7 @@ process TBGROUPS {
 
     MTBseq --step TBgroups \
     --threads ${task.cpus} \
+    --samples ${samplesheet_tsv} \
     --project ${params.project_name} \
     1>>.command.out \
     2>>.command.err \

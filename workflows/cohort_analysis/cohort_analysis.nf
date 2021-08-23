@@ -31,13 +31,20 @@ workflow COHORT_ANALYSIS {
                 .collectFile(name: params.samplesheet_name, newLine: false, storeDir: "${params.outdir}")
 
     //TODO: Consume the emitted channels from per_sample_analysis workflow
-        TBJOIN(samples_tsv_file,
-               TBVARIANTS.out.tbjoin_input.collect(),
+        TBJOIN(TBVARIANTS.out.tbjoin_input.collect(),
                TBLIST.out.tbjoin_input.collect(),
+               samples_tsv_file,
                params.gatk38_jar,
                params.user)
 
-        TBAMEND(TBJOIN.out.joint_samples, params.gatk38_jar, params.user)
-        TBGROUPS(TBAMEND.out.samples_amended, params.gatk38_jar, params.user)
+        TBAMEND(TBJOIN.out.joint_samples,
+                samples_tsv_file,
+                params.gatk38_jar,
+                params.user)
+
+        TBGROUPS(TBAMEND.out.samples_amended,
+                 samples_tsv_file,
+                 params.gatk38_jar,
+                 params.user)
 
 }
