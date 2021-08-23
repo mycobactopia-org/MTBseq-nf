@@ -22,7 +22,7 @@ process TBJOIN {
     env(USER)
 
     output:
-    path ("Joint/${params.project_name}_joint*samples.{tab,log}")
+    path ("Joint/${params.project_name}_joint*samples*.{tab,log}")
     tuple path(samplesheet_tsv), path("Joint/${params.project_name}_joint*samples.tab"), emit: joint_samples
 
     script:
