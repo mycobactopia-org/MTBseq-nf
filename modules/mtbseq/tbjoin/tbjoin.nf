@@ -15,7 +15,7 @@ process TBJOIN {
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    path(samples_file)
+    path(samplesheet_tsv)
     path("Called/*")
     path("Position_Tables/*")
     path(gatk_jar)
@@ -23,7 +23,7 @@ process TBJOIN {
 
     output:
     path ("Joint/${params.project_name}_joint*samples.{tab,log}")
-    tuple path(samples_file), path("Joint/${params.project_name}_joint*samples.tab"), emit: joint_samples
+    tuple path(samplesheet_tsv), path("Joint/${params.project_name}_joint*samples.tab"), emit: joint_samples
 
     script:
     """
@@ -33,7 +33,7 @@ process TBJOIN {
 
     MTBseq --step TBjoin \
     --threads ${task.cpus} \
-    --samples ${samples_file} \
+    --samples ${samplesheet_tsv} \
     --project ${params.mtbseq_project_name} \
     --mincovf ${params.mincovf} \
     --mincovr ${params.mincovr} \
