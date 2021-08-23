@@ -33,7 +33,9 @@ workflow test {
     // reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
 
 
-    TBFULL(reads_ch)
+    TBFULL(reads_ch,
+           params.gatk38_jar,
+           params.user)
 
     // PER_SAMPLE_ANALYSIS(reads_ch) // DONE
 
