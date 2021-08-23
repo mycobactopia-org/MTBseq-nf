@@ -13,7 +13,7 @@ params.window = 12
 params.distance = 12
 
 process TBAMEND {
-    tag "${project_name}"
+    tag "${params.project_name}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
@@ -22,8 +22,8 @@ process TBAMEND {
     env(USER)
 
     output:
-    path("Amend/*")
-    path("Amend/*_phylo_w*.tab"), emit: samples_amended
+    path("Amend/*"),  emit: samples_amended
+    // path("Amend/*_phylo_w*.tab"), emit: samples_amended
 
     script:
 

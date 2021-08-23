@@ -6,7 +6,7 @@ params.should_publish = true
 params.project_name = "mtbseq"
 
 process TBGROUPS {
-    tag "${project_name}"
+    tag "${params.project_name}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
