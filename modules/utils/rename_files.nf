@@ -16,7 +16,7 @@ process RENAME_FILES {
 
     script:
     """
-    echo "Renaming files as per MTBseq requirements."
+    echo "Renaming ${reads} files as per MTBseq requirements."
 
     cp ${reads[0]} ${genomeFileName}_${params.library_name}_R1.fastq.gz
     cp ${reads[1]} ${genomeFileName}_${params.library_name}_R2.fastq.gz
