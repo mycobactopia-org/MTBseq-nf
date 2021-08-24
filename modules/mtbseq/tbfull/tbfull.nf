@@ -20,8 +20,9 @@ process TBFULL {
 
     output:
     tuple val("${genomeFileName}"), path("${genomeFileName}")
-    path("${genomeFileName}/Called/*tab"), emit: variants_table
-    path("${genomeFileName}/Position_Tables/*tab"), emit: position_table
+    val("${genomeFileName}"), emit: genome_names
+    path("${genomeFileName}/Called/${genomeFileName}_${params.library_name}*gatk_position_variants*.tab"), emit: position_variants
+    path("${genomeFileName}/Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: position_tables
 
     script:
 

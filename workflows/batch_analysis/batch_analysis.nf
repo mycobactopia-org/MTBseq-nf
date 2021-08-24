@@ -5,7 +5,6 @@ include { TBJOIN } from '../../modules/mtbseq/tbjoin/tbjoin.nf' addParams (param
 include { TBAMEND } from '../../modules/mtbseq/tbamend/tbamend.nf' addParams (params.TBAMEND)
 include { TBGROUPS } from '../../modules/mtbseq/tbgroups/tbgroups.nf' addParams (params.TBGROUPS)
 
-//FIXME
 workflow BATCH_ANALYSIS {
 
     take:
@@ -14,13 +13,27 @@ workflow BATCH_ANALYSIS {
     main:
         TBFULL(reads_ch, params.gatk38_jar, params.user)
 
-        samples_tsv_file = TBFULL.out.genomes_names
+        samples_tsv_file = genome_names
                 .collect()
                 .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
-                .collectFile(name: 'samples.tsv', newLine: false, storeDir: "${params.outdir}")
+                .collectFile(name: params.samplesheet_name, newLine: false, storeDir: "${params.outdir}")
 
-        TBJOIN(samples_tsv_file,TBFULL.out.variants_table.collect(), TBLIST.out.position_table.collect(), params.gatk38_jar, params.user)
-        TBAMEND(TBJOIN.out.joint_samples, params.gatk38_jar, params.user)
-        TBGROUPS(TBAMEND.out.samples_amended, params.gatk38_jar, params.user)
+        TBJOIN(position_variants.collect(),
+               position_tables.collect(),
+               samples_tsv_file,
+               params.gatk38_jar,
+               params.user)
+
+        TBAMEND(TBJOIN.out.joint_samples,
+                samples_tsv_file,
+                params.gatk38_jar,
+                params.user)
+
+        TBGROUPS(TBAMEND.out.samples_amended,
+                 samples_tsv_file,
+                 params.gatk38_jar,
+                 params.user)
+
+
 
 }

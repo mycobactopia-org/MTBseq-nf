@@ -6,30 +6,28 @@ nextflow.enable.dsl = 2
 
 
 include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample_analysis.nf"
-
 include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf"
-
-// include { BATCH_ANALYSIS } from "./workflows/batch_analysis/batch_analysis.nf"
+include { BATCH_ANALYSIS } from "./workflows/batch_analysis/batch_analysis.nf"
 
 workflow {
     reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
     // reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
 
-    COHORT_ANALYSIS(reads_ch)
 
+    //NOTE: Parallel Analysis
+    PER_SAMPLE_ANALYSIS(reads_ch)
+    COHORT_ANALYSIS(PER_SAMPLE_ANALYSIS.out.genome_names,
+                    PER_SAMPLE_ANALYSIS.out.position_variants,
+                    PER_SAMPLE_ANALYSIS.out.position_tables)
 }
 
 //=======================================
 // TESTING
 //=======================================
 
-
 workflow test {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
 
-    PER_SAMPLE_ANALYSIS(reads_ch)
+    BATCH_ANALYSIS(reads_ch)
 
-    COHORT_ANALYSIS(PER_SAMPLE_ANALYSIS.out.genome_names,
-                    PER_SAMPLE_ANALYSIS.out.position_variants,
-                    PER_SAMPLE_ANALYSIS.out.position_tables)
 }
