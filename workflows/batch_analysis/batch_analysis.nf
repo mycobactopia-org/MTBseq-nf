@@ -11,15 +11,17 @@ workflow BATCH_ANALYSIS {
         reads_ch
 
     main:
-        TBFULL(reads_ch, params.gatk38_jar, params.user)
+        TBFULL(reads_ch,
+               params.gatk38_jar,
+               params.user)
 
-        samples_tsv_file = genome_names
+        samples_tsv_file = TBFULL.out.genome_names
                 .collect()
                 .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
                 .collectFile(name: params.samplesheet_name, newLine: false, storeDir: "${params.outdir}")
 
-        TBJOIN(position_variants.collect(),
-               position_tables.collect(),
+        TBJOIN(TBFULL.out.position_variants.collect(),
+               TBFULL.out.position_tables.collect(),
                samples_tsv_file,
                params.gatk38_jar,
                params.user)
