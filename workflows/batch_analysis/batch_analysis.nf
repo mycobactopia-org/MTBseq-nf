@@ -1,5 +1,6 @@
 nextflow.enable.dsl = 2
 
+include { RENAME_FILES } from '../../modules/utils/rename_files.nf' addParams (params.RENAME_FILES)
 include { TBFULL } from '../../modules/mtbseq/tbfull/tbfull.nf' addParams (params.TBFULL)
 include { TBJOIN } from '../../modules/mtbseq/tbjoin/tbjoin.nf' addParams (params.TBJOIN)
 include { TBAMEND } from '../../modules/mtbseq/tbamend/tbamend.nf' addParams (params.TBAMEND)
@@ -11,15 +12,18 @@ workflow BATCH_ANALYSIS {
         reads_ch
 
     main:
-        TBFULL(reads_ch,
-               params.gatk38_jar,
-               params.user)
 
         samples_tsv_file = reads_ch
                 .map {it -> it[0]}
                 .collect()
                 .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
                 .collectFile(name: params.samplesheet_name, newLine: false, storeDir: "${params.outdir}")
+
+        RENAME_FILES(reads_ch)
+
+        TBFULL(RENAME_FILES.out.collect(),
+               params.gatk38_jar,
+               params.user)
 
         TBJOIN(TBFULL.out.position_variants.collect(),
                TBFULL.out.position_tables.collect(),

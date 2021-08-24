@@ -14,7 +14,7 @@ process TBFULL {
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
+    path("*")
     path(gatk_jar)
     env(USER)
 
