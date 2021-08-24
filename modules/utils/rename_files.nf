@@ -9,13 +9,16 @@ process RENAME_FILES {
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
+    tuple val(genomeFileName), path(reads)
 
     output:
-    path("*fastq.gz")
+    path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
 
     script:
     """
-    echo "Renaming files as per MTBseq requirements using Nextflow file staging techniques"
+    echo "Renaming files as per MTBseq requirements."
+
+    cp ${reads[0]} ${genomeFileName}_${params.library_name}_R1.fastq.gz
+    cp ${reads[1]} ${genomeFileName}_${params.library_name}_R2.fastq.gz
     """
 }
