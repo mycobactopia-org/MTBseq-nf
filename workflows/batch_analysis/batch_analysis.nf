@@ -15,7 +15,8 @@ workflow BATCH_ANALYSIS {
                params.gatk38_jar,
                params.user)
 
-        samples_tsv_file = TBFULL.out.genome_names
+        samples_tsv_file = reads_ch
+                .map {it -> it[0]}
                 .collect()
                 .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
                 .collectFile(name: params.samplesheet_name, newLine: false, storeDir: "${params.outdir}")
