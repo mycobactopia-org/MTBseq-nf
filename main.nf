@@ -30,4 +30,9 @@ workflow test {
 
     BATCH_ANALYSIS(reads_ch)
 
+    PER_SAMPLE_ANALYSIS(reads_ch)
+
+    COHORT_ANALYSIS(PER_SAMPLE_ANALYSIS.out.genome_names,
+                    PER_SAMPLE_ANALYSIS.out.position_variants,
+                    PER_SAMPLE_ANALYSIS.out.position_tables)
 }
