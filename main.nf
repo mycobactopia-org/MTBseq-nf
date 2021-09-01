@@ -28,7 +28,7 @@ workflow {
 workflow test {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
 
-    BATCH_ANALYSIS(reads_ch)
+    // BATCH_ANALYSIS(reads_ch)
 
     PER_SAMPLE_ANALYSIS(reads_ch)
 
