@@ -6,8 +6,6 @@ include { TBJOIN } from '../../modules/mtbseq/tbjoin/tbjoin.nf' addParams (param
 include { TBAMEND } from '../../modules/mtbseq/tbamend/tbamend.nf' addParams (params.TBAMEND)
 include { TBGROUPS } from '../../modules/mtbseq/tbgroups/tbgroups.nf' addParams (params.TBGROUPS)
 
-//TODO Test this analysis again on a machine with higher configs.
-//NOTE The Parallel_analysis completes with the same machine - perhaps better memory footprint.
 workflow BATCH_ANALYSIS {
 
     take:
@@ -18,11 +16,13 @@ workflow BATCH_ANALYSIS {
         samples_tsv_file = reads_ch
                 .map {it -> it[0]}
                 .collect()
-                .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
+                .flatten()
+                .map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
                 .collectFile(name: params.samplesheet_name, newLine: false, storeDir: "${params.outdir}")
 
         RENAME_FILES(reads_ch)
 
+    //NOTE: Requires atleast 5_CPU/16_MEM
         TBFULL(RENAME_FILES.out.collect(),
                params.gatk38_jar,
                params.user)
