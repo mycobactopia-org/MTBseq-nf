@@ -5,11 +5,12 @@ params.save_mode = 'copy'
 params.should_publish = true
 
 process TBSTATS {
-    tag "${genomeFileName}"
+    tag "${params.project_name}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    tuple val(genomeFileName), path("Bam/*"), path("Position_Tables/*")
+    path("Bam/*")
+    path("Position_Tables/*")
     path(gatk_jar)
     env(USER)
 
