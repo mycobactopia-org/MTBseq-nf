@@ -18,6 +18,7 @@ workflow PER_SAMPLE_ANALYSIS {
         TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user)
         TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user)
         TBVARIANTS(TBLIST.out.position_table, params.gatk38_jar, params.user)
+    // TODO fix the shape of tbbwa and tblist output collection
         TBSTATS(TBBWA.out.bam.collect(),
                 TBLIST.out.position_table.collect(),
                 params.gatk38_jar,
