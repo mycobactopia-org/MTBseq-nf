@@ -30,6 +30,8 @@ workflow test {
 
     reads_ch
         .map { it -> it[1] }
+        .collect()
+        .flatten()
         .view()
 
     // BATCH_ANALYSIS(reads_ch)
