@@ -19,7 +19,7 @@ process TBSTRAINS {
     env(USER)
 
     output:
-    path("${genomeFileName}/Classification/Strain_Classification.tab")
+    path("Classification/Strain_Classification.tab")
 
     script:
 
