@@ -19,19 +19,22 @@ workflow PER_SAMPLE_ANALYSIS {
         TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user)
         TBVARIANTS(TBLIST.out.position_table, params.gatk38_jar, params.user)
         TBSTATS(TBBWA.out.bam
+                         .collect()
                          .map{it -> it[1]}
-                         .flatten().collect(),
+                         .flatten(),
 
                 TBLIST.out.position_table
+                          .collect()
                           .map{it -> it[1]}
-                          .flatten().collect(),
+                          .flatten(),
 
                 params.gatk38_jar,
                 params.user)
 
         TBSTRAINS(TBLIST.out.position_table
+                            .collect()
                             .map{it -> it[1]}
-                            .flatten().collect(),
+                            .flatten(),
                   params.gatk38_jar,
                   params.user)
 
