@@ -15,7 +15,7 @@ process TBSTATS {
     env(USER)
 
     output:
-    path("${genomeFileName}/Statistics/Mapping_and_Variant_Statistics.tab")
+    path("Statistics/Mapping_and_Variant_Statistics.tab")
 
     script:
 
@@ -30,9 +30,6 @@ process TBSTATS {
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
-
-    mkdir ${genomeFileName}
-    mv  Statistics ./${genomeFileName}/
     """
 
     stub:
