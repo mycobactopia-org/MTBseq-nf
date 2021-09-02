@@ -18,18 +18,29 @@ workflow PER_SAMPLE_ANALYSIS {
         TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user)
         TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user)
         TBVARIANTS(TBLIST.out.position_table, params.gatk38_jar, params.user)
-        TBSTATS(TBBWA.out.bam
+
+                TBBWA.out.bam
                          .map{it -> it[1]}
-                         .collect().flatten(),
+        .collect().flatten().view()
 
-                TBLIST.out.position_table
-                          .map{it -> it[1]}
-                          .collect().flatten(),
+                // TBLIST.out.position_table
+                //           .map{it -> it[1]}
+                //           .collect().flatten()
 
-                params.gatk38_jar,
-                params.user)
 
-        TBSTRAINS(TBLIST.out.position_table, params.gatk38_jar, params.user)
+
+        // TBSTATS(TBBWA.out.bam
+        //                  .map{it -> it[1]}
+        //                  .collect().flatten(),
+
+        //         TBLIST.out.position_table
+        //                   .map{it -> it[1]}
+        //                   .collect().flatten(),
+
+        //         params.gatk38_jar,
+        //         params.user)
+
+        // TBSTRAINS(TBLIST.out.position_table, params.gatk38_jar, params.user)
 
     emit:
         genome_names = reads_ch.map{ it -> it[0]}
