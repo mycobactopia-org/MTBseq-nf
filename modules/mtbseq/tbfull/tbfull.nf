@@ -21,6 +21,9 @@ process TBFULL {
     output:
     path("Called/*_${params.library_name}*gatk_position_variants*.tab"), emit: position_variants
     path("Position_Tables/*_${params.library_name}*.gatk_position_table.tab"), emit: position_tables
+    path("Classification")
+    path("Statistics")
+
 
     script:
 

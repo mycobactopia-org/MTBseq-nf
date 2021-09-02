@@ -5,20 +5,23 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample_analysis.nf"
-include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf"
+include { PARALLEL_ANALYSIS } from "./workflows/parallel_analysis/parallel_analysis.nf"
 include { BATCH_ANALYSIS } from "./workflows/batch_analysis/batch_analysis.nf"
 
 workflow {
-    reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.apiKey)
-    // reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
 
+    if ( params.run_type == "sra" ) {
+        reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.ncbi_api_key)
+    } else if ( params.run_type == "local" ) {
+        reads_ch = Channel.fromFilePairs(params.reads)
+    }
 
-    //NOTE: Parallel Analysis
-    PER_SAMPLE_ANALYSIS(reads_ch)
-    COHORT_ANALYSIS(PER_SAMPLE_ANALYSIS.out.genome_names,
-                    PER_SAMPLE_ANALYSIS.out.position_variants,
-                    PER_SAMPLE_ANALYSIS.out.position_tables)
+    if (params.analysis_mode == "parallel") {
+        PARALLEL_ANALYSIS(reads_ch)
+    } else if (params.analysis_mode == "batch")  {
+        BATCH_ANALYSIS(reads_ch)
+    }
+
 }
 
 //=======================================
@@ -28,11 +31,10 @@ workflow {
 workflow test {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
 
-    BATCH_ANALYSIS(reads_ch)
+    if (params.analysis_mode == "parallel") {
+        PARALLEL_ANALYSIS(reads_ch)
+    } else if (params.analysis_mode == "batch")  {
+        BATCH_ANALYSIS(reads_ch)
+    }
 
-    // PER_SAMPLE_ANALYSIS(reads_ch)
-
-    // COHORT_ANALYSIS(PER_SAMPLE_ANALYSIS.out.genome_names,
-    //                 PER_SAMPLE_ANALYSIS.out.position_variants,
-    //                 PER_SAMPLE_ANALYSIS.out.position_tables)
 }
