@@ -10,11 +10,11 @@ params.minfreq = 75
 
 
 process TBSTRAINS {
-    tag "${genomeFileName}"
+    tag "${params.project_name}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    tuple val(genomeFileName), path("Position_Tables/*")
+    path("Position_Tables/*")
     path(gatk_jar)
     env(USER)
 
@@ -40,8 +40,6 @@ process TBSTRAINS {
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
 
-    mkdir ${genomeFileName}
-    mv  Classification ./${genomeFileName}/
     """
 
     stub:
