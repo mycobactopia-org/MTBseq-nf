@@ -19,6 +19,8 @@ workflow PER_SAMPLE_ANALYSIS {
         TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user)
         TBVARIANTS(TBLIST.out.position_table_tuple, params.gatk38_jar, params.user)
 
+    // NOTE: These are part of per-sample-analysis but they need the output from all other processes
+    // to compute the metrics for the cohort.
         TBSTATS(TBBWA.out.bam.collect(),
                 TBLIST.out.position_table.collect(),
                 params.gatk38_jar,
