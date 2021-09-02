@@ -18,8 +18,8 @@ process TBVARIANTS {
     env(USER)
 
     output:
-    path("${genomeFileName}/Called/${genomeFileName}_${params.library_name}*gatk_position_{uncovered,variants}*.tab")
-    path("${genomeFileName}/Called/${genomeFileName}_${params.library_name}*gatk_position_variants*.tab"), emit: tbjoin_input
+    path("Called/${genomeFileName}_${params.library_name}*gatk_position_{uncovered,variants}*.tab")
+    path("Called/${genomeFileName}_${params.library_name}*gatk_position_variants*.tab"), emit: tbjoin_input
 
     script:
 
@@ -39,8 +39,6 @@ process TBVARIANTS {
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
-    mkdir ${genomeFileName}
-    mv  Called ./${genomeFileName}
     """
 
     stub:

@@ -14,23 +14,17 @@ workflow PER_SAMPLE_ANALYSIS {
 
     main:
         TBBWA(reads_ch, params.gatk38_jar, params.user)
-        TBREFINE(TBBWA.out.bam, params.gatk38_jar, params.user)
+        TBREFINE(TBBWA.out.bam_tuple, params.gatk38_jar, params.user)
         TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user)
         TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user)
-        TBVARIANTS(TBLIST.out.position_table, params.gatk38_jar, params.user)
-        TBSTATS(TBBWA.out.bam
-                .collect().map{it -> it[1]}.flatten(),
+        TBVARIANTS(TBLIST.out.position_table_tuple, params.gatk38_jar, params.user)
 
-                TBLIST.out.position_table
-                .collect().map{it -> it[1]}.flatten(),
-
+        TBSTATS(TBBWA.out.bam.collect(),
+                TBLIST.out.position_table.collect(),
                 params.gatk38_jar,
                 params.user)
 
-        TBSTRAINS(TBLIST.out.position_table
-                            .collect()
-                            .map{it -> it[1]}
-                            .flatten(),
+        TBSTRAINS(TBLIST.out.position_table.collect(),
                   params.gatk38_jar,
                   params.user)
 

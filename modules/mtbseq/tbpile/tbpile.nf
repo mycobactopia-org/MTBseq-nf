@@ -15,8 +15,8 @@ process TBPILE {
     env(USER)
 
     output:
-    path("${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}*.gatk.{mpileup,mpileuplog}")
-    tuple val(genomeFileName), path("${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}*.gatk.mpileup"), emit: mpileup
+    path("Mpileup/${genomeFileName}_${params.library_name}*.gatk.{mpileup,mpileuplog}")
+    tuple val(genomeFileName), path("Mpileup/${genomeFileName}_${params.library_name}*.gatk.mpileup"), emit: mpileup
 
     script:
 
@@ -32,8 +32,6 @@ process TBPILE {
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
-    mkdir ${genomeFileName}
-    mv  Mpileup ./${genomeFileName}/
     """
 
     stub:

@@ -14,7 +14,7 @@ process TBREFINE {
     env(USER)
 
     output:
-    tuple val(genomeFileName), path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*gatk.{bam,bai,bamlog,grp,intervals}"), emit: gatk_bam
+    tuple val(genomeFileName), path("GATK_Bam/${genomeFileName}_${params.library_name}*gatk.{bam,bai,bamlog,grp,intervals}"), emit: gatk_bam
 
     script:
 
@@ -30,8 +30,6 @@ process TBREFINE {
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
-    mkdir ${genomeFileName}
-    mv  GATK_Bam ./${genomeFileName}/
     """
 
     stub:

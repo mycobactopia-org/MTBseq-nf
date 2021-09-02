@@ -15,8 +15,9 @@ process TBLIST {
     env(USER)
 
     output:
-    path("${genomeFileName}/Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: tbjoin_input
-    tuple val(genomeFileName), path("${genomeFileName}/Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: position_table
+    path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: tbjoin_input
+    tuple val(genomeFileName), path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: position_table_tuple
+    path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: position_table
 
     script:
 
@@ -34,8 +35,7 @@ process TBLIST {
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
 
-    mkdir ${genomeFileName}
-    mv  Position_Tables ./${genomeFileName}/
+
     """
 
     stub:

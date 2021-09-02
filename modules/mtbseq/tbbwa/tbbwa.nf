@@ -14,8 +14,9 @@ process TBBWA {
     env(USER)
 
     output:
-    path("${genomeFileName}/Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
-    tuple val(genomeFileName), path("${genomeFileName}/Bam/${genomeFileName}_${params.library_name}*.bam"), emit: bam
+    path("Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
+    tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.bam"), emit: bam_tuple
+    path("Bam/${genomeFileName}_${params.library_name}*.bam"), emit: bam
 
     script:
 
@@ -32,8 +33,6 @@ process TBBWA {
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
 
-    mkdir ${genomeFileName}
-    mv  Bam ./${genomeFileName}/
     """
 
     stub:
