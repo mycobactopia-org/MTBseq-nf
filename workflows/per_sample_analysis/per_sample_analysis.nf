@@ -21,12 +21,14 @@ workflow PER_SAMPLE_ANALYSIS {
         TBSTATS(TBBWA.out.bam
                          .collect()
                          .map{it -> it[1]}
-                         .flatten(),
+                         .flatten()
+                         .collect(),
 
                 TBLIST.out.position_table
                           .collect()
                           .map{it -> it[1]}
-                          .flatten(),
+                          .flatten()
+                          .collect(),
 
                 params.gatk38_jar,
                 params.user)
