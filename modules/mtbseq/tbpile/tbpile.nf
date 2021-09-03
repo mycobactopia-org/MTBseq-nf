@@ -1,36 +1,37 @@
 nextflow.enable.dsl = 2
-// NOTE: To properly setup the gatk inside the docker image
-// - Download the gatk-3.8.0 tar file from here https://console.cloud.google.com/storage/browser/gatk-software/package-archive/gatk;tab=objects?prefix=&forceOnObjectsSortingFiltering=false
-// - tar -xvf GATK_TAR_FILE
-// - gatk-register gatk_folder/gatk_jar
-
 
 params.results_dir = "${params.outdir}/tbpile"
 params.save_mode = 'copy'
 params.should_publish = true
 
-// TODO: Add the tbjoin workflow
 process TBPILE {
     tag "${genomeFileName}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
+    stageInMode 'copy'
 
     input:
-    tuple val(genomeFileName), path("GATK_Bam/${genomeFileName}_${params.library_name}_*gatk.bam")
+    tuple val(genomeFileName), path("GATK_Bam/*")
     path(gatk_jar)
-    env USER
+    env(USER)
 
     output:
-    path("${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}*.gatk.{mpileup,mpileuplog}")
-    tuple val(genomeFileName), path("${genomeFileName}/Mpileup/${genomeFileName}_${params.library_name}*.gatk.mpileup"), emit: mpileup
+    path("Mpileup/${genomeFileName}_${params.library_name}*.gatk.{mpileup,mpileuplog}")
+    tuple val(genomeFileName), path("Mpileup/${genomeFileName}_${params.library_name}*.gatk.mpileup"), emit: mpileup
+
     script:
 
     """
 
     gatk-register ${gatk_jar}
 
-    mkdir ${genomeFileName}
-    MTBseq --step TBpile --threads ${task.cpus} 2>${task.process}_${genomeFileName}_err.log 1>${task.process}_${genomeFileName}_out.log
-    mv  Mpileup ./${genomeFileName}/
+    mkdir Mpileup
+
+    MTBseq --step TBpile \
+    --threads ${task.cpus} \
+    1>>.command.out \
+    2>>.command.err \
+    || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
+
     """
 
     stub:

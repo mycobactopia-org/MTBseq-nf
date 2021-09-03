@@ -11,12 +11,12 @@ process TBBWA {
     input:
     tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
     path(gatk_jar)
-    env USER
+    env(USER)
 
     output:
-    path("${genomeFileName}/Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
-    tuple val(genomeFileName), path("${genomeFileName}/Bam/${genomeFileName}_${params.library_name}*.bam"), emit: bam
-    val(genomeFileName), emit:genomes_names
+    path("Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
+    tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.bam"), emit: bam_tuple
+    path("Bam/${genomeFileName}_${params.library_name}*.bam"), emit: bam
 
     script:
 
@@ -24,9 +24,15 @@ process TBBWA {
 
     gatk-register ${gatk_jar}
 
-    mkdir ${genomeFileName}
-    MTBseq --step TBbwa --threads ${task.cpus} 2>${task.process}_${genomeFileName}_err.log 1>${task.process}_${genomeFileName}_out.log
-    mv  Bam ./${genomeFileName}/
+    mkdir Bam
+
+    MTBseq --step TBbwa \
+    --threads ${task.cpus} \
+    1>>.command.out \
+    2>>.command.err \
+    || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
+
+
     """
 
     stub:
@@ -35,6 +41,9 @@ process TBBWA {
     echo "MTBseq --step TBbwa --threads ${task.cpus}"
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
+    touch ${task.process}_${genomeFileName}_out.log
+    touch ${task.process}_${genomeFileName}_err.log
 
     mkdir ${genomeFileName}
     mkdir ${genomeFileName}/Bam

@@ -5,39 +5,36 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-include { MTBSEQ } from "./modules/mtbseq/mtbseq.nf"
+include { PARALLEL_ANALYSIS } from "./workflows/parallel_analysis/parallel_analysis.nf"
+include { BATCH_ANALYSIS } from "./workflows/batch_analysis/batch_analysis.nf"
 
-include { TBBWA } from './modules/mtbseq/tbbwa/tbbwa.nf' addParams(params.TBBWA)
-include { TBREFINE } from './modules/mtbseq/tbrefine/tbrefine.nf' addParams(params.TBREFINE)
-include { TBPILE } from './modules/mtbseq/tbpile/tbpile.nf' addParams(params.TBPILE)
-include { TBLIST } from './modules/mtbseq/tblist/tblist.nf' addParams(params.TBLIST)
-include { TBVARIANTS } from './modules/mtbseq/tbvariants/tbvariants.nf' addParams(params.TBVARIANTS)
-include { TBSTATS } from './modules/mtbseq/tbstats/tbstats.nf' addParams(params.TBSTATS)
-include { TBSTRAINS } from './modules/mtbseq/tbstrains/tbstrains.nf' addParams(params.TBSTRAINS)
-include { TBJOIN } from './modules/mtbseq/tbjoin/tbjoin.nf' addParams(params.TBJOIN)
-include { TBAMEND } from './modules/mtbseq/tbamend/tbamend.nf' addParams(params.TBAMEND)
-include { TBGROUPS } from './modules/mtbseq/tbgroups/tbgroups.nf' addParams(params.TBGROUPS)
-include { TBFULL }  from './modules/mtbseq/tbfull/tbfull.nf' addParams(params.TBFULL)
+workflow {
 
-workflow mtbseq {
-    reads_ch = Channel.fromFilePairs(params.reads)
-    gatk38_jar_ch = Channel.value(params.gatk38_jar)
-    env_user_ch = Channel.value("root")
+    if ( params.run_type == "sra" ) {
+        reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.ncbi_api_key)
+    } else if ( params.run_type == "local" ) {
+        reads_ch = Channel.fromFilePairs(params.reads)
+    }
 
-    TRIMMOMATIC(reads_ch)
-    MTBSEQ(TRIMMOMATIC.out,
-            gatk38_jar_ch,
-            env_user_ch)
+    if (params.analysis_mode == "parallel") {
+        PARALLEL_ANALYSIS(reads_ch)
+    } else if (params.analysis_mode == "batch")  {
+        BATCH_ANALYSIS(reads_ch)
+    }
 
 }
 
-include { PER_SAMPLE_ANALYSIS } from "./workflows/per_sample_analysis/per_sample_analysis.nf"
+//=======================================
+// TESTING
+//=======================================
 
-include { COHORT_ANALYSIS } from "./workflows/cohort_analysis/cohort_analysis.nf"
+workflow test {
+    reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
 
-include { TBFULL_ANALYSIS } from "./workflows/tbfull_analysis/tbfull_analysis.nf"
-workflow {
-
-    COHORT_ANALYSIS()
+    if (params.analysis_mode == "parallel") {
+        PARALLEL_ANALYSIS(reads_ch)
+    } else if (params.analysis_mode == "batch")  {
+        BATCH_ANALYSIS(reads_ch)
+    }
 
 }

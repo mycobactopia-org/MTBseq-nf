@@ -1,27 +1,20 @@
 nextflow.enable.dsl = 2
-// NOTE: To properly setup the gatk inside the docker image
-// - Download the gatk-3.8.0 tar file from here https://console.cloud.google.com/storage/browser/gatk-software/package-archive/gatk;tab=objects?prefix=&forceOnObjectsSortingFiltering=false
-// - tar -xvf GATK_TAR_FILE
-// - gatk-register gatk_folder/gatk_jar
-
 
 params.results_dir = "${params.outdir}/tbrefine"
 params.save_mode = 'copy'
 params.should_publish = true
 
-// TODO: Add the tbjoin workflow
 process TBREFINE {
     tag "${genomeFileName}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.bam")
+    tuple val(genomeFileName), path("Bam/")
     path(gatk_jar)
-    env USER
+    env(USER)
 
     output:
-    path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*.gatk.{bam,bai,bamlog,grp,intervals}")
-    tuple val(genomeFileName), path("${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}*gatk.bam"), emit: gatk_bam
+    tuple val(genomeFileName), path("GATK_Bam/${genomeFileName}_${params.library_name}*gatk.{bam,bai,bamlog,grp,intervals}"), emit: gatk_bam
 
     script:
 
@@ -29,9 +22,14 @@ process TBREFINE {
 
     gatk-register ${gatk_jar}
 
-    mkdir ${genomeFileName}
-    MTBseq --step TBrefine --threads ${task.cpus} 2>${task.process}_${genomeFileName}_err.log 1>${task.process}_${genomeFileName}_out.log
-    mv  GATK_Bam ./${genomeFileName}/
+    mkdir GATK_Bam
+
+    MTBseq --step TBrefine \
+    --threads ${task.cpus} \
+    1>>.command.out \
+    2>>.command.err \
+    || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
+
     """
 
     stub:
