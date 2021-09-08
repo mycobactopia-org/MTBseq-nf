@@ -46,8 +46,7 @@
             "fa_icon": "fas fa-dna",
             "properties": {
                 "mtb_reference_fasta": {
-                    "type": "string",
-                    "hidden": true
+                    "type": "string"
                 }
             }
         },
@@ -59,27 +58,22 @@
             "properties": {
                 "project_name": {
                     "type": "string",
-                    "default": "prj",
-                    "hidden": true
+                    "default": "prj"
                 },
                 "analysis_mode": {
                     "type": "string",
-                    "default": "parallel",
-                    "hidden": true
+                    "default": "parallel"
                 },
                 "samplesheet_name": {
                     "type": "string",
-                    "default": "samplesheet.tsv",
-                    "hidden": true
+                    "default": "samplesheet.tsv"
                 },
                 "ncbi_api_key": {
-                    "type": "string",
-                    "hidden": true
+                    "type": "string"
                 },
                 "user": {
                     "type": "string",
-                    "default": "alice",
-                    "hidden": true
+                    "default": "alice"
                 }
             }
         }
