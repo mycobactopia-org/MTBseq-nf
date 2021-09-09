@@ -1,10 +1,8 @@
 # Mtbseq-nf
 
-**NOTE**: This still a work in progress, the code is functional however the [usage](#Usage) doc needs some love!
+**NOTE: This still a work in progress, the code is functional however the [usage](#Usage) doc needs some love!**
 
-Project with aim to create a nextflow wrapper for mtbseq workflow.
-
-Heavily based on [ngs-fzb/MTBseq_source](https://github.com/ngs-fzb/MTBseq_source)
+[MTBseq](https://github.com/ngs-fzb/MTBseq_source) made simple and easy using Nextflow. 
 
 # Benefits of the Nextflow wrapper
 
