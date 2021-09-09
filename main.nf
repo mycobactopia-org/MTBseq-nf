@@ -10,15 +10,15 @@ include { BATCH_ANALYSIS } from "./workflows/batch_analysis/batch_analysis.nf"
 
 workflow {
 
-    if ( params.run_type == "sra" ) {
+    if( params.run_type == "sra" ) {
         reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.ncbi_api_key)
-    } else if ( params.run_type == "local" ) {
+    } else if( params.run_type == "local" ) {
         reads_ch = Channel.fromFilePairs(params.reads)
     }
 
-    if (params.analysis_mode == "parallel") {
+    if( params.analysis_mode == "parallel" ) {
         PARALLEL_ANALYSIS(reads_ch)
-    } else if (params.analysis_mode == "batch")  {
+    } else if( params.analysis_mode == "batch" ) {
         BATCH_ANALYSIS(reads_ch)
     }
 
@@ -31,9 +31,9 @@ workflow {
 workflow test {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
 
-    if (params.analysis_mode == "parallel") {
+    if( params.analysis_mode == "parallel" ) {
         PARALLEL_ANALYSIS(reads_ch)
-    } else if (params.analysis_mode == "batch")  {
+    } else if( params.analysis_mode == "batch" ) {
         BATCH_ANALYSIS(reads_ch)
     }
 

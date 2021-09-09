@@ -49,12 +49,14 @@ process TBJOIN {
     stub:
 
     """
-    echo "MTBseq
-        --project ${params.project_name} \
-        --mincovf ${params.mincovf} \
-        --mincovr ${params.mincovr} \
-        --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}"
+    echo "MTBseq --step TBjoin \
+    --threads ${task.cpus} \
+    --samples ${samplesheet_tsv} \
+    --project ${params.project_name} \
+    --mincovf ${params.mincovf} \
+    --mincovr ${params.mincovr} \
+    --minphred ${params.minphred} \
+    --minfreq ${params.minfreq}"
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 

@@ -39,12 +39,11 @@ process TBREFINE {
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
-    mkdir ${genomeFileName}
-    mkdir ${genomeFileName}/GATK_Bam
-    touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bam
-    touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bai
-    touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bamlog
-    touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.grp
-    touch ${genomeFileName}/GATK_Bam/${genomeFileName}_${params.library_name}.gatk.intervals
+    mkdir GATK_Bam
+    touch GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bam
+    touch GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bai
+    touch GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bamlog
+    touch GATK_Bam/${genomeFileName}_${params.library_name}.gatk.grp
+    touch GATK_Bam/${genomeFileName}_${params.library_name}.gatk.intervals
     """
 }

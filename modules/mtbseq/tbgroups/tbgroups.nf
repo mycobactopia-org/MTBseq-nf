@@ -36,7 +36,10 @@ process TBGROUPS {
 
     stub:
     """
-    echo "MTBseq --step TBgroups  --project ${params.project_name}"
+    echo "MTBseq --step TBgroups \
+    --threads ${task.cpus} \
+    --samples ${samplesheet_tsv} \
+    --project ${params.project_name}"
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
