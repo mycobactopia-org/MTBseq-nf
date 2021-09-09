@@ -38,19 +38,18 @@ process TBBWA {
     stub:
 
     """
-    echo "MTBseq --step TBbwa --threads ${task.cpus}"
+    echo "MTBseq --step TBbwa \
+    --threads ${task.cpus}"
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     touch ${task.process}_${genomeFileName}_out.log
     touch ${task.process}_${genomeFileName}_err.log
 
-    mkdir ${genomeFileName}
-    mkdir ${genomeFileName}/Bam
-    mkdir ${genomeFileName}/Bam/${genomeFileName}
-    touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bam
-    touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bai
-    touch ${genomeFileName}/Bam/${genomeFileName}_${params.library_name}.bamlog
+    mkdir Bam
+    touch Bam/${genomeFileName}_${params.library_name}.bam
+    touch Bam/${genomeFileName}_${params.library_name}.bai
+    touch Bam/${genomeFileName}_${params.library_name}.bamlog
 
     """
 
