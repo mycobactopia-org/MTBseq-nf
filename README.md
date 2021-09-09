@@ -1,6 +1,6 @@
 # Mtbseq-nf
 
-**NOTE**: This still a work in progress, the code is functional however the usage doc needs some love!
+**NOTE**: This still a work in progress, the code is functional however the [usage](#Usage) doc needs some love!
 
 Project with aim to create a nextflow wrapper for mtbseq workflow.
 
@@ -11,6 +11,14 @@ Heavily based on [ngs-fzb/MTBseq_source](https://github.com/ngs-fzb/MTBseq_sourc
 - Reliance of bioconda for installing packages
 - Reproducibility via containers 
 - Deployability on a range of infratructure (cloud/on-prem clusters/local machine)
+
+# Usage 
+
+## Nextflow command line
+
+
+## Nextflow Tower 
+
 
 # Contributions
 
