@@ -44,17 +44,18 @@ process TBVARIANTS {
     stub:
 
     """
-    echo "MTBseq --step TBvariants --mincovf ${params.mincovf} \
-        --mincovr ${params.mincovr} \
-        --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}"
+    echo "MTBseq --step TBvariants \
+    --threads ${task.cpus} \
+    --mincovf ${params.mincovf} \
+    --mincovr ${params.mincovr} \
+    --minphred ${params.minphred} \
+    --minfreq ${params.minfreq}"
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
-    mkdir ${genomeFileName}
-    mkdir ${genomeFileName}/Called
-    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
-    touch ${genomeFileName}/Called/${genomeFileName}_${params.library_name}.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+    mkdir Called
+    touch Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+    touch Called/${genomeFileName}_${params.library_name}.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
 
     """
 

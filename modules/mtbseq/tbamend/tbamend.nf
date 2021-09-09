@@ -51,7 +51,9 @@ process TBAMEND {
     """
     stub:
     """
-    echo "MTBseq --step TBamend --samples ${samplesheet_tsv} \
+    echo " MTBseq --step TBamend \
+    --threads ${task.cpus} \
+    --samples ${samplesheet_tsv} \
     --project ${params.project_name} \
     --mincovf ${params.mincovf} \
     --mincovr ${params.mincovr} \

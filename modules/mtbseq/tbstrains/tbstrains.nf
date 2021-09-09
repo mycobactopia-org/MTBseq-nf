@@ -47,14 +47,15 @@ process TBSTRAINS {
     """
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
-    echo "MTBseq --step TBstrains --mincovf ${params.mincovf} \
+    echo "MTBseq --step TBstrains \
+        --threads ${task.cpus} \
+        --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
         --minfreq ${params.minfreq}"
 
-    mkdir ${genomeFileName}
-    mkdir ${genomeFileName}/Classification
-    touch ${genomeFileName}/Classification/Strain_Classification.tab
+    mkdir Classification
+    touch Classification/Strain_Classification.tab
 
     """
 

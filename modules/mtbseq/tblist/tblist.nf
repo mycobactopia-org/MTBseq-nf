@@ -48,9 +48,8 @@ process TBLIST {
     touch ${task.process}_${genomeFileName}_out.log
     touch ${task.process}_${genomeFileName}_err.log
 
-    mkdir ${genomeFileName}
-    mkdir ${genomeFileName}/Position_Tables
-    touch ${genomeFileName}/Position_Tables/${genomeFileName}_${params.library_name}.gatk_position_table.tab
+    mkdir Position_Tables
+    touch Position_Tables/${genomeFileName}_${params.library_name}.gatk_position_table.tab
 
     """
 
