@@ -1,4 +1,4 @@
-# Mtbseq-nf
+# mtbseq-nf
 
 **NOTE: This still a work in progress, the code is functional however the [usage](#Usage) doc needs some love!**
 
@@ -6,16 +6,18 @@
 
 # Benefits of the Nextflow wrapper
 
-- Reliance of bioconda for installing packages
-- Reproducibility via containers 
+- Fine-grained control over resource allocation (CPU/Memory/Storage)
+- Reliance of bioconda and biocontainers for installing packages for reproducibility
 - Ease of use on a range of infrastructure (cloud/on-prem clusters/local machine)
 - Resumability for failed processes
-- Centralized location for specifying 
-    - Hardware requirements 
-    - Software requirements ( MTBseq version )
-    - MTBseq parameters
-- Dedicated user interface for all parameters (for wider audience)
-
+- Centralized locations for specifying 
+    - Hardware requirements (`conf/standard.config`)
+    - Software requirements (`conf/docker.config` or `conf/conda.config`)
+    - MTBseq parameters (`conf/global_parameters.config`)
+- Dedicated user interface for all parameters for wider audience (`nextflow_schema.json`)
+- Explicit rather than the implicit options (`conf/global_parameters.config`)
+- Ability to analyze genomes in **parallel** as well as in **batch** 
+  
 # Usage 
 
 ## Nextflow command line
