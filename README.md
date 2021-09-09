@@ -17,7 +17,20 @@
 - Dedicated user interface for all parameters for wider audience (`nextflow_schema.json`)
 - Explicit rather than the implicit options (`conf/global_parameters.config`)
 - Ability to analyze genomes in **parallel** as well as in **batch** 
-  
+
+# Workflow example
+This pipeline has two execution types: batch and parallel and here is a dag example for them!
+
+The execution type is determined by the analysis\_mode parameter
+
+## Batch
+![batch-workflow](./resources/dag-batch.png)
+
+## Parallel
+![parallel-workflow](./resources/dag-parallel.png)
+
+
+
 # Usage 
 
 ## Nextflow command line
