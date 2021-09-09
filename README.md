@@ -8,12 +8,13 @@
 
 - Reliance of bioconda for installing packages
 - Reproducibility via containers 
-- Ease of use on a range of infratructure (cloud/on-prem clusters/local machine)
+- Ease of use on a range of infrastructure (cloud/on-prem clusters/local machine)
 - Resumability for failed processes
 - Centralized location for specifying 
     - Hardware requirements 
     - Software requirements ( MTBseq version )
     - MTBseq parameters
+- Dedicated user interface for all parameters (for wider audience)
 
 # Usage 
 
