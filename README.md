@@ -2,13 +2,18 @@
 
 **NOTE: This still a work in progress, the code is functional however the [usage](#Usage) doc needs some love!**
 
-[MTBseq](https://github.com/ngs-fzb/MTBseq_source) made simple and easy using Nextflow. 
+[MTBseq](https://github.com/ngs-fzb/MTBseq_source) made simple and easy using [Nextflow](https://www.nextflow.io/) workflow manager. 
 
 # Benefits of the Nextflow wrapper
 
 - Reliance of bioconda for installing packages
 - Reproducibility via containers 
-- Deployability on a range of infratructure (cloud/on-prem clusters/local machine)
+- Ease of use on a range of infratructure (cloud/on-prem clusters/local machine)
+- Resumability for failed processes
+- Centralized location for specifying 
+    - Hardware requirements 
+    - Software requirements ( MTBseq version )
+    - MTBseq parameters
 
 # Usage 
 
