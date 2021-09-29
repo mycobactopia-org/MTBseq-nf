@@ -67,13 +67,3 @@ process TRIMMOMATIC {
 
     """
 }
-
-workflow test {
-
-
-    input_ch = Channel.fromFilePairs("$launchDir/test_data/*_{1,2}.fastq.gz")
-
-
-    TRIMMOMATIC(input_ch)
-
-}
