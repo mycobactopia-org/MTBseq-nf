@@ -7,22 +7,29 @@ nextflow.enable.dsl = 2
 
 include { PARALLEL_ANALYSIS } from "./workflows/parallel_analysis/parallel_analysis.nf"
 include { BATCH_ANALYSIS } from "./workflows/batch_analysis/batch_analysis.nf"
+include { TRIMMOMATIC } from "./modules/trimmomatic/trimmomatic.nf"
 
 workflow {
-
     if( params.run_type == "sra" ) {
         reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.ncbi_api_key)
     } else if( params.run_type == "local" ) {
         reads_ch = Channel.fromFilePairs(params.reads)
     }
-
-    if( params.analysis_mode == "parallel" ) {
-        PARALLEL_ANALYSIS(reads_ch)
-    } else if( params.analysis_mode == "batch" ) {
-        BATCH_ANALYSIS(reads_ch)
+    if(params.use_trimmomatic == "false"){
+        if( params.analysis_mode == "parallel" ) {
+            PARALLEL_ANALYSIS(reads_ch)
+        } else if( params.analysis_mode == "batch" ) {
+            BATCH_ANALYSIS(reads_ch)
+            }
+    } else if (params.use_trimmomatic == "true") {
+        if( params.analysis_mode == "parallel" ) {
+            TRIMMOMATIC(reads_ch)
+            PARALLEL_ANALYSIS(TRIMMOMATIC.out)
+        } else if( params.analysis_mode == "batch" ) {
+            TRIMMOMATIC(reads_ch)
+            BATCH_ANALYSIS(TRIMMOMATIC.out)
+            }
     }
-
-}
 
 //=======================================
 // TESTING
