@@ -23,7 +23,7 @@ process TRIMMOMATIC {
     fq_2_paired = genomeName + '_R2.p.fastq.gz'
     fq_2_unpaired = genomeName + '_R2.s.fastq.gz'
 
-    def adapterFile = "/usr/local/share/trimmomatic-0.35-6/adapters/NexteraPE-PE.fa"
+    def adapterFile = "/usr/local/share/trimmomatic-0.39-2/adapters/${params.trimmomatic_adapter_name}" // NexteraPE-PE.fa
 
     """
     trimmomatic \
@@ -46,7 +46,7 @@ process TRIMMOMATIC {
     fq_2_paired = genomeName + '_R2.p.fastq.gz'
     fq_2_unpaired = genomeName + '_R2.s.fastq.gz'
 
-    adapterFile = "/usr/local/share/trimmomatic-0.35-6/adapters/NexteraPE-PE.fa"
+    def adapterFile = "/usr/local/share/trimmomatic-0.39-2/adapters/${params.trimmomatic_adapter_file_name}"
 
     """
     echo "trimmomatic \
