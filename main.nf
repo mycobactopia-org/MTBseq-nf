@@ -15,21 +15,25 @@ workflow {
     } else if( params.run_type == "local" ) {
         reads_ch = Channel.fromFilePairs(params.reads)
     }
-    if(params.use_trimmomatic == "false"){
-        if( params.analysis_mode == "parallel" ) {
-            PARALLEL_ANALYSIS(reads_ch)
-        } else if( params.analysis_mode == "batch" ) {
-            BATCH_ANALYSIS(reads_ch)
-            }
-    } else if (params.use_trimmomatic == "true") {
-        if( params.analysis_mode == "parallel" ) {
-            TRIMMOMATIC(reads_ch)
-            PARALLEL_ANALYSIS(TRIMMOMATIC.out)
-        } else if( params.analysis_mode == "batch" ) {
-            TRIMMOMATIC(reads_ch)
-            BATCH_ANALYSIS(TRIMMOMATIC.out)
-            }
-    }
+
+    if( params.use_trimmomatic == "false" &&  params.analysis_mode == "parallel") {
+
+        PARALLEL_ANALYSIS(reads_ch)
+
+    } else if ( params.use_trimmomatic == "false" &&  params.analysis_mode == "batch" ) {
+
+        BATCH_ANALYSIS(reads_ch)
+
+    } else if ( params.use_trimmomatic == "true" &&  params.analysis_mode == "parallel" ) {
+
+        TRIMMOMATIC(reads_ch)
+        PARALLEL_ANALYSIS(TRIMMOMATIC.out)
+
+    } else if (params.use_trimmomatic == "true" &&  params.analysis_mode == "batch") {
+
+        TRIMMOMATIC(reads_ch)
+        BATCH_ANALYSIS(TRIMMOMATIC.out)}
+}
 
 //=======================================
 // TESTING
