@@ -11,7 +11,7 @@ process TBBWA {
     input:
     tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
     path(gatk_jar)
-    tuple path(mtb_ref), path(resilist), path(global_intregions), path(categories), path(basecalib)
+    tuple path(mtb_ref), path(resilist), path(intregions), path(categories), path(basecalib)
     env(USER)
 
 
@@ -30,6 +30,10 @@ process TBBWA {
 
     MTBseq --step TBbwa \
     --threads ${task.cpus} \
+    --ref mtb_ref ${mtb_ref}\
+    --resilist ${resilist} \
+    --intregions ${intregions} \
+    --categories ${categories} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
