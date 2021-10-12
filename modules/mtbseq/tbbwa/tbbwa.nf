@@ -11,7 +11,7 @@ process TBBWA {
     input:
     tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
     path(gatk_jar)
-    tuple path(mtb_ref), path(resilist), path(intregions), path(categories), path(basecalib)
+    tuple path(${params.mtb_ref_name}.*), path(resilist), path(intregions), path(categories), path(basecalib)
     env(USER)
 
 
@@ -30,7 +30,7 @@ process TBBWA {
 
     MTBseq --step TBbwa \
     --threads ${task.cpus} \
-    --ref mtb_ref ${mtb_ref}\
+    --ref mtb_ref ${params.mtb_ref_name} \
     --resilist ${resilist} \
     --intregions ${intregions} \
     --categories ${categories} \
