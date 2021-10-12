@@ -22,10 +22,11 @@ workflow {
         BATCH_ANALYSIS(reads_ch)
     }
 
-    references_ch = Channel.of[file(params.global_resilist),
-                               file(params.global_intregions),
-                               file(params.global_categories),
-                               file(params.global_basecalib)]
+    references_ch = Channel.of[path(params.global_mtb_ref),
+                               path(params.global_resilist),
+                               path(params.global_intregions),
+                               path(params.global_categories),
+                               path(params.global_basecalib)]
 
 }
 

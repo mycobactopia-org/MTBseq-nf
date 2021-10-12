@@ -11,7 +11,9 @@ process TBBWA {
     input:
     tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
     path(gatk_jar)
+    tuple path(mtb_ref), path(resilist), path(global_intregions), path(categories), path(basecalib)
     env(USER)
+
 
     output:
     path("Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
