@@ -16,6 +16,7 @@ process TBFULL {
     input:
     path("*")
     path(gatk_jar)
+    tuple path("${params.mtb_ref_name}.*"), path(resilist), path(intregions), path(categories), path(basecalib)
     env(USER)
 
     output:

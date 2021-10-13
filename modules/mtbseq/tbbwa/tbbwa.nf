@@ -28,9 +28,12 @@ process TBBWA {
 
     mkdir Bam
 
+    # setting up the references as requested by MTBseq manual
+    mv ${params.mtb_ref_name}.* /MTBseq_source/var/ref/.
+
     MTBseq --step TBbwa \
     --threads ${task.cpus} \
-    --ref mtb_ref ${params.mtb_ref_name} \
+    --ref ${params.mtb_ref_name} \
     --resilist ${resilist} \
     --intregions ${intregions} \
     --categories ${categories} \

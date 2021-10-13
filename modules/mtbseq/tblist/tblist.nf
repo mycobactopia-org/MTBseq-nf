@@ -12,6 +12,7 @@ process TBLIST {
     input:
     tuple val(genomeFileName), path("Mpileup/${genomeFileName}_${params.library_name}*.gatk.mpileup")
     path(gatk_jar)
+    tuple path("${params.mtb_ref_name}.*"), path(resilist), path(intregions), path(categories), path(basecalib)
     env(USER)
 
     output:
