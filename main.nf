@@ -10,6 +10,13 @@ include { BATCH_ANALYSIS } from "./workflows/batch_analysis/batch_analysis.nf"
 
 workflow {
 
+    references_ch = Channel.of[params.global_mtb_ref,
+                               params.global_resilist,
+                               params.global_intregions,
+                               params.global_categories,
+                               params.global_basecalib]
+
+
     if( params.run_type == "sra" ) {
         reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.ncbi_api_key)
     } else if( params.run_type == "local" ) {
@@ -21,13 +28,6 @@ workflow {
     } else if( params.analysis_mode == "batch" ) {
         BATCH_ANALYSIS(reads_ch)
     }
-
-    references_ch = Channel.of[params.global_mtb_ref,
-                               params.global_resilist,
-                               params.global_intregions,
-                               params.global_categories,
-                               params.global_basecalib]
-
 }
 
 //=======================================
