@@ -33,6 +33,9 @@ process TBFULL {
 
     gatk-register ${gatk_jar}
 
+    # setting up the references as requested by MTBseq manual
+    mv ${params.mtb_ref_name}.* /MTBseq_source/var/ref/.
+
     MTBseq --step TBfull \
     --thread ${task.cpus} \
     --minbqual ${params.minbqual} \

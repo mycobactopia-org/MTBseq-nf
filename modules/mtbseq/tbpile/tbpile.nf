@@ -25,6 +25,9 @@ process TBPILE {
 
     gatk-register ${gatk_jar}
 
+    # setting up the references as requested by MTBseq manual
+    mv ${params.mtb_ref_name}.* /MTBseq_source/var/ref/.
+
     mkdir Mpileup
 
     MTBseq --step TBpile \

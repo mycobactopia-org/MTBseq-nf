@@ -27,6 +27,9 @@ process TBSTRAINS {
 
     gatk-register ${gatk_jar}
 
+    # setting up the references as requested by MTBseq manual
+    mv ${params.mtb_ref_name}.* /MTBseq_source/var/ref/.
+
     mkdir Classification
 
     MTBseq --step TBstrains \
