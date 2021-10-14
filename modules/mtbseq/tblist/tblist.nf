@@ -34,6 +34,10 @@ process TBLIST {
     MTBseq --step TBlist \
     --threads ${task.cpus} \
     --minbqual ${params.minbqual} \
+    --ref ${params.mtb_ref_name} \
+    --resilist ${resilist} \
+    --intregions ${intregions} \
+    --categories ${categories} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq

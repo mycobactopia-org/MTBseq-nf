@@ -43,6 +43,10 @@ process TBJOIN {
     --mincovr ${params.mincovr} \
     --minphred ${params.minphred} \
     --minfreq ${params.minfreq} \
+    --ref ${params.mtb_ref_name} \
+    --resilist ${resilist} \
+    --intregions ${intregions} \
+    --categories ${categories} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq

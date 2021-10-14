@@ -47,6 +47,10 @@ process TBAMEND {
     --unambig ${params.unambig} \
     --window ${params.window} \
     --distance ${params.distance} \
+    --ref ${params.mtb_ref_name} \
+    --resilist ${resilist} \
+    --intregions ${intregions} \
+    --categories ${categories} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
