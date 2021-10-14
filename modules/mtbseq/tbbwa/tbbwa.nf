@@ -14,7 +14,6 @@ process TBBWA {
     tuple path("${params.mtb_ref_name}.*"), path(resilist), path(intregions), path(categories), path(basecalib)
     env(USER)
 
-
     output:
     path("Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
     tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.bam"), emit: bam_tuple
