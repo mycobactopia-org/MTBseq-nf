@@ -35,11 +35,17 @@ workflow {
 
 workflow test {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
+    references_ch = Channel.of[params.global_ref_reference_genome_path,
+                               params.global_ref_resistance_list,
+                               params.global_ref_interesting_regions,
+                               params.global_ref_gene_categories,
+                               params.global_ref_base_quality_recalibration]
+
 
     if( params.analysis_mode == "parallel" ) {
-        PARALLEL_ANALYSIS(reads_ch)
+        PARALLEL_ANALYSIS(reads_ch, references_ch)
     } else if( params.analysis_mode == "batch" ) {
-        BATCH_ANALYSIS(reads_ch)
+        BATCH_ANALYSIS(reads_ch, references_ch)
     }
 
 }
