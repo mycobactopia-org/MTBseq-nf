@@ -10,12 +10,11 @@ include { BATCH_ANALYSIS } from "./workflows/batch_analysis/batch_analysis.nf"
 
 workflow {
 
-    references_ch = Channel.of[params.global_mtb_ref,
-                               params.global_resilist,
-                               params.global_intregions,
-                               params.global_categories,
-                               params.global_basecalib]
-
+    references_ch = Channel.of[params.global_ref_reference_genome_path,
+                               params.global_ref_resistance_list,
+                               params.global_ref_interesting_regions,
+                               params.global_ref_gene_categories,
+                               params.global_ref_base_quality_recalibration]
 
     if( params.run_type == "sra" ) {
         reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.ncbi_api_key)
