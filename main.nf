@@ -23,9 +23,9 @@ workflow {
     }
 
     if( params.analysis_mode == "parallel" ) {
-        PARALLEL_ANALYSIS(reads_ch)
+        PARALLEL_ANALYSIS(reads_ch,references_ch)
     } else if( params.analysis_mode == "batch" ) {
-        BATCH_ANALYSIS(reads_ch)
+        BATCH_ANALYSIS(reads_ch,references_ch)
     }
 }
 

@@ -11,23 +11,25 @@ include { TBSTRAINS } from '../../modules/mtbseq/tbstrains/tbstrains.nf' addPara
 workflow PER_SAMPLE_ANALYSIS {
     take:
         reads_ch
-
+        references_ch
     main:
-        TBBWA(reads_ch, params.gatk38_jar, params.user)
-        TBREFINE(TBBWA.out.bam_tuple, params.gatk38_jar, params.user)
-        TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user)
-        TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user)
-        TBVARIANTS(TBLIST.out.position_table_tuple, params.gatk38_jar, params.user)
+        TBBWA(reads_ch, params.gatk38_jar,references_ch params.user)
+        TBREFINE(TBBWA.out.bam_tuple, params.gatk38_jar, references_ch params.user)
+        TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, references_ch, params.user)
+        TBLIST(TBPILE.out.mpileup, params.gatk38_jar, references_ch, params.user)
+        TBVARIANTS(TBLIST.out.position_table_tuple, params.gatk38_jar, references_ch ,params.user)
 
     // NOTE: These are part of per-sample-analysis but they need the output from
     // all other processes to compute the metrics for the cohort.
         TBSTATS(TBBWA.out.bam.collect(),
                 TBLIST.out.position_table.collect(),
                 params.gatk38_jar,
+                references_ch,
                 params.user)
 
         TBSTRAINS(TBLIST.out.position_table.collect(),
                   params.gatk38_jar,
+                  references_ch,
                   params.user)
 
     emit:

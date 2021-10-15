@@ -9,6 +9,7 @@ workflow COHORT_ANALYSIS {
         genome_names
         position_variants
         position_tables
+        references_ch
 
     main:
         samples_tsv_file = genome_names
@@ -20,16 +21,19 @@ workflow COHORT_ANALYSIS {
                position_tables.collect(),
                samples_tsv_file,
                params.gatk38_jar,
+               references_ch,
                params.user)
 
         TBAMEND(TBJOIN.out.joint_samples,
                 samples_tsv_file,
                 params.gatk38_jar,
+                references_ch,
                 params.user)
 
         TBGROUPS(TBAMEND.out.samples_amended,
                  samples_tsv_file,
                  params.gatk38_jar,
+                 references_ch
                  params.user)
 
 }

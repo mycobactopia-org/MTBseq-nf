@@ -10,6 +10,7 @@ workflow BATCH_ANALYSIS {
 
     take:
         reads_ch
+        references_ch
 
     main:
 
@@ -25,22 +26,26 @@ workflow BATCH_ANALYSIS {
     //NOTE: Requires atleast 5_CPU/16_MEM
         TBFULL(RENAME_FILES.out.collect(),
                params.gatk38_jar,
+               references_ch,
                params.user)
 
         TBJOIN(TBFULL.out.position_variants.collect(),
                TBFULL.out.position_tables.collect(),
                samples_tsv_file,
                params.gatk38_jar,
+               references_ch,
                params.user)
 
         TBAMEND(TBJOIN.out.joint_samples,
                 samples_tsv_file,
                 params.gatk38_jar,
+                references_ch,
                 params.user)
 
         TBGROUPS(TBAMEND.out.samples_amended,
                  samples_tsv_file,
                  params.gatk38_jar,
+                 references_ch,
                  params.user)
 
 
