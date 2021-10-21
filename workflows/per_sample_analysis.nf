@@ -12,25 +12,26 @@ workflow PER_SAMPLE_ANALYSIS {
     take:
         reads_ch
         references_ch
+
     main:
-        TBBWA(reads_ch, params.gatk38_jar,references_ch params.user)
-        TBREFINE(TBBWA.out.bam_tuple, params.gatk38_jar, references_ch params.user)
-        TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, references_ch, params.user)
-        TBLIST(TBPILE.out.mpileup, params.gatk38_jar, references_ch, params.user)
-        TBVARIANTS(TBLIST.out.position_table_tuple, params.gatk38_jar, references_ch ,params.user)
+        TBBWA(reads_ch, params.gatk38_jar, params.user, references_ch)
+        TBREFINE(TBBWA.out.bam_tuple, params.gatk38_jar, params.user, references_ch)
+        TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user, references_ch)
+        TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user, references_ch)
+        TBVARIANTS(TBLIST.out.position_table_tuple, params.gatk38_jar ,params.user, references_ch)
 
     // NOTE: These are part of per-sample-analysis but they need the output from
     // all other processes to compute the metrics for the cohort.
         TBSTATS(TBBWA.out.bam.collect(),
                 TBLIST.out.position_table.collect(),
                 params.gatk38_jar,
-                references_ch,
-                params.user)
+                params.user,
+                references_ch)
 
         TBSTRAINS(TBLIST.out.position_table.collect(),
                   params.gatk38_jar,
-                  references_ch,
-                  params.user)
+                  params.user,
+                  references_ch)
 
     emit:
         genome_names = reads_ch.map{ it -> it[0]}

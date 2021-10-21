@@ -7,9 +7,12 @@ workflow PARALLEL_ANALYSIS {
     take:
         reads_ch
         references_ch
+
     main:
-        PER_SAMPLE_ANALYSIS(reads_ch,references_ch)
+        PER_SAMPLE_ANALYSIS(reads_ch, references_ch)
+
         COHORT_ANALYSIS(PER_SAMPLE_ANALYSIS.out.genome_names,
-                    PER_SAMPLE_ANALYSIS.out.position_variants,
-                    PER_SAMPLE_ANALYSIS.out.position_tables)
+                        PER_SAMPLE_ANALYSIS.out.position_variants,
+                        PER_SAMPLE_ANALYSIS.out.position_tables,
+                        references_ch)
 }

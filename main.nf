@@ -11,18 +11,10 @@ include { BATCH_ANALYSIS } from "./workflows/batch_analysis.nf"
 workflow {
 
     //NOTE: Create a channel for all reference files
-    references_ch = Channel.of([params.ref,
-                                params.resilist,
+    references_ch = Channel.of([params.resilist,
                                 params.intregions,
                                 params.categories,
                                 params.basecalib])
-
-    annotations_ch = Channel.of([params.resilist,
-                                 params.intregions,
-                                 params.categories,
-                                 params.basecalib])
-
-
 
 
     //--------------------------------------------
