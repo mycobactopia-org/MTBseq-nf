@@ -18,7 +18,7 @@
 
 # Usage
 
-The simplest use case is to analyze a few genomes on a local environment. Almost all aspects are customizable but for the sake of brevity, a bare bones step for any beginner user is as shown below
+The simplest use case is to analyze a few genomes on a local environment. Almost all aspects are customizable but for the sake of brevity, a bare bones guide for any beginner user is as shown below
 
 - [ ] 1. Clone the project 
 
@@ -39,7 +39,18 @@ tar -xvf GATK_TAR_FILE
 
 They should follow the pattern `SAMPLE_R1.fastq.gz`
 
-- [ ] 5. To run the pipeline, make sure you have [`nextflow`](https://www.nextflow.io/docs/latest/getstarted.html) and `conda` setup.
+- [ ] 5. To run the pipeline, make sure you have `conda` installed. Moreover, if you don't already have `nextflow` installed, you can use the following commands to install it 
+
+```shell
+conda install -n nextflow_env -c bioconda -c conda-forge nextflow 
+```
+
+
+You can confirm the setup by typing 
+
+```
+nextflow info 
+```
 
 - [ ] 6. Then simply issue the following command on the command line 
 
