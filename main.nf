@@ -24,8 +24,13 @@ workflow {
 
 
 
+
+    //--------------------------------------------
+    // Source the input reads
+    //
     //TODO: Refactor this section later to only rely upon a samplesheet.
-    // Determine dynamically the samples origin i.e. SRA/
+    // Determine dynamically the samples origin i.e. SRA/LOCAL etc
+    //--------------------------------------------
 
     if( params.run_type == "sra" ) {
 
@@ -37,19 +42,25 @@ workflow {
 
     } else {
 
-        // Read from samplesheet
+        // Default to reading from a samplesheet
 
         reads_ch = Channel.fromPath(params.input_samplesheet)
                           .splitCsv(header: false, skip: 1)
 
     }
 
+
+    //--------------------------------------------
+    // Analysis mode
+    //--------------------------------------------
+
     if( params.analysis_mode == "parallel" ) {
 
         PARALLEL_ANALYSIS(reads_ch,references_ch)
 
-    } else if( params.analysis_mode == "batch" ) {
+    } else {
 
+        //NOTE: Use the traditional Batch analysis, similar to MTBseq
         BATCH_ANALYSIS(reads_ch,references_ch)
 
     }
