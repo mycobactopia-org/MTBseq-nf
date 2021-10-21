@@ -1,8 +1,6 @@
 # mtbseq-nf
 
-**NOTE: This still a work in progress, the code is functional however the [usage](#Usage) doc needs some love!**
-
-[MTBseq](https://github.com/ngs-fzb/MTBseq_source) made simple and easy using [Nextflow](https://www.nextflow.io/) workflow manager. 
+`mtbseq-nf` pipeline makes [MTBseq](https://github.com/ngs-fzb/MTBseq_source) simple and easy to use via [Nextflow](https://www.nextflow.io/) workflow manager. 
 
 # Benefits of the Nextflow wrapper
 
@@ -11,32 +9,57 @@
 - Ease of use on a range of infrastructure (cloud/on-prem clusters/local machine)
 - Resumability for failed processes
 - Centralized locations for specifying 
+    - MTBseq parameters (`conf/global_parameters.config`)
     - Hardware requirements (`conf/standard.config`)
     - Software requirements (`conf/docker.config` or `conf/conda.config`)
-    - MTBseq parameters (`conf/global_parameters.config`)
-- Dedicated user interface for all parameters for wider audience (`nextflow_schema.json`)
-- Explicit rather than the implicit options (`conf/global_parameters.config`)
-- Ability to analyze genomes in **parallel** as well as in **batch** 
+- Dedicated user interface for all parameters for wider audience (`nextflow_schema.json`). This only works on [Nextflow Tower](tower.nf/).
+- Easier customizability for the pipeline, using explicit parameters (`conf/global_parameters.config`).
+- Ability to analyze genomes in **parallel** as well as in **batch**, on `local`, `cloud` and `cluster` environments.
+
+# Usage
+
+The simplest use case is to analyze a few genomes on a local environment. Almost all aspects are customizable but for the sake of brevity, a bare bones step for any beginner user is as shown below
+
+- [ ] Clone the project 
+
+```shell
+git clone https://github.com/mtb-bioinformatics/mtbseq-nf
+cd mtbseq-nf
+```
+
+- [ ] Download the  `gatk-3.8.0` tar from [here](https://console.cloud.google.com/storage/browser/gatk-software/package-archive/gatk;tab=objects?prefix=&forceOnObjectsSortingFiltering=false)
+
+- [ ] Untar it and place it in the `resources` folder
+
+```
+tar -xvf GATK_TAR_FILE
+```
+
+- [ ] Move your genomes to the `data/full_data` folder
+
+They should follow the pattern `SAMPLE_R1.fastq.gz`
+
+- [ ] To run the pipeline, make sure you have `nextflow` setup
+
+- [ ] Then simply issue the follwing command on the command line 
+
+```
+nextflow run main.nf -profile standard,conda -analysis-type local
+```
+
+
 
 # Workflow example
+
 This pipeline has two execution types: batch and parallel and here is a dag example for them!
 
-The execution type is determined by the analysis\_mode parameter
+The execution type is determined by the `analysis_mode` parameter
 
 ## Batch
 ![batch-workflow](./resources/dag-batch.png)
 
 ## Parallel
 ![parallel-workflow](./resources/dag-parallel.png)
-
-
-
-# Usage 
-
-## Nextflow command line
-
-
-## Nextflow Tower 
 
 
 # Contributions
