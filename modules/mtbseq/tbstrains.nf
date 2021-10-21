@@ -22,6 +22,7 @@ process TBSTRAINS {
 
     ${params.mtbseq_path} --step TBstrains \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
@@ -44,6 +45,7 @@ process TBSTRAINS {
 
     echo "${params.mtbseq_path} --step TBstrains \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \

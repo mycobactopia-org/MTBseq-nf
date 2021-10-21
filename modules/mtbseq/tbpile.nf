@@ -1,5 +1,5 @@
 process TBPILE {
-    tag "${genomeFileName}"
+    tag "${genomeFileName} - ${params.project}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
     stageInMode 'copy'
 
@@ -23,6 +23,7 @@ process TBPILE {
 
     ${params.mtbseq_path} --step TBpile \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
@@ -38,6 +39,7 @@ process TBPILE {
     """
     echo "${params.mtbseq_path} --step TBpile \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \

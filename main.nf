@@ -49,7 +49,7 @@ workflow {
 
     } else {
 
-        //NOTE: Use the traditional Batch analysis, similar to MTBseq
+        //NOTE: Defaults to the traditional Batch analysis as implemented in MTBseq
         BATCH_ANALYSIS(reads_ch,
                        [params.resilist,
                         params.intregions,

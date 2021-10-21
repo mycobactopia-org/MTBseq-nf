@@ -1,5 +1,5 @@
 process TBJOIN {
-    tag "${params.project}"
+    tag "${genomeFileName} - ${params.project}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:

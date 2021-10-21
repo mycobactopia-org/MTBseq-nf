@@ -25,6 +25,7 @@ process TBFULL {
 
     ${params.mtbseq_path} --step TBfull \
         --thread ${task.cpus} \
+        --project ${params.project} \
         --minbqual ${params.minbqual} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
@@ -44,6 +45,7 @@ process TBFULL {
     """
     echo " ${params.mtbseq_path} --step TBfull \
         --thread ${task.cpus} \
+        --project ${params.project} \
         --minbqual ${params.minbqual} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \

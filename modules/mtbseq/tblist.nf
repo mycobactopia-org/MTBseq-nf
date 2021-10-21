@@ -1,5 +1,5 @@
 process TBLIST {
-    tag "${genomeFileName}"
+    tag "${genomeFileName} - ${params.project}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
@@ -24,6 +24,7 @@ process TBLIST {
 
     ${params.mtbseq_path} --step TBlist \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --minbqual ${params.minbqual} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
@@ -42,6 +43,7 @@ process TBLIST {
     """
     echo "${params.mtbseq_path} --step TBlist \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --minbqual ${params.minbqual} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \

@@ -1,5 +1,5 @@
 process TBBWA {
-    tag "${genomeFileName}"
+    tag "${genomeFileName} - ${params.project}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
@@ -23,6 +23,7 @@ process TBBWA {
 
     ${params.mtbseq_path} --step TBbwa \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
@@ -39,6 +40,7 @@ process TBBWA {
     """
     echo " ${params.mtbseq_path} --step TBbwa \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \

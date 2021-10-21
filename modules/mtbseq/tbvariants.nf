@@ -1,5 +1,5 @@
 process TBVARIANTS {
-    tag "${genomeFileName}"
+    tag "${genomeFileName} - ${params.project}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
@@ -23,6 +23,7 @@ process TBVARIANTS {
 
     ${params.mtbseq_path} --step TBvariants \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
@@ -42,6 +43,7 @@ process TBVARIANTS {
     """
     echo "${params.mtbseq_path} --step TBvariants \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
