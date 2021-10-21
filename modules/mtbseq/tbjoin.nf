@@ -11,8 +11,8 @@ process TBJOIN {
     tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-    path("Joint/${params.project_name}_joint*samples*.{tab,log}")
-    path("Joint/${params.project_name}_joint*samples*.tab"), emit: joint_samples
+    path("Joint/${params.project}_joint*samples*.{tab,log}")
+    path("Joint/${params.project}_joint*samples*.tab"), emit: joint_samples
 
     script:
     """
@@ -23,7 +23,7 @@ process TBJOIN {
     ${params.mtbseq_path} --step TBjoin \
         --threads ${task.cpus} \
         --samples ${samplesheet_tsv} \
-        --project ${params.project_name} \
+        --project ${params.project} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
@@ -45,7 +45,7 @@ process TBJOIN {
     echo "${params.mtbseq_path} --step TBjoin \
         --threads ${task.cpus} \
         --samples ${samplesheet_tsv} \
-        --project ${params.project_name} \
+        --project ${params.project} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
@@ -58,8 +58,8 @@ process TBJOIN {
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Joint
-    touch Joint/${params.project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.tab
-    touch Joint/${params.project_name}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.log
+    touch Joint/${params.project}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.tab
+    touch Joint/${params.project}_joint_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_samples5.log
 
     """
 

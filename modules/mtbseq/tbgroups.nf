@@ -1,5 +1,5 @@
 process TBGROUPS {
-    tag "${params.project_name}"
+    tag "${params.project}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
@@ -21,7 +21,7 @@ process TBGROUPS {
     ${params.mtbseq_path} --step TBgroups \
         --threads ${task.cpus} \
         --samples ${samplesheet_tsv} \
-        --project ${params.project_name} \
+        --project ${params.project} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
@@ -37,7 +37,7 @@ process TBGROUPS {
     echo "${params.mtbseq_path} --step TBgroups \
         --threads ${task.cpus} \
         --samples ${samplesheet_tsv} \
-        --project ${params.project_name} \
+        --project ${params.project} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
@@ -46,8 +46,8 @@ process TBGROUPS {
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
     mkdir Groups
-    touch Groups/${params.project_name}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.matrix
-    touch Groups/${params.project_name}_joint_cf4_cr4_fr75_ph4_samples35_amended_u95_phylo_w12_d12.groups
+    touch Groups/${params.project}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.matrix
+    touch Groups/${params.project}_joint_cf4_cr4_fr75_ph4_samples35_amended_u95_phylo_w12_d12.groups
 
     """
 }
