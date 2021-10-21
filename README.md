@@ -39,7 +39,7 @@ tar -xvf GATK_TAR_FILE
 
 They should follow the pattern `SAMPLE_R1.fastq.gz`
 
-- [ ] 5. To run the pipeline, make sure you have [`nextflow` setup](https://www.nextflow.io/docs/latest/getstarted.html)
+- [ ] 5. To run the pipeline, make sure you have [`nextflow`](https://www.nextflow.io/docs/latest/getstarted.html) and `conda` setup.
 
 - [ ] 6. Then simply issue the following command on the command line 
 
