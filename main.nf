@@ -5,7 +5,7 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-// include { PARALLEL_ANALYSIS } from "./workflows/parallel_analysis.nf"
+include { PARALLEL_ANALYSIS } from "./workflows/parallel_analysis.nf"
 include { BATCH_ANALYSIS } from "./workflows/batch_analysis.nf"
 
 workflow {
