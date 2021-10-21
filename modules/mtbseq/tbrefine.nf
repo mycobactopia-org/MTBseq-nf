@@ -5,8 +5,8 @@ process TBREFINE {
     input:
     tuple val(genomeFileName), path("Bam/")
     path(gatk_jar)
-    tuple path("${ref_reference_genome_name}.*"), path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
     env(USER)
+    tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
     tuple val(genomeFileName), path("GATK_Bam/${genomeFileName}_${params.library_name}*gatk.{bam,bai,bamlog,grp,intervals}"), emit: gatk_bam
@@ -20,12 +20,12 @@ process TBREFINE {
 
     mkdir GATK_Bam
 
-    MTBseq --step TBrefine \
+    ${params.mtbseq_path} --step TBrefine \
         --threads ${task.cpus} \
-        --ref ${ref_reference_genome_name} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
@@ -35,7 +35,13 @@ process TBREFINE {
     stub:
 
     """
-    echo "MTBseq --step TBrefine --threads ${task.cpus}"
+    echo " ${params.mtbseq_path} --step TBrefine \
+        --threads ${task.cpus} \
+        --resilist ${ref_resistance_list} \
+        --intregions ${ref_interesting_regions} \
+        --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration}"
+
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 

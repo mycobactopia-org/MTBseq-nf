@@ -6,8 +6,8 @@ process TBAMEND {
     path("Joint/*")
     path(samplesheet_tsv)
     path(gatk_jar)
-    tuple path("${ref_reference_genome_name}.*"), path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
     env(USER)
+    tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
     path("Amend/*"), emit: samples_amended
@@ -19,7 +19,7 @@ process TBAMEND {
 
     mkdir Amend
 
-    MTBseq --step TBamend \
+    ${params.mtbseq_path} --step TBamend \
         --threads ${task.cpus} \
         --samples ${samplesheet_tsv} \
         --project ${params.project_name} \
@@ -30,10 +30,10 @@ process TBAMEND {
         --unambig ${params.unambig} \
         --window ${params.window} \
         --distance ${params.distance} \
-        --ref ${ref_reference_genome_name} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
@@ -42,17 +42,21 @@ process TBAMEND {
     """
     stub:
     """
-    echo " MTBseq --step TBamend \
-    --threads ${task.cpus} \
-    --samples ${samplesheet_tsv} \
-    --project ${params.project_name} \
-    --mincovf ${params.mincovf} \
-    --mincovr ${params.mincovr} \
-    --minphred ${params.minphred} \
-    --minfreq ${params.minfreq} \
-    --unambig ${params.unambig} \
-    --window ${params.window} \
-    --distance ${params.distance} "
+    echo " ${params.mtbseq_path} --step TBamend \
+        --threads ${task.cpus} \
+        --samples ${samplesheet_tsv} \
+        --project ${params.project_name} \
+        --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq} \
+        --unambig ${params.unambig} \
+        --window ${params.window} \
+        --distance ${params.distance} \
+        --resilist ${ref_resistance_list} \
+        --intregions ${ref_interesting_regions} \
+        --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration}  "
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 

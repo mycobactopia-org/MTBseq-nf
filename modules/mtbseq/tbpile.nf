@@ -6,8 +6,8 @@ process TBPILE {
     input:
     tuple val(genomeFileName), path("GATK_Bam/*")
     path(gatk_jar)
-    tuple path("${ref_reference_genome_name}.*"), path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
     env(USER)
+    tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
     path("Mpileup/${genomeFileName}_${params.library_name}*.gatk.{mpileup,mpileuplog}")
@@ -21,12 +21,12 @@ process TBPILE {
 
     mkdir Mpileup
 
-    MTBseq --step TBpile \
+    ${params.mtbseq_path} --step TBpile \
         --threads ${task.cpus} \
-        --ref ${ref_reference_genome_name} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
@@ -36,7 +36,12 @@ process TBPILE {
     stub:
 
     """
-    echo "MTBseq --step TBpile --threads ${task.cpus}"
+    echo "${params.mtbseq_path} --step TBpile \
+        --threads ${task.cpus} \
+        --resilist ${ref_resistance_list} \
+        --intregions ${ref_interesting_regions} \
+        --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration}"
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 

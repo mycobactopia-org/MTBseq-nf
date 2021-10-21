@@ -72,14 +72,18 @@ workflow {
 
 workflow TEST {
 
-    reads_ch = Channel.fromPath("${projectDir}/data/mock_data/input_samplesheet.csv")
-        .splitCsv(header: false, skip: 1)
 
-    references_ch = Channel.of([params.ref,
-                                params.resilist,
-                                params.intregions,
-                                params.categories,
-                                params.basecalib])
+    Channel.fromPath("${params.ref_and_indexes_path}/*")
+        .filter { it.name != params.ref }
+        .view()
 
-    BATCH_ANALYSIS(reads_ch,references_ch)
+ // result.ref.view { "$it is fasta" }
+ // result.indexes.view { "$it is index" }
+ // result.large.view { "$it is large" }
+
+    // Channel.of([params.ref,
+    //                             params.resilist,
+    //                             params.intregions,
+    //                             params.categories,
+    //                             params.basecalib])
 }

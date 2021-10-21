@@ -5,8 +5,8 @@ process TBLIST {
     input:
     tuple val(genomeFileName), path("Mpileup/${genomeFileName}_${params.library_name}*.gatk.mpileup")
     path(gatk_jar)
-    tuple path("${ref_reference_genome_name}.*"), path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
     env(USER)
+    tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
     path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: tbjoin_input
@@ -22,13 +22,13 @@ process TBLIST {
 
     mkdir Position_Tables
 
-    MTBseq --step TBlist \
+    ${params.mtbseq_path} --step TBlist \
         --threads ${task.cpus} \
         --minbqual ${params.minbqual} \
-        --ref ${ref_reference_genome_name} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
@@ -40,7 +40,13 @@ process TBLIST {
     stub:
 
     """
-    echo "MTBseq --step TBlist --threads ${task.cpus} --minbqual ${params.minbqual}"
+    echo "${params.mtbseq_path} --step TBlist \
+        --threads ${task.cpus} \
+        --minbqual ${params.minbqual} \
+        --resilist ${ref_resistance_list} \
+        --intregions ${ref_interesting_regions} \
+        --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration}"
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 

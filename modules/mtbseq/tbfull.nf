@@ -5,8 +5,8 @@ process TBFULL {
     input:
     path("*")
     path(gatk_jar)
-    tuple path("${ref_reference_genome_name}.*"), path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
     env(USER)
+    tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
     path("Called")
@@ -23,17 +23,17 @@ process TBFULL {
     gatk-register ${gatk_jar}
 
 
-    MTBseq --step TBfull \
+    ${params.mtbseq_path} --step TBfull \
         --thread ${task.cpus} \
         --minbqual ${params.minbqual} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
         --minfreq ${params.minfreq} \
-        --ref ${ref_reference_genome_name} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
@@ -42,12 +42,17 @@ process TBFULL {
 
     stub:
     """
-    echo " MTBseq --step TBfull --threads ${task.cpus} \
-    --minbqual ${params.minbqual} \
-    --mincovf ${params.mincovf} \
-    --mincovr ${params.mincovr} \
-    --minphred ${params.minphred} \
-    --minfreq ${params.minfreq} "
+    echo " ${params.mtbseq_path} --step TBfull \
+        --thread ${task.cpus} \
+        --minbqual ${params.minbqual} \
+        --mincovf ${params.mincovf} \
+        --mincovr ${params.mincovr} \
+        --minphred ${params.minphred} \
+        --minfreq ${params.minfreq} \
+        --resilist ${ref_resistance_list} \
+        --intregions ${ref_interesting_regions} \
+        --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration} "
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 

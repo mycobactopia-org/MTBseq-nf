@@ -6,6 +6,7 @@ process TBSTRAINS {
     path("Position_Tables/*")
     path(gatk_jar)
     env(USER)
+    tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
     path("Classification/Strain_Classification.tab")
@@ -19,16 +20,16 @@ process TBSTRAINS {
 
     mkdir Classification
 
-    MTBseq --step TBstrains \
+    ${params.mtbseq_path} --step TBstrains \
         --threads ${task.cpus} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
         --minfreq ${params.minfreq} \
-        --ref ${ref_reference_genome_name} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
@@ -41,12 +42,16 @@ process TBSTRAINS {
     """
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
-    echo "MTBseq --step TBstrains \
+    echo "${params.mtbseq_path} --step TBstrains \
         --threads ${task.cpus} \
         --mincovf ${params.mincovf} \
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
-        --minfreq ${params.minfreq}"
+        --minfreq ${params.minfreq} \
+        --resilist ${ref_resistance_list} \
+        --intregions ${ref_interesting_regions} \
+        --categories ${ref_gene_categories} \
+        --basecalib ${ref_base_quality_recalibration}"
 
     mkdir Classification
     touch Classification/Strain_Classification.tab
