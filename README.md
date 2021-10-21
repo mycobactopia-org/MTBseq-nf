@@ -20,28 +20,28 @@
 
 The simplest use case is to analyze a few genomes on a local environment. Almost all aspects are customizable but for the sake of brevity, a bare bones step for any beginner user is as shown below
 
-- [ ] Clone the project 
+- [ ] 1. Clone the project 
 
 ```shell
 git clone https://github.com/mtb-bioinformatics/mtbseq-nf
 cd mtbseq-nf
 ```
 
-- [ ] Download the  `gatk-3.8.0` tar from [here](https://console.cloud.google.com/storage/browser/gatk-software/package-archive/gatk;tab=objects?prefix=&forceOnObjectsSortingFiltering=false)
+- [ ] 2. Download the  `gatk-3.8.0` tar from [here](https://console.cloud.google.com/storage/browser/gatk-software/package-archive/gatk;tab=objects?prefix=&forceOnObjectsSortingFiltering=false)
 
-- [ ] Untar it and place it in the `resources` folder
+- [ ] 3. Untar it and place it in the `resources` folder
 
 ```
 tar -xvf GATK_TAR_FILE
 ```
 
-- [ ] Move your genomes to the `data/full_data` folder
+- [ ] 4. Move your genomes to the `data/full_data` folder
 
 They should follow the pattern `SAMPLE_R1.fastq.gz`
 
-- [ ] To run the pipeline, make sure you have `nextflow` setup
+- [ ] 5. To run the pipeline, make sure you have `nextflow` setup
 
-- [ ] Then simply issue the follwing command on the command line 
+- [ ] 6. Then simply issue the follwing command on the command line 
 
 ```
 nextflow run main.nf -profile standard,conda -analysis-type local
