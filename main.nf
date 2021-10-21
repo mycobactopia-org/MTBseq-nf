@@ -5,22 +5,22 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-include { PARALLEL_ANALYSIS } from "./workflows/parallel_analysis.nf"
+// include { PARALLEL_ANALYSIS } from "./workflows/parallel_analysis.nf"
 include { BATCH_ANALYSIS } from "./workflows/batch_analysis.nf"
 
 workflow {
 
     //NOTE: Create a channel for all reference files
-    references_ch = Channel.of[params.global_mtb_ref,
-                               params.global_resilist,
-                               params.global_intregions,
-                               params.global_categories,
-                               params.global_basecalib]
+    references_ch = Channel.of([params.ref,
+                                params.resilist,
+                                params.intregions,
+                                params.categories,
+                                params.basecalib])
 
-    annotations_ch = Channel.of[params.global_resilist,
-                                params.global_intregions,
-                                params.global_categories,
-                                params.global_basecalib]
+    annotations_ch = Channel.of([params.resilist,
+                                 params.intregions,
+                                 params.categories,
+                                 params.basecalib])
 
 
 
@@ -33,16 +33,15 @@ workflow {
 
     } else if( params.run_type == "local" ) {
 
-        reads_ch = Channel.fromPath(params.input_samplesheet)
-        .splitCsv(header: false, skip: 1)
-        .map { row -> {
-                    sampleName           = row[0]
-                    read1                = row[1]
-                    read2                = row[2]
+        reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
 
-                    return tuple(sampleName, tuple(file(read1), file(read2)))
-                }
-            }
+    } else {
+
+        // Read from samplesheet
+
+        reads_ch = Channel.fromPath(params.input_samplesheet)
+                          .splitCsv(header: false, skip: 1)
+
     }
 
     if( params.analysis_mode == "parallel" ) {
@@ -65,6 +64,11 @@ workflow TEST {
     reads_ch = Channel.fromPath("${projectDir}/data/mock_data/input_samplesheet.csv")
         .splitCsv(header: false, skip: 1)
 
-    reads_ch.view()
+    references_ch = Channel.of([params.ref,
+                                params.resilist,
+                                params.intregions,
+                                params.categories,
+                                params.basecalib])
 
+    BATCH_ANALYSIS(reads_ch,references_ch)
 }

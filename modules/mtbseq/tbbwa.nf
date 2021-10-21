@@ -21,9 +21,6 @@ process TBBWA {
 
     mkdir Bam
 
-    # setting up the references as requested by MTBseq manual
-    mv ${ref_reference_genome_name}.* /MTBseq_source/var/ref/.
-
     MTBseq --step TBbwa \
     --threads ${task.cpus} \
     --ref ${ref_reference_genome_name} \

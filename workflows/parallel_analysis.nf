@@ -1,7 +1,7 @@
 nextflow.enable.dsl = 2
 
-include { COHORT_ANALYSIS } from "../cohort_analysis/cohort_analysis.nf"
-include { PER_SAMPLE_ANALYSIS } from "../per_sample_analysis/per_sample_analysis.nf"
+include { COHORT_ANALYSIS } from "./cohort_analysis.nf"
+include { PER_SAMPLE_ANALYSIS } from "./per_sample_analysis.nf"
 
 workflow PARALLEL_ANALYSIS {
     take:

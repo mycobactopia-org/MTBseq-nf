@@ -19,8 +19,6 @@ process TBLIST {
 
     gatk-register ${gatk_jar}
 
-    # setting up the references as requested by MTBseq manual
-    mv ${ref_reference_genome_name}.* /MTBseq_source/var/ref/.
 
     mkdir Position_Tables
 
