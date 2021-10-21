@@ -5,12 +5,12 @@ nextflow.enable.dsl = 2
 // - gatk-register gatk_folder/gatk_jar
 
 
-include { PARALLEL_ANALYSIS } from "./workflows/parallel_analysis/parallel_analysis.nf"
-include { BATCH_ANALYSIS } from "./workflows/batch_analysis/batch_analysis.nf"
+include { PARALLEL_ANALYSIS } from "./workflows/parallel_analysis.nf"
+include { BATCH_ANALYSIS } from "./workflows/batch_analysis.nf"
 
 workflow {
 
-    references_ch = Channel.of[params.global_mtb_ref_path,
+    references_ch = Channel.of[params.global_mtb_ref,
                                params.global_resilist,
                                params.global_intregions,
                                params.global_categories,
@@ -35,7 +35,7 @@ workflow {
 
 workflow test {
     reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
-    references_ch = Channel.of[params.global_mtb_ref_path,
+    references_ch = Channel.of[params.global_mtb_ref,
                                params.global_resilist,
                                params.global_intregions,
                                params.global_categories,

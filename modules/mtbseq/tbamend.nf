@@ -1,17 +1,3 @@
-nextflow.enable.dsl = 2
-
-params.results_dir = "${params.outdir}/tbamend"
-params.save_mode = 'copy'
-params.should_publish = true
-params.project_name = "mtbseq"
-params.mincovf = 4
-params.mincovr = 4
-params.minphred = 4
-params.minfreq = 75
-params.unambig = 95
-params.window = 12
-params.distance = 12
-
 process TBAMEND {
     tag "${params.project_name}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
