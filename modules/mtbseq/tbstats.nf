@@ -21,11 +21,11 @@ process TBSTATS {
     mkdir Statistics
 
     MTBseq --step TBstats \
-    --threads ${task.cpus} \
-    --ref ${ref_reference_genome_name} \
-    --resilist ${ref_resistance_list} \
-    --intregions ${ref_interesting_regions} \
-    --categories ${ref_gene_categories} \
+        --threads ${task.cpus} \
+        --ref ${ref_reference_genome_name} \
+        --resilist ${ref_resistance_list} \
+        --intregions ${ref_interesting_regions} \
+        --categories ${ref_gene_categories} \
     1>>.command.out \
     2>>.command.err \
     || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
