@@ -64,7 +64,7 @@
                     "type": "string",
                     "default": "parallel"
                 },
-                "samplesheet_name": {
+                "cohort_tsv": {
                     "type": "string",
                     "default": "samplesheet.tsv"
                 },

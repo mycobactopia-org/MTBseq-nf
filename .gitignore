@@ -3,5 +3,7 @@
 */**/*gbk
 
 .idea
-work
+
+work/
+results/
 *.nextflow*
