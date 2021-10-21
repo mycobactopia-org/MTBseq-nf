@@ -1,10 +1,3 @@
-nextflow.enable.dsl = 2
-
-params.results_dir = "${params.outdir}/tbgroups"
-params.save_mode = 'copy'
-params.should_publish = true
-params.project_name = "mtbseq"
-
 process TBGROUPS {
     tag "${params.project_name}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish

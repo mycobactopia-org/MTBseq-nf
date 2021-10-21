@@ -1,9 +1,3 @@
-nextflow.enable.dsl = 2
-
-params.results_dir = "${params.outdir}/tbpile"
-params.save_mode = 'copy'
-params.should_publish = true
-
 process TBPILE {
     tag "${genomeFileName}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish

@@ -1,16 +1,5 @@
-nextflow.enable.dsl = 2
-
-params.results_dir = "${params.outdir}/tbfull"
-params.save_mode = 'copy'
-params.should_publish = true
-params.minbqual = 13
-params.mincovf = 4
-params.mincovr = 4
-params.minphred = 4
-params.minfreq = 75
-
 process TBFULL {
-    tag "${params.project_name}"
+    tag "${params.project}"
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
