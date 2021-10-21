@@ -10,13 +10,6 @@ include { BATCH_ANALYSIS } from "./workflows/batch_analysis.nf"
 
 workflow {
 
-    //NOTE: Create a channel for all reference files
-    references_ch = Channel.of([params.resilist,
-                                params.intregions,
-                                params.categories,
-                                params.basecalib])
-
-
     //--------------------------------------------
     // Source the input reads
     //
@@ -48,12 +41,20 @@ workflow {
 
     if( params.analysis_mode == "parallel" ) {
 
-        PARALLEL_ANALYSIS(reads_ch,references_ch)
+        PARALLEL_ANALYSIS(reads_ch,
+                          [params.resilist,
+                           params.intregions,
+                           params.categories,
+                           params.basecalib])
 
     } else {
 
         //NOTE: Use the traditional Batch analysis, similar to MTBseq
-        BATCH_ANALYSIS(reads_ch,references_ch)
+        BATCH_ANALYSIS(reads_ch,
+                       [params.resilist,
+                        params.intregions,
+                        params.categories,
+                        params.basecalib])
 
     }
 }
@@ -65,17 +66,4 @@ workflow {
 workflow TEST {
 
 
-    Channel.fromPath("${params.ref_and_indexes_path}/*")
-        .filter { it.name != params.ref }
-        .view()
-
- // result.ref.view { "$it is fasta" }
- // result.indexes.view { "$it is index" }
- // result.large.view { "$it is large" }
-
-    // Channel.of([params.ref,
-    //                             params.resilist,
-    //                             params.intregions,
-    //                             params.categories,
-    //                             params.basecalib])
 }
