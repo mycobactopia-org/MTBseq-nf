@@ -32,6 +32,9 @@ process TBFULL {
         --minphred ${params.minphred} \
         --minfreq ${params.minfreq} \
         --resilist ${ref_resistance_list} \
+        --unambig ${params.unambig} \
+        --window ${params.window} \
+        --distance ${params.distance} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
         --basecalib ${ref_base_quality_recalibration} \
