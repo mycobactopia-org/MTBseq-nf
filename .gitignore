@@ -4,7 +4,8 @@
 
 .idea
 
+resources/GenomeAnalysisTK.jar
 work/
 data/full_data
-results/
+results*
 *.nextflow*
