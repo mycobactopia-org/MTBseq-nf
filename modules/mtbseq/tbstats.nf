@@ -22,6 +22,7 @@ process TBSTATS {
 
     ${params.mtbseq_path} --step TBstats \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
@@ -37,6 +38,7 @@ process TBSTATS {
     """
     echo "${params.mtbseq_path} --step TBstats \
         --threads ${task.cpus} \
+        --project ${params.project} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
