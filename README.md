@@ -55,7 +55,7 @@ nextflow info
 - [ ] 6. Then simply issue the following command on the command line 
 
 ```
-nextflow run main.nf -profile standard,conda -analysis-type local
+nextflow run main.nf -profile standard,conda
 ```
 
 
