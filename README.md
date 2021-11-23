@@ -42,7 +42,7 @@ They should follow the pattern `SAMPLE_R1.fastq.gz`
 - [ ] 5. To run the pipeline, make sure you have `conda` installed. Moreover, if you don't already have `nextflow` installed, you can use the following commands to install it 
 
 ```shell
-conda install -n mtbseq-nf-env -c bioconda -c conda-forge nextflow 
+conda create -n mtbseq-nf-env -c bioconda -c conda-forge nextflow 
 ```
 
 
