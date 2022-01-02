@@ -25,6 +25,7 @@ process TBGROUPS {
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
+        --distance ${params.distance} \
         --basecalib ${ref_base_quality_recalibration} \
     1>>.command.out \
     2>>.command.err \
@@ -41,6 +42,7 @@ process TBGROUPS {
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
+        --distance ${params.distance} \
         --basecalib ${ref_base_quality_recalibration}"
 
     sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
