@@ -28,6 +28,7 @@ process TBJOIN {
         --mincovr ${params.mincovr} \
         --minphred ${params.minphred} \
         --minfreq ${params.minfreq} \
+        --distance ${params.distance} \
         --resilist ${ref_resistance_list} \
         --intregions ${ref_interesting_regions} \
         --categories ${ref_gene_categories} \
