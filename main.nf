@@ -7,6 +7,31 @@ nextflow.enable.dsl = 2
 
 include { PARALLEL_ANALYSIS } from "./workflows/parallel_analysis.nf"
 include { BATCH_ANALYSIS } from "./workflows/batch_analysis.nf"
+include { QC_REPORTS } from "./workflows/qc_reports.nf"
+
+workflow QUALITY_CONTROL {
+
+    if( params.run_type == "sra" ) {
+
+        reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.ncbi_api_key)
+
+    } else if( params.run_type == "local" ) {
+
+        reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
+
+    } else {
+
+        // Default to reading from a samplesheet
+
+        reads_ch = Channel.fromPath(params.input_samplesheet)
+                          .splitCsv(header: false, skip: 1)
+
+    }
+
+    QC_REPORTS(reads_ch)
+
+}
+
 
 workflow {
 
@@ -34,6 +59,12 @@ workflow {
 
     }
 
+    //--------------------------------------------
+    // Quality Control
+    //--------------------------------------------
+    if (params.skip_qc == false) {
+        QC_REPORTS(reads_ch)
+    }
 
     //--------------------------------------------
     // Analysis mode
