@@ -14,7 +14,7 @@ process FASTQC {
     script:
 
     """
-    fastqc *fastq*
+    fastqc *fastq* -t ${task.cpus}
     """
 
     stub:
