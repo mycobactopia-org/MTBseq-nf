@@ -27,7 +27,7 @@ git clone https://github.com/mtb-bioinformatics/mtbseq-nf
 cd mtbseq-nf
 ```
 
-- [ ] 2. Download the  `gatk-3.8.0` tar from [here](https://console.cloud.google.com/storage/browser/gatk-software/package-archive/gatk;tab=objects?prefix=&forceOnObjectsSortingFiltering=false)
+- [ ] 2. Download the  `gatk-3.8.0` tar from [here](https://console.cloud.google.com/storage/browser/_details/gatk-software/package-archive/gatk/GenomeAnalysisTK-3.8-0-ge9d806836.tar.bz2;tab=live_object)
 
 - [ ] 3. Untar it and place it in the `resources` folder
 
