@@ -4,7 +4,7 @@
 
 .idea
 
-resources/GenomeAnalysisTK.jar
+resources/GenomeAnalysisTK*
 work/
 data/full_data
 results*
