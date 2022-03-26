@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 include { FASTQC } from "../modules/utils/fastqc.nf" addParams (params.FASTQC)
 include { MULTIQC } from "../modules/utils/multiqc.nf" addParams (params.MULTIQC)
 
