@@ -29,9 +29,6 @@
                     "type": "string",
                     "default": "illumina"
                 },
-                "local_location": {
-                    "type": "string"
-                },
                 "gatk38_jar": {
                     "type": "string"
                 }

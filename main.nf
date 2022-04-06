@@ -17,7 +17,7 @@ workflow QUALITY_CONTROL {
 
     } else if( params.run_type == "local" ) {
 
-        reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
+        reads_ch = Channel.fromFilePairs(params.reads)
 
     } else {
 
@@ -48,7 +48,7 @@ workflow {
 
     } else if( params.run_type == "local" ) {
 
-        reads_ch = Channel.fromFilePairs("${params.local_location}/*{R1,R2}*gz")
+        reads_ch = Channel.fromFilePairs(params.reads)
 
     } else {
 
