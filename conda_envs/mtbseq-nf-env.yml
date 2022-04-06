@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - bioconda::mtbseq=1.0.4
+  - bioconda::mtbseq=1.0.3
   - bioconda/linux-64::gatk=3.8.0
   - bioconda::fastqc=0.11.9
   - bioconda::multiqc=1.9

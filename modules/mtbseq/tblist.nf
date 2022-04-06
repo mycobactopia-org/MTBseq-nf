@@ -17,7 +17,7 @@ process TBLIST {
 
     """
 
-    gatk3-register ${gatk_jar}
+    gatk-register ${gatk_jar}
 
 
     mkdir Position_Tables
