@@ -15,7 +15,7 @@ process TBREFINE {
 
     """
 
-    gatk-register ${gatk_jar}
+    gatk3-register ${gatk_jar}
 
 
     mkdir GATK_Bam

@@ -15,7 +15,7 @@ process TBSTRAINS {
 
     """
 
-    gatk-register ${gatk_jar}
+    gatk3-register ${gatk_jar}
 
 
     mkdir Classification

@@ -20,7 +20,7 @@ process TBFULL {
 
     """
 
-    gatk-register ${gatk_jar}
+    gatk3-register ${gatk_jar}
 
 
     ${params.mtbseq_path} --step TBfull \

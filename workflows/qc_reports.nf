@@ -1,5 +1,5 @@
-include { FASTQC } from "../modules/utils/fastqc.nf" addParams (params.FASTQC)
-include { MULTIQC } from "../modules/utils/multiqc.nf" addParams (params.MULTIQC)
+include { FASTQC } from "../modules/qc/fastqc.nf" addParams (params.FASTQC)
+include { MULTIQC } from "../modules/qc/multiqc.nf" addParams (params.MULTIQC)
 
 
 workflow QC_REPORTS {
