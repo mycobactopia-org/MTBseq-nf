@@ -3,6 +3,6 @@ genomeIds:
   - "ERR841440"
   - "ERR1193883"
 
-outdir: "./output"
+outdir: "./test_output"
 
-ncbi_api_key: "FIX ME"
+ncbi_api_key: "b6d95ddb1bbd179bf9408c2726dba5ddfe09"
