@@ -1,0 +1,8 @@
+genomeIds:
+  - "ERR841438"
+  - "ERR841440"
+  - "ERR1193883"
+
+outdir: "./output"
+
+ncbi_api_key: "FIX ME"
