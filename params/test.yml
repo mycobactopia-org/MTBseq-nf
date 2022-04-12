@@ -1,6 +1,6 @@
 genomeIds:
-  - "ERR841438"
-  - "ERR841440"
+  - "ERR037481"
+  - "ERR216945"
   - "ERR1193883"
 
 outdir: "./test_output"
