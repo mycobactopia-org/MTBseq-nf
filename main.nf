@@ -96,5 +96,20 @@ workflow {
 
 workflow TEST {
 
+reads_ch = Channel.fromSRA(params.genomeIds, cache: true, apiKey: params.ncbi_api_key)
+
+PARALLEL_ANALYSIS(reads_ch,
+                  [params.resilist,
+                    params.intregions,
+                    params.categories,
+                    params.basecalib])
+
+BATCH_ANALYSIS(reads_ch,
+               [params.resilist,
+                 params.intregions,
+                 params.categories,
+                 params.basecalib])
+
+
 
 }

@@ -10,5 +10,5 @@ data/full_data
 results*
 *.nextflow*
 
-conda_envs/xbs-nf-env*
+conda_envs/mtbseq-nf-env*
 containers/**/*yml

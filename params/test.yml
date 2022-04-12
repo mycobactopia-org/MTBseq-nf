@@ -1,0 +1,8 @@
+genomeIds:
+  - "ERR037481"
+  - "ERR216945"
+  - "ERR1193883"
+
+outdir: "./test_output"
+
+ncbi_api_key: "API_KEY"
