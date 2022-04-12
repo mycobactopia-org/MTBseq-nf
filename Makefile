@@ -7,5 +7,4 @@ run_dev:
 	nextflow run main.nf -profile dev -resume -with-tower
 
 run_test:
-	nextflow run main.nf -params-file params/test.yml -entry TEST -resume -profile conda
-	nextflow run main.nf -params-file params/test.yml -entry TEST -resume -profile docker
+	nextflow run main.nf -params-file params/test.yml -entry TEST -resume -profile standard,docker
