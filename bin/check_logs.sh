@@ -1,3 +1,4 @@
+#! /usr/bin/bash
 #Checking MTBseq
 mtbseq_logfile="MTBseq*.log"
 if ls $mtbseq_logfile 1> /dev/null 2>&1; then
