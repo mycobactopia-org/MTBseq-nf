@@ -10,7 +10,7 @@ process TBBWA {
 
     output:
     path("Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
-    tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.bam"), emit: bam_tuple
+    tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.{bam,bai}"), emit: bam_tuple
     path("Bam/${genomeFileName}_${params.library_name}*.bam"), emit: bam
 
     script:
