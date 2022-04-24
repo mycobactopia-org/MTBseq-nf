@@ -19,7 +19,7 @@ workflow BATCH_ANALYSIS {
                 .collect()
                 .flatten()
                 .map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
-                .collectFile(name: params.cohort_tsv, newLine: false, storeDir: "${params.outdir}")
+                .collectFile(name: params.cohort_tsv, newLine: false, storeDir: "${params.outdir}", cache: false)
 
         RENAME_FILES(reads_ch)
 

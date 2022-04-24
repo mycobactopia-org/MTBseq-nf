@@ -15,7 +15,7 @@ workflow COHORT_ANALYSIS {
         samples_tsv_file = genome_names
                 .collect()
                 .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
-                .collectFile(name: params.cohort_tsv, newLine: false, storeDir: "${params.outdir}")
+                .collectFile(name: params.cohort_tsv, newLine: false, storeDir: "${params.outdir}", cache: false)
 
         TBJOIN(position_variants.collect(),
                position_tables.collect(),
