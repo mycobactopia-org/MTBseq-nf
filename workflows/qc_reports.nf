@@ -8,6 +8,6 @@ workflow QC_REPORTS {
 
     main:
          FASTQC(reads_ch)
-         MULTIQC(FASTQC.out.MULTIQC.collect())
+         MULTIQC(FASTQC.out.html_zip_ch.collect())
 
 }
