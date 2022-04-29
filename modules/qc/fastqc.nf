@@ -7,7 +7,7 @@ process FASTQC {
 
     output:
     tuple path('*.html'), path('*.zip')
-    path("*.{html,zip}"), emit: MULTIQC
+    path("*.{html,zip}"), emit: html_zip_ch
 
     script:
 
