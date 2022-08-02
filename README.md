@@ -39,6 +39,8 @@ tar -xvf GATK_TAR_FILE
 
 They should follow the pattern `SAMPLE_R1.fastq.gz`
 
+OBS: Please don't use the `_` character on sample names. 
+
 - [ ] 5. To run the pipeline, make sure you have `conda` installed. Moreover, if you don't already have `nextflow` installed, you can use the following commands to install it 
 
 ```shell
@@ -57,9 +59,10 @@ nextflow info
 - [ ] 6. Then simply issue the following command on the command line 
 
 ```
-nextflow run main.nf -profile standard,conda
+nextflow run main.nf -profile standard,conda --analysis_mode {parallel,batch}
 ```
 
+Chosing either parallel or batch as run modes.
 
 
 # Workflow example
@@ -74,6 +77,11 @@ The execution type is determined by the `analysis_mode` parameter
 ## Parallel
 ![parallel-workflow](./resources/dag-parallel.png)
 
+## What are the differences between `Batch` and `Parallel` analysis modes?
+
+Batch uses `MTBseq --step full` on each sample, not allowing parallelization of secondary steps like `TB BWA` and `TB Variants`,
+Parallel enforces the parallelization of each step. The main advantage of Parallel is the precise resource usage, as some steps
+require less CPUs and RAM than other, this allow us to parallelize the steps and optimize the run time.
 
 # Contributions
 
