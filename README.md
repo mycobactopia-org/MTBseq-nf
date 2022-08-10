@@ -63,11 +63,10 @@ OBS: Please don't use the `_` character on sample names. (ie.: Don't use `sample
   ```
 
 - [ ] 7 Simply issue the following command on the command line
-
-```
-nextflow run main.nf -profile standard,{docker,conda} --analysis_mode {parallel,batch}
-```
-Chosing `docker` or `conda`, and `parallel` or `batch` 
+  Chosing `docker` or `conda`, and `parallel` or `batch` 
+  ```
+  nextflow run main.nf -profile standard,{docker,conda} --analysis_mode {parallel,batch}
+  ```
 
   - [ ] 7.1 Runing with conda on parallel mode
 
