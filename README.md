@@ -41,43 +41,50 @@ They should follow the pattern `SAMPLE_R1.fastq.gz` and `SAMPLE_R2.fastq.gz`
 
 OBS: Please don't use the `_` character on sample names. (ie.: Don't use `sample_001_R1.fastq.gz`, `sample001_R1.fastq.gz` would be better)
 
-- [ ] 5. To run the pipeline, make sure you have `conda` or `docker` installed. Moreover, if you don't already have `nextflow` installed, you can use the following commands to install it 
-
-  - [ ] 5.1 If you're using conda:
-
-```shell
-conda create -n mtbseq-nf-env -c bioconda -c conda-forge nextflow 
+- [ ] 5 If you don't already have `nextflow` installed, you can use the following commands to install it 
+```
+ curl -s https://get.nextflow.io | bash
 ```
 
-You can confirm the setup by activating that environment and using the `nextflow info`  command
+- [ ] 6. To run the pipeline, make sure you have `conda` or `docker` installed. 
 
-```
-conda activate -n mtbseq-nf-env
+  - [ ] 6.1 If you're using conda:
 
-nextflow info 
-```
+  ```shell
+  conda create -n mtbseq-nf-env -c bioconda -c conda-forge nextflow 
+  ```
 
+  You can confirm the setup by activating that environment and using the `nextflow info`  command
 
-- [ ] 6. Then simply issue the following command on the command line
+  ```
+  conda activate -n mtbseq-nf-env
+
+  nextflow info 
+  ```
+
+- [ ] Simply issue the following command on the command line
+
 ```
 nextflow run main.nf -profile standard,{docker,conda} --analysis_mode {parallel,batch}
 ```
-  - [ ] 6.1 Runing with conda on parallel mode
-```
-nextflow run main.nf -profile standard,conda --analysis_mode parallel
-```
-  - [ ] 6.2 Runing with conda on batch mode
-```
-nextflow run main.nf -profile standard,conda --analysis_mode batch
-```  
-  - [ ] 6.3 Runing with docker on parallel mode
-```
-nextflow run main.nf -profile standard,docker --analysis_mode parallel
-```
-  - [ ] 6.4 Runing with docker on batch mode
-```
-nextflow run main.nf -profile standard,docker --analysis_mode batch
-```
+Chosing `docker` or `conda`, and `parallel` or `batch` 
+
+  - [ ] 7.1 Runing with conda on parallel mode
+  ```
+  nextflow run main.nf -profile standard,conda --analysis_mode parallel
+  ```
+  - [ ] 7.2 Runing with conda on batch mode
+  ```
+  nextflow run main.nf -profile standard,conda --analysis_mode batch
+  ```  
+  - [ ] 7.3 Runing with docker on parallel mode
+  ```
+  nextflow run main.nf -profile standard,docker --analysis_mode parallel
+  ```
+  - [ ] 7.4 Runing with docker on batch mode
+  ```
+  nextflow run main.nf -profile standard,docker --analysis_mode batch
+  ```
 
 # Workflow example
 
