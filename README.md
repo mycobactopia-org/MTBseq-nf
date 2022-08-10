@@ -70,18 +70,25 @@ nextflow run main.nf -profile standard,{docker,conda} --analysis_mode {parallel,
 Chosing `docker` or `conda`, and `parallel` or `batch` 
 
   - [ ] 7.1 Runing with conda on parallel mode
+
   ```
   nextflow run main.nf -profile standard,conda --analysis_mode parallel
   ```
+
   - [ ] 7.2 Runing with conda on batch mode
+
   ```
   nextflow run main.nf -profile standard,conda --analysis_mode batch
   ```  
+
   - [ ] 7.3 Runing with docker on parallel mode
+
   ```
   nextflow run main.nf -profile standard,docker --analysis_mode parallel
   ```
+
   - [ ] 7.4 Runing with docker on batch mode
+  
   ```
   nextflow run main.nf -profile standard,docker --analysis_mode batch
   ```
