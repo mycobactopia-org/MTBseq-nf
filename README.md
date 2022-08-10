@@ -103,9 +103,10 @@ The execution type is determined by the `analysis_mode` parameter
 
 ### What are the differences between `Batch` and `Parallel` analysis modes?
 
-Batch uses `MTBseq --step full` on each sample, not allowing parallelization of secondary steps like `TB BWA` and `TB Variants`,
-Parallel enforces the parallelization of each step. The main advantage of Parallel is the precise resource usage, as some steps
-require less CPUs and RAM than other, this allow us to parallelize the steps and optimize the run time.
+Batch uses `MTBseq --step full` on each sample, not allowing parallelization of secondary steps like `TB BWA` and `TB Variants` and leaving the resource control to MTBseq,
+Parallel enforces the parallelization of each step. The main advantage of Parallel is the precise resource usage as the paralellization steps are controled by Nextflow, some steps
+require less CPUs and RAM than other, this allow us to optimize the run time.
+
 
 # Contributions
 
