@@ -62,7 +62,7 @@ OBS: Please don't use the `_` character on sample names. (ie.: Don't use `sample
   nextflow info 
   ```
 
-- [ ] Simply issue the following command on the command line
+- [ ] 7 Simply issue the following command on the command line
 
 ```
 nextflow run main.nf -profile standard,{docker,conda} --analysis_mode {parallel,batch}
