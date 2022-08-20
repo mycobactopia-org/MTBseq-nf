@@ -16,6 +16,11 @@
 - Easier customizability for the pipeline, using explicit parameters (`conf/global_parameters.config`).
 - Ability to analyze genomes in **parallel** as well as in **batch**, on `local`, `cloud` and `cluster` environments.
 
+# Parallel execution of MTBseq via MTBseq-nf
+
+![](./docs/MTBseq-nf-modes.png)
+
+
 # Usage 
 
 For usage please refer the dedicated [USAGE](./docs/USAGE.md) docs.
