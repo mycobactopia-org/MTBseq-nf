@@ -6,4 +6,4 @@ set -xue
 
 # NOTE: The conda environments are expected by the `conda_local` profile to be created within `conda_envs` directory
 
-conda env create -p mtbseq-nf-env --file mtbseq-nf-env.yml
+mamba env create -p mtbseq-nf-env --file mtbseq-nf-env.yml
