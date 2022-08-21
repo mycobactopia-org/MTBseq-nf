@@ -10,4 +10,4 @@ RUN micromamba install -y -n base conda-forge::procps-ng  \
 
 COPY --chown=$MAMBA_USER:$MAMBA_USER GenomeAnalysisTK.jar /tmp/GenomeAnalysisTK.jar
 
-RUN gatk-register
+RUN /opt/conda/bin/gatk-register /tmp/GenomeAnalysisTK.jar

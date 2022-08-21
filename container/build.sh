@@ -9,7 +9,7 @@ cp ../conda_envs/mtbseq-nf-env.yml ./
 cp ../resources/GenomeAnalysisTK-3.8-0-ge9d806836/GenomeAnalysisTK.jar ./
 
 echo "Building mtbseq-nf container ..."
-CONTAINER_TAG=0.9.0
+CONTAINER_TAG=0.9.5
 CONTAINER_NAME=$DOCKER_NAMESPACE/"mtbseq-nf":$CONTAINER_TAG
 
 echo "Container Name : $CONTAINER_NAME "
