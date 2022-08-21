@@ -7,3 +7,7 @@ RUN micromamba install -y -f /tmp/mtbseq-nf-env.yml -n base
 
 RUN micromamba install -y -n base conda-forge::procps-ng  \
    && micromamba clean -a -y
+
+COPY --chown=$MAMBA_USER:$MAMBA_USER GenomeAnalysisTK.jar /tmp/GenomeAnalysisTK.jar
+
+RUN gatk-register

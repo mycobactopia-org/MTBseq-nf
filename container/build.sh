@@ -6,6 +6,7 @@ set -uex
 DOCKER_NAMESPACE="rg.fr-par.scw.cloud/nfcontainers"
 
 cp ../conda_envs/mtbseq-nf-env.yml ./
+cp ../resources/GenomeAnalysisTK-3.8-0-ge9d806836/GenomeAnalysisTK.jar ./
 
 echo "Building mtbseq-nf container ..."
 CONTAINER_TAG=0.9.0
@@ -15,7 +16,7 @@ echo "Container Name : $CONTAINER_NAME "
 docker build -t $CONTAINER_NAME .
 CONTAINER_ID=$(docker run -d $CONTAINER_NAME)
 docker commit $CONTAINER_ID $CONTAINER_NAME
-docker push $DOCKER_NAMESPACE/$container_dir:$CONTAINER_TAG
+docker push $DOCKER_NAMESPACE/"mtbseq-nf":$CONTAINER_TAG
 docker stop $CONTAINER_ID
 
 
