@@ -2,8 +2,7 @@ nextflow.enable.dsl = 2
 
 include { FASTQC } from "./modules/qc/fastqc.nf" addParams (params.FASTQC)
 include { MULTIQC } from "./modules/qc/multiqc.nf" addParams (params.MULTIQC)
-include { QC_REPORTS } from "./workflows/normal_analysis.nf"
-include { MTBSEQ_NF } from "./workflows/normal_analysis.nf"
+include { MTBSEQ_NF } from "./workflows/mtbseq.nf"
 
 //--------------------------------------------
 // Source the input reads
