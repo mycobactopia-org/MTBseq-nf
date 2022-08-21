@@ -20,5 +20,6 @@ docker push $DOCKER_NAMESPACE/"mtbseq-nf":$CONTAINER_TAG
 docker stop $CONTAINER_ID
 
 
-echo "Deleting the copied env file"
+echo "Deleting the copied files"
 rm mtbseq-nf-env.yml
+rm GenomeAnalysisTK.jar
