@@ -9,21 +9,22 @@
 - Ease of use on a range of infrastructure (cloud/on-prem clusters/local machine)
 - Resumability for failed processes
 - Centralized locations for specifying 
-    - MTBseq parameters (`conf/global_parameters.config`)
+     MTBseq parameters (`default_params.config`)
     - Hardware requirements (`conf/standard.config`)
     - Software requirements (`conf/docker.config` or `conf/conda.config`)
 - Dedicated user interface for all parameters for wider audience (`nextflow_schema.json`). This only works on [Nextflow Tower](tower.nf/).
-- Easier customizability for the pipeline, using explicit parameters (`conf/global_parameters.config`).
+- Easier customizability for the pipeline, using explicit parameters (`default_params.config`).
 - Ability to analyze genomes in **parallel** as well as in **batch**, on `local`, `cloud` and `cluster` environments.
 
 # Parallel execution of MTBseq via MTBseq-nf
 
 ![](./docs/MTBseq-nf-modes.png)
 
+This pipeline add a new option for running mtbseq with paralellization using nextflow to control the resource utilization, as well optimizing the overall time to run it.
 
 # Installation and Usage 
 
-For installation and usage please refer the dedicated [INSTALL](./docs/INSTALL.md) [USAGE](./docs/USAGE.md) documents.
+For installation and usage please refer the dedicated [INSTALL](./docs/INSTALL.md) and[USAGE](./docs/USAGE.md) documents.
 
 # Contributions
 
