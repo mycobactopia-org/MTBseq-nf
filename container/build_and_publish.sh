@@ -26,4 +26,4 @@ docker stop $CONTAINER_ID
 
 echo "Deleting the copied files"
 rm mtbseq-nf-env.yml
-rm -rf GenomeAnalysisTK*.jar
+rm -rf GenomeAnalysisTK*
