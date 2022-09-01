@@ -21,9 +21,9 @@
 ![](./docs/MTBseq-nf-modes.png)
 
 
-# Usage 
+# Installation and Usage 
 
-For usage please refer the dedicated [USAGE](./docs/USAGE.md) docs.
+For installation and usage please refer the dedicated [INSTALL](./docs/INSTALL.md) [USAGE](./docs/USAGE.md) documents.
 
 # Contributions
 
