@@ -20,6 +20,7 @@ mamba env create -p mtbseq-nf-env --file mtbseq-nf-env.yml
 
 echo "Registering GATK Jar"
 
+# TODO: Good candidate for a clean approach in a refactor.
 eval "$(conda shell.bash hook)"
 conda activate "./mtbseq-nf-env"
 gatk-register GenomeAnalysisTK.jar 
