@@ -23,11 +23,23 @@
 
 ![](./docs/MTBseq-nf-modes.png)
 
-This pipeline add a new option for running mtbseq with paralellization using nextflow to control the resource utilization, as well optimizing the overall time to run it.
+This pipeline add a new option for running MTBseq with paralellization using nextflow to control the resource utilization, as well optimizing the overall time to run it.
+
+## Normal and Parallel workflows
+
+This pipeline has two execution types: normal and parallel and here is a visual representation.
+
+The execution type is determined by the presence of `parallel` parameter.
+
+## What are the differences between `Normal` and `Parallel` analysis modes?
+
+A normal MTBseq run would use `MTBseq --step full` and all samples would move to the next stage of the analysis in sync with each other, hence not allowing parallelization of analysis for samples which have been analyzed at a given step. Steps like `TB BWA` and `TB Variants` and leading to suboptimal usage of the available hardware.
+
+Using `--parallel` run we enforce the parallelization of each step. The main advantage of it is the precise resource usage as the steps are controlled by Nextflow, and some steps require less CPUs and RAM than other, this allow us to optimize the run time and resource costs.
 
 # Installation and Usage
 
-For installation and usage please refer the dedicated [INSTALL](./docs/INSTALL.md) and[USAGE](./docs/USAGE.md) documents.
+For installation and usage please refer the dedicated [INSTALL](./docs/INSTALL.md) and [USAGE](./docs/USAGE.md) documents.
 
 # Contributions
 
