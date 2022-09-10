@@ -15,21 +15,19 @@ if( params.run_type == "folder" ) {
     // Default to reading from a samplesheet
 
     //NOTE: Expected structure of input CSV samplesheet
-    // read1       read2
-    // R1,         R2
+    // sampleName    read1    read2
+    // ERX1933967    R1,      R2
 
     reads_ch = Channel.fromPath(params.input_samplesheet)
             .splitCsv(header: false, skip: 1)
             .map { row -> {
-                        read1             = row[0]
-                        read2             = row[1]
+                        read1             = row[1]
+                        read2             = row[2]
                     }
 
                 return tuple(tuple(file(read1), file(read2)))
             }
         }
-
-
 }
 
 
