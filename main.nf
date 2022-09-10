@@ -7,16 +7,16 @@ include { MTBSEQ_NF } from "./workflows/mtbseq.nf"
 //--------------------------------------------
 
 
-if( params.run_type == "folder" ) {
+if( params.input_fastqs_folder ) {
 
-    reads_ch = Channel.fromFilePairs(params.input_folder)
+    reads_ch = Channel.fromFilePairs(params.input_fastqs_folder)
 
 } else {
     // Default to reading from a samplesheet
 
     //NOTE: Expected structure of input CSV samplesheet
-    // sampleName    read1    read2
-    // ERX1933967    R1,      R2
+    // sampleName,read1,read2
+    // ERX1933967,R1,R2
 
     reads_ch = Channel.fromPath(params.input_samplesheet)
             .splitCsv(header: false, skip: 1)
@@ -28,7 +28,6 @@ if( params.run_type == "folder" ) {
                 return tuple(tuple(file(read1), file(read2)))
             }
         }
-}
 
 
 

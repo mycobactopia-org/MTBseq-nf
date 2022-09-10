@@ -6,7 +6,7 @@ include { TBJOIN } from '../../modules/mtbseq/tbjoin.nf' addParams (params.TBJOI
 include { TBAMEND } from '../../modules/mtbseq/tbamend.nf' addParams (params.TBAMEND)
 include { TBGROUPS } from '../../modules/mtbseq/tbgroups.nf' addParams (params.TBGROUPS)
 
-workflow BATCH_ANALYSIS {
+workflow NORMAL_ANALYSIS {
 
     take:
         reads_ch

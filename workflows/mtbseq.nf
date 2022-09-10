@@ -16,34 +16,34 @@ workflow MTBSEQ_NF {
         //--------------------------------------------
         // Optional QC analysis
         //--------------------------------------------
-
         if( params.only_qc ) {
 
              FASTQC(reads_ch)
              MULTIQC(FASTQC.out.html_zip_ch.collect())
 
-        }
-
-        //--------------------------------------------
-        // Analysis mode
-        //--------------------------------------------
-
-        if( params.parallel ) {
-
-            PARALLEL_ANALYSIS(reads_ch,
-                              [params.resilist,
-                               params.intregions,
-                               params.categories,
-                               params.basecalib])
-
         } else {
+            //--------------------------------------------
+            // Analysis mode
+            //--------------------------------------------
+            if( params.parallel && !params.only_qc ) {
 
-            //NOTE: Defaults to the normal analysis as implemented in MTBseq
-            NORMAL_ANALYSIS(reads_ch,
-                           [params.resilist,
-                            params.intregions,
-                            params.categories,
-                            params.basecalib])
+                PARALLEL_ANALYSIS(reads_ch,
+                                  [params.resilist,
+                                   params.intregions,
+                                   params.categories,
+                                   params.basecalib])
+
+            } else {
+
+                //NOTE: Defaults to the normal analysis as implemented in MTBseq
+                NORMAL_ANALYSIS(reads_ch,
+                               [params.resilist,
+                                params.intregions,
+                                params.categories,
+                                params.basecalib])
+
+            }
 
         }
+
 }
