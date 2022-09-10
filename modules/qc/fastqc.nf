@@ -3,23 +3,25 @@ process FASTQC {
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-    tuple val(genomeName), path(genomeReads)
+        tuple val(genomeName), path(genomeReads)
 
     output:
-    tuple path('*.html'), path('*.zip')
-    path("*.{html,zip}"), emit: html_zip_ch
+        tuple path('*.html'), path('*.zip')
+        path("*.{html,zip}"), emit: html_zip_ch
 
     script:
 
-    """
-    fastqc *fastq* -t ${task.cpus}
-    """
+        """
+        fastqc *fastq* -t ${task.cpus}
+        """
 
     stub:
 
-    """
-    echo "fastqc *fastq*"
-    touch ${genomeName}.html
-    touch ${genomeName}.zip
-    """
+        """
+        sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
+
+        echo "fastqc *fastq*"
+        touch ${genomeName}.html
+        touch ${genomeName}.zip
+        """
 }
