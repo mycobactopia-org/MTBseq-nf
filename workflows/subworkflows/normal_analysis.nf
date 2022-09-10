@@ -23,7 +23,7 @@ workflow NORMAL_ANALYSIS {
 
         RENAME_FILES(reads_ch)
 
-    //NOTE: Requires atleast 5_CPU/16_MEM
+        //NOTE: Requires atleast 5_CPU/16_MEM
         TBFULL(RENAME_FILES.out.collect(),
                params.gatk38_jar,
                params.user,
