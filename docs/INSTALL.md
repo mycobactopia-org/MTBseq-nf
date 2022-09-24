@@ -34,6 +34,11 @@ cd conda_envs
 bash setup_conda_envs.sh
 ```
 
+
+## Docker based execution
+
+For environments where docker is available, the pipeline will download a custom container and run the analysis.
+
 This step will generate the environment at this folder, nextflow will take care of activating this environment when
 executing the pipeline
 
