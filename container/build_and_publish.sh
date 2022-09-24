@@ -4,7 +4,7 @@ set -uex
 # NOTE: Make sure you've set the environment correctly and are logged in to the registry.
 # NOTE: Login to github registry with `echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin`
 
-CONTAINER_TAG=0.9.6
+CONTAINER_TAG=0.9.7
 
 DOCKER_NAMESPACE="ghcr.io/mtb-bioinformatics"
 
