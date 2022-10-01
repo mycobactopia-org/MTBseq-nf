@@ -1,89 +1,83 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/MTBseq-nf/master/nextflow_schema.json",
-    "title": "MTBseq-nf pipeline parameters",
-    "description": "MTBSeq packaged as a Nextflow Workflow for usability and sensible defaults",
-    "type": "object",
-    "definitions": {
-        "input_output_options": {
-            "title": "Input/output options",
-            "type": "object",
-            "fa_icon": "fas fa-terminal",
-            "description": "Define where the pipeline should find input data and save output data.",
-            "properties": {
-                "reads": {
-                    "type": "string"
-                },
-                "genomeIds": {
-                    "type": "string"
-                },
-                "outdir": {
-                    "type": "string",
-                    "default": "results",
-                    "fa_icon": "fas fa-folder-open"
-                },
-                "run_type": {
-                    "type": "string"
-                },
-                "library_name": {
-                    "type": "string",
-                    "default": "illumina"
-                },
-                "gatk38_jar": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "gatk38_jar"
-            ]
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://raw.githubusercontent.com/MTBseq-nf/master/nextflow_schema.json",
+  "title": "MTBseq-nf pipeline parameters",
+  "description": "MTBSeq packaged as a Nextflow Workflow for usability and sensible defaults",
+  "type": "object",
+  "definitions": {
+    "input_output_options": {
+      "title": "Input/output options",
+      "type": "object",
+      "fa_icon": "fas fa-terminal",
+      "description": "Define where the pipeline should find input data and save output data.",
+      "properties": {
+        "reads": {
+          "type": "string"
         },
-        "reference_genome_options": {
-            "title": "Reference genome options",
-            "type": "object",
-            "fa_icon": "fas fa-dna",
-            "properties": {
-                "mtb_reference_fasta": {
-                    "type": "string"
-                }
-            }
+        "genomeIds": {
+          "type": "string"
         },
-        "generic_options": {
-            "title": "Generic options",
-            "type": "object",
-            "fa_icon": "fas fa-file-import",
-            "help_text": "These options are common to all MTBseq processes.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
-            "properties": {
-                "project_name": {
-                    "type": "string",
-                    "default": "prj"
-                },
-                "analysis_mode": {
-                    "type": "string",
-                    "default": "parallel"
-                },
-                "cohort_tsv": {
-                    "type": "string",
-                    "default": "samplesheet.tsv"
-                },
-                "ncbi_api_key": {
-                    "type": "string"
-                },
-                "user": {
-                    "type": "string",
-                    "default": "alice"
-                }
-            }
-        }
+        "outdir": {
+          "type": "string",
+          "default": "results",
+          "fa_icon": "fas fa-folder-open"
+        },
+        "run_type": {
+          "type": "string"
+        },
+        "library_name": {
+          "type": "string",
+          "default": "illumina"
+        },
+      },
     },
-    "allOf": [
-        {
-            "$ref": "#/definitions/input_output_options"
-        },
-        {
-            "$ref": "#/definitions/reference_genome_options"
-        },
-        {
-            "$ref": "#/definitions/generic_options"
+    "reference_genome_options": {
+      "title": "Reference genome options",
+      "type": "object",
+      "fa_icon": "fas fa-dna",
+      "properties": {
+        "mtb_reference_fasta": {
+          "type": "string"
         }
-    ]
+      }
+    },
+    "generic_options": {
+      "title": "Generic options",
+      "type": "object",
+      "fa_icon": "fas fa-file-import",
+      "help_text": "These options are common to all MTBseq processes.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "default": "prj"
+        },
+        "analysis_mode": {
+          "type": "string",
+          "default": "parallel"
+        },
+        "cohort_tsv": {
+          "type": "string",
+          "default": "samplesheet.tsv"
+        },
+        "ncbi_api_key": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string",
+          "default": "alice"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/definitions/input_output_options"
+    },
+    {
+      "$ref": "#/definitions/reference_genome_options"
+    },
+    {
+      "$ref": "#/definitions/generic_options"
+    }
+  ]
 }

@@ -4,7 +4,6 @@ process TBFULL {
 
     input:
         path("*")
-        path(gatk_jar)
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
@@ -19,9 +18,6 @@ process TBFULL {
     script:
 
         """
-
-        ${ params.load_gatk38_jar ? "gatk-register ${gatk_jar}" : ""}
-
 
         ${params.mtbseq_path} --step TBfull \
             --thread ${task.cpus} \

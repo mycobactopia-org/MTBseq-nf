@@ -5,7 +5,6 @@ process TBGROUPS {
     input:
         path("Amend/*")
         path(samplesheet_tsv)
-        path(gatk_jar)
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
@@ -14,8 +13,6 @@ process TBGROUPS {
 
     script:
         """
-        ${ params.load_gatk38_jar ? "gatk-register ${gatk_jar}" : ""}
-
         mkdir Groups
 
         ${params.mtbseq_path} --step TBgroups \

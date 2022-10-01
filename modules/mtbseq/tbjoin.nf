@@ -6,7 +6,6 @@ process TBJOIN {
         path("Called/*")
         path("Position_Tables/*")
         path(samplesheet_tsv)
-        path(gatk_jar)
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
@@ -16,8 +15,6 @@ process TBJOIN {
 
     script:
         """
-        ${ params.load_gatk38_jar ? "gatk-register ${gatk_jar}" : ""}
-
         mkdir Joint
 
         ${params.mtbseq_path} --step TBjoin \

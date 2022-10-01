@@ -4,7 +4,6 @@ process TBBWA {
 
     input:
         tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
-        path(gatk_jar)
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
@@ -16,8 +15,6 @@ process TBBWA {
     script:
 
         """
-        ${ params.load_gatk38_jar ? "gatk-register ${gatk_jar}" : ""}
-
         mkdir Bam
 
         ${params.mtbseq_path} --step TBbwa \

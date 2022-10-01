@@ -20,19 +20,16 @@ workflow COHORT_ANALYSIS {
         TBJOIN(position_variants.collect(),
                position_tables.collect(),
                samples_tsv_file,
-               params.gatk38_jar,
                params.user,
                references_ch)
 
         TBAMEND(TBJOIN.out.joint_samples,
                 samples_tsv_file,
-                params.gatk38_jar,
                 params.user,
                 references_ch)
 
         TBGROUPS(TBAMEND.out.samples_amended,
                  samples_tsv_file,
-                 params.gatk38_jar,
                  params.user,
                  references_ch)
 

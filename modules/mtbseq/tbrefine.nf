@@ -4,7 +4,6 @@ process TBREFINE {
 
     input:
         tuple val(genomeFileName), path("Bam/")
-        path(gatk_jar)
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
@@ -14,9 +13,6 @@ process TBREFINE {
     script:
 
         """
-
-        ${ params.load_gatk38_jar ? "gatk-register ${gatk_jar}" : ""}
-
         mkdir GATK_Bam
 
         ${params.mtbseq_path} --step TBrefine \

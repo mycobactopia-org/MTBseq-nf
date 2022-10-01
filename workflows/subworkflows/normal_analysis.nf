@@ -25,26 +25,22 @@ workflow NORMAL_ANALYSIS {
 
         //NOTE: Requires atleast 5_CPU/16_MEM
         TBFULL(RENAME_FILES.out.collect(),
-               params.gatk38_jar,
                params.user,
                references_ch)
 
         TBJOIN(TBFULL.out.position_variants.collect(),
                TBFULL.out.position_tables.collect(),
                samples_tsv_file,
-               params.gatk38_jar,
                params.user,
                references_ch)
 
         TBAMEND(TBJOIN.out.joint_samples,
                 samples_tsv_file,
-                params.gatk38_jar,
                 params.user,
                 references_ch)
 
         TBGROUPS(TBAMEND.out.samples_amended,
                  samples_tsv_file,
-                 params.gatk38_jar,
                  params.user,
                  references_ch)
 

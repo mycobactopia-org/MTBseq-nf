@@ -5,7 +5,6 @@ process TBSTATS {
     input:
         path("Bam/*")
         path("Position_Tables/*")
-        path(gatk_jar)
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
@@ -15,9 +14,6 @@ process TBSTATS {
     script:
 
         """
-        ${ params.load_gatk38_jar ? "gatk-register ${gatk_jar}" : ""}
-
-
         mkdir Statistics
 
         ${params.mtbseq_path} --step TBstats \

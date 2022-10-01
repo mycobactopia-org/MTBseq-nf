@@ -14,22 +14,20 @@ workflow PER_SAMPLE_ANALYSIS {
         references_ch
 
     main:
-        TBBWA(reads_ch, params.gatk38_jar, params.user, references_ch)
-        TBREFINE(TBBWA.out.bam_tuple, params.gatk38_jar, params.user, references_ch)
-        TBPILE(TBREFINE.out.gatk_bam, params.gatk38_jar, params.user, references_ch)
-        TBLIST(TBPILE.out.mpileup, params.gatk38_jar, params.user, references_ch)
-        TBVARIANTS(TBLIST.out.position_table_tuple, params.gatk38_jar ,params.user, references_ch)
+        TBBWA(reads_ch, params.user, references_ch)
+        TBREFINE(TBBWA.out.bam_tuple, params.user, references_ch)
+        TBPILE(TBREFINE.out.gatk_bam, params.user, references_ch)
+        TBLIST(TBPILE.out.mpileup, params.user, references_ch)
+        TBVARIANTS(TBLIST.out.position_table_tuple, params.user, references_ch)
 
     // NOTE: These are part of per-sample-analysis but they need the output from
     // all other processes to compute the metrics for the cohort.
         TBSTATS(TBBWA.out.bam.collect(),
                 TBLIST.out.position_table.collect(),
-                params.gatk38_jar,
                 params.user,
                 references_ch)
 
         TBSTRAINS(TBLIST.out.position_table.collect(),
-                  params.gatk38_jar,
                   params.user,
                   references_ch)
 

@@ -5,7 +5,6 @@ process TBPILE {
 
     input:
         tuple val(genomeFileName), path("GATK_Bam/*")
-        path(gatk_jar)
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
@@ -16,8 +15,6 @@ process TBPILE {
     script:
 
         """
-        ${ params.load_gatk38_jar ? "gatk-register ${gatk_jar}" : ""}
-
         mkdir Mpileup
 
         ${params.mtbseq_path} --step TBpile \
