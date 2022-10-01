@@ -16,9 +16,7 @@ process TBLIST {
     script:
 
         """
-
-        gatk-register ${gatk_jar}
-
+        ${ params.load_gatk38_jar ? "gatk-register ${gatk_jar}" : ""}
 
         mkdir Position_Tables
 

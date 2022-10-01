@@ -16,7 +16,7 @@ process TBJOIN {
 
     script:
         """
-        gatk-register ${gatk_jar}
+        ${ params.load_gatk38_jar ? "gatk-register ${gatk_jar}" : ""}
 
         mkdir Joint
 
