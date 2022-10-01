@@ -22,8 +22,9 @@ $condaBinary env create -p mtbseq-nf-env --file mtbseq-nf-env.yml
 
 echo "Registering GATK Jar"
 
-eval "$($condaBinary shell.bash hook)"
-$condaBinary activate "./mtbseq-nf-env"
+# Refactor this to be able to rely upon micromamba
+eval "$(conda shell.bash hook)"
+conda activate "./mtbseq-nf-env"
 
 gatk-register GenomeAnalysisTK.jar 
 
