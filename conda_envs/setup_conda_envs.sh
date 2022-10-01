@@ -22,8 +22,7 @@ $condaBinary env create -p mtbseq-nf-env --file mtbseq-nf-env.yml
 
 echo "Registering GATK Jar"
 
-# TODO: Good candidate for a clean approach in a refactor.
-eval "$(conda shell.bash hook)"
+eval "$($condaBinary shell.bash hook)"
 $condaBinary activate "./mtbseq-nf-env"
 
 gatk-register GenomeAnalysisTK.jar 
