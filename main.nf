@@ -2,17 +2,14 @@ nextflow.enable.dsl = 2
 
 include { MTBSEQ_NF } from "./workflows/mtbseq.nf"
 
+
+
+workflow {
+
 //--------------------------------------------
 // Source the input reads
 //--------------------------------------------
 
-
-if( params.input_fastqs_folder ) {
-
-    reads_ch = Channel.fromFilePairs(params.input_fastqs_folder)
-
-} else {
-    // Default to reading from a samplesheet
 
     //NOTE: Expected structure of input CSV samplesheet
     // sampleName,read1,read2
@@ -28,11 +25,7 @@ if( params.input_fastqs_folder ) {
 
                 return tuple(sampleName, tuple(file(read1), file(read2)))
             }
-        }
 
-
-
-workflow {
 
     MTBSEQ_NF(reads_ch)
 

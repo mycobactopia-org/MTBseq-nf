@@ -21,8 +21,7 @@ git clone https://github.com/mtb-bioinformatics/MTBseq-nf.git
 ## Conda environment creation
 
 > **Note**
-> These instructions will generate a conda environment at the
-> project folder
+> These instructions will generate a conda environment in the project folder
 
 If you're planing to run the pipeline using conda, you'll need to setup the
 conda enviroment prior running it.
@@ -34,13 +33,11 @@ cd conda_envs
 bash setup_conda_envs.sh
 ```
 
-
 ## Docker based execution
 
 For environments where docker is available, the pipeline will download a custom container and run the analysis.
 
-This step will generate the environment at this folder, nextflow will take care of activating this environment when
-executing the pipeline
+This step will generate the environment at this folder, nextflow will take care of activating this environment when executing the pipeline
 
 You can confirm the setup by activating that environment and using the `nextflow info`  command
 

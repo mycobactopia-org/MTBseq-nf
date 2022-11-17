@@ -6,7 +6,12 @@ The simplest use case is to analyze a few genomes on a local environment (laptop
 
 - [ ] 1. Make sure that you have installed MTBseq-nf following our [INSTALL]("./INSTALL") docs
 
-- [ ] 2. Create a `fastqs` folder and add your `fastq` files inside it
+- [ ] 2. Create a CSV samplesheet and add with the following structure
+
+```
+sampleName,read1,read2
+ERX1933967,/full/path/to/ERX1933967_R1.fastq.gz,/full/path/to/ERX1933967_R2.fastq.gz
+```
 
 They should follow the pattern `SAMPLE_R1.fastq.gz` and `SAMPLE_R2.fastq.gz`
 
@@ -16,9 +21,6 @@ They should follow the pattern `SAMPLE_R1.fastq.gz` and `SAMPLE_R2.fastq.gz`
 > **Note**
 > We suggest the usage of [fetchngs](https://nf-co.re/fetchngs) for fetching fastq
 > data from private or public repositories
-
-> **Note**
-> You may specify another folder containing the genomes by the `--folder` parameter
 
 - [ ] 3.1 If you're using conda:
 
