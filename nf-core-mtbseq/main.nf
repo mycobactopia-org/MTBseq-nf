@@ -4,6 +4,7 @@
     nf-core/mtbseq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Github : https://github.com/nf-core/mtbseq
+
     Website: https://nf-co.re/mtbseq
     Slack  : https://nfcore.slack.com/channels/mtbseq
 ----------------------------------------------------------------------------------------
