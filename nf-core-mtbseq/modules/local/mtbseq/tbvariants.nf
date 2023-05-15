@@ -26,19 +26,20 @@ process MTBSEQ_TBVARIANTS {
     """
     mkdir Called
 
-    MTBseq --step TBvariants \
-            --threads ${task.cpus} \
-            --project ${params.project} \
-            --mincovf ${params.mincovf} \
-            --mincovr ${params.mincovr} \
-            --minphred ${params.minphred} \
-            --minfreq ${params.minfreq} \
-            --resilist ${ref_resistance_list} \
-            --intregions ${ref_interesting_regions} \
-            --categories ${ref_gene_categories} \
-            --basecalib ${ref_base_quality_recalibration} \
-        1>>.command.out \
-        2>>.command.err \
+    MTBseq --step TBvariants \\
+            --threads ${task.cpus} \\
+            --project ${params.project} \\
+            --mincovf ${params.mincovf} \\
+            --mincovr ${params.mincovr} \\
+            --minphred ${params.minphred} \\
+            --minfreq ${params.minfreq} \\
+            --resilist ${ref_resistance_list} \\
+            --intregions ${ref_interesting_regions} \\
+            --categories ${ref_gene_categories} \\
+            --basecalib ${ref_base_quality_recalibration} \\
+       $args               \\
+       1>>.command.out \\
+       2>>.command.err \\
         || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
     cat <<-END_VERSIONS > versions.yml
