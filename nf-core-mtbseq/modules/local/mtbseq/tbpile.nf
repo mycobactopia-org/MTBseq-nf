@@ -1,5 +1,5 @@
 process MTBSEQ_TBPILE {
-    tag "$meta.id - $params.project"
+    tag "${meta.id} - ${params.project}"
     label 'process_medium'
     conda "bioconda::mtbseq=1.0.4"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
