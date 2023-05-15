@@ -36,13 +36,6 @@ WorkflowMain.initialise(workflow, params, log)
 
 include { MTBSEQ } from './workflows/mtbseq'
 
-//
-// WORKFLOW: Run main nf-core/mtbseq analysis pipeline
-//
-workflow NFCORE_MTBSEQ {
-    MTBSEQ ()
-}
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN ALL WORKFLOWS
@@ -54,7 +47,7 @@ workflow NFCORE_MTBSEQ {
 // See: https://github.com/nf-core/rnaseq/issues/619
 //
 workflow {
-    NFCORE_MTBSEQ ()
+    MTBSEQ ()
 }
 
 /*
