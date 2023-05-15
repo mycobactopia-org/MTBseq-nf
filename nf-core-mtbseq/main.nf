@@ -4,6 +4,7 @@
     nf-core/mtbseq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Github : https://github.com/nf-core/mtbseq
+
     Website: https://nf-co.re/mtbseq
     Slack  : https://nfcore.slack.com/channels/mtbseq
 ----------------------------------------------------------------------------------------
@@ -35,6 +36,13 @@ WorkflowMain.initialise(workflow, params, log)
 
 include { MTBSEQ } from './workflows/mtbseq'
 
+//
+// WORKFLOW: Run main nf-core/mtbseq analysis pipeline
+//
+workflow NFCORE_MTBSEQ {
+    MTBSEQ ()
+}
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN ALL WORKFLOWS
@@ -46,7 +54,7 @@ include { MTBSEQ } from './workflows/mtbseq'
 // See: https://github.com/nf-core/rnaseq/issues/619
 //
 workflow {
-    MTBSEQ ()
+    NFCORE_MTBSEQ ()
 }
 
 /*
