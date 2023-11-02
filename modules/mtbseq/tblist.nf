@@ -13,20 +13,20 @@ process TBLIST {
         path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: position_table
 
     script:
-
+        def args = task.ext.args ?: "--minbqual ${params.minbqual}"
         """
         mkdir Position_Tables
 
-        ${params.mtbseq_path} --step TBlist \
-            --threads ${task.cpus} \
-            --project ${params.project} \
-            --minbqual ${params.minbqual} \
-            --resilist ${ref_resistance_list} \
-            --intregions ${ref_interesting_regions} \
-            --categories ${ref_gene_categories} \
-            --basecalib ${ref_base_quality_recalibration} \
-        1>>.command.out \
-        2>>.command.err \
+        ${params.mtbseq_path} --step TBlist \\
+            --threads ${task.cpus} \\
+            --project ${params.project} \\
+            --resilist ${ref_resistance_list} \\
+            --intregions ${ref_interesting_regions} \\
+            --categories ${ref_gene_categories} \\
+            --basecalib ${ref_base_quality_recalibration} \\
+            ${args} \\
+        1>>.command.out \\
+        2>>.command.err \\
         || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
 

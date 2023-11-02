@@ -17,15 +17,15 @@ process TBPILE {
         """
         mkdir Mpileup
 
-        ${params.mtbseq_path} --step TBpile \
-            --threads ${task.cpus} \
-            --project ${params.project} \
-            --resilist ${ref_resistance_list} \
-            --intregions ${ref_interesting_regions} \
-            --categories ${ref_gene_categories} \
-            --basecalib ${ref_base_quality_recalibration} \
-        1>>.command.out \
-        2>>.command.err \
+        ${params.mtbseq_path} --step TBpile \\
+            --threads ${task.cpus} \\
+            --project ${params.project} \\
+            --resilist ${ref_resistance_list} \\
+            --intregions ${ref_interesting_regions} \\
+            --categories ${ref_gene_categories} \\
+            --basecalib ${ref_base_quality_recalibration} \\
+        1>>.command.out \\
+        2>>.command.err \\
         || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
         """
