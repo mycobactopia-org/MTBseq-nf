@@ -1,8 +1,6 @@
-nextflow.enable.dsl = 2
-
-include { TBJOIN } from '../../modules/mtbseq/tbjoin.nf' addParams (params.TBJOIN)
-include { TBAMEND } from '../../modules/mtbseq/tbamend.nf' addParams (params.TBAMEND)
-include { TBGROUPS } from '../../modules/mtbseq/tbgroups.nf' addParams (params.TBGROUPS)
+include { TBJOIN } from '../../../modules/mtbseq/tbjoin.nf' addParams (params.TBJOIN)
+include { TBAMEND } from '../../../modules/mtbseq/tbamend.nf' addParams (params.TBAMEND)
+include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf' addParams (params.TBGROUPS)
 
 workflow COHORT_ANALYSIS {
     take:

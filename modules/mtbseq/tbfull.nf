@@ -34,6 +34,7 @@ process TBFULL {
         """
 
     stub:
+        def genomeFileName = "stub"
         """
         sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 

@@ -38,21 +38,9 @@ workflow MTBSEQNF {
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
     // MTBSEQ run modes
-
-    reads_ch = Channel.fromPath(params.input_samplesheet)
-            .splitCsv(header: false, skip: 1)
-            .map { row -> {
-                        sampleName        = row[0]
-                        read1             = row[1]
-                        read2             = row[2]
-                    }
-
-                return tuple(sampleName, tuple(file(read1), file(read2)))
-            }
-
     if( params.parallel && !params.only_qc ) {
 
-                PARALLEL_ANALYSIS(reads_ch,
+                PARALLEL_ANALYSIS(ch_samplesheet,
                                   [params.resilist,
                                    params.intregions,
                                    params.categories,
@@ -61,7 +49,7 @@ workflow MTBSEQNF {
             } else {
 
                 //NOTE: Defaults to the normal analysis as implemented in MTBseq
-                NORMAL_ANALYSIS(reads_ch,
+                NORMAL_ANALYSIS(ch_samplesheet,
                                [params.resilist,
                                 params.intregions,
                                 params.categories,
