@@ -1,5 +1,6 @@
 process TBGROUPS {
     tag "${params.project}"
+    label 'process_high'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:

@@ -1,5 +1,6 @@
 process TBREFINE {
     tag "${genomeFileName} - ${params.project}"
+    label 'process_medium'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:

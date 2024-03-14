@@ -1,5 +1,6 @@
 process TBAMEND {
     tag "${params.project}"
+    label 'process_high'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
@@ -12,9 +13,9 @@ process TBAMEND {
         path("Amend/*"), emit: samples_amended
 
     script:
-    
+
     def args = task.ext.args ?: "--project ${params.project} --mincovf ${params.mincovf} --mincovr ${params.mincovr} --minphred ${params.minphred} --minfreq ${params.minfreq} --unambig ${params.unambig} --window ${params.window} --distance ${params.distance}"
-    
+
         """
         mkdir Amend
 
