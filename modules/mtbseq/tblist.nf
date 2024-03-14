@@ -10,7 +10,7 @@ process TBLIST {
 
     output:
         path("Position_Tables/${meta.id}_${params.library_name}*.gatk_position_table.tab"), emit: tbjoin_input
-        tuple val(meta.id), path("Position_Tables/${meta.id}_${params.library_name}*.gatk_position_table.tab"), emit: position_table_tuple
+        tuple val(meta), path("Position_Tables/${meta.id}_${params.library_name}*.gatk_position_table.tab"), emit: position_table_tuple
         path("Position_Tables/${meta.id}_${params.library_name}*.gatk_position_table.tab"), emit: position_table
 
     script:

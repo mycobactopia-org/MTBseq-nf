@@ -10,7 +10,7 @@ process TBBWA {
 
     output:
         path("Bam/${meta.id}_${params.library_name}*.{bam,bai,bamlog}")
-        tuple val(meta.id), path("Bam/${meta.id}_${params.library_name}*.{bam,bai}"), emit: bam_tuple
+        tuple val(meta), path("Bam/${meta.id}_${params.library_name}*.{bam,bai}"), emit: bam_tuple
         path("Bam/${meta.id}_${params.library_name}*.bam"), emit: bam
 
     script:

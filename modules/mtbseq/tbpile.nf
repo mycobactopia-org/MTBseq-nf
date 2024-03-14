@@ -11,7 +11,7 @@ process TBPILE {
 
     output:
         path("Mpileup/${meta.id}_${params.library_name}*.gatk.{mpileup,mpileuplog}")
-        tuple val(meta.id), path("Mpileup/${meta.id}_${params.library_name}*.gatk.mpileup"), emit: mpileup
+        tuple val(meta), path("Mpileup/${meta.id}_${params.library_name}*.gatk.mpileup"), emit: mpileup
 
     script:
 
