@@ -5,7 +5,7 @@ process TBPILE {
     stageInMode 'copy'
 
     input:
-        tuple val(meta.id), path("GATK_Bam/*")
+        tuple val(meta), path("GATK_Bam/*")
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 

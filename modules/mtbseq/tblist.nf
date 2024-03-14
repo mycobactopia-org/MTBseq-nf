@@ -4,7 +4,7 @@ process TBLIST {
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-        tuple val(meta.id), path("Mpileup/${meta.id}_${params.library_name}*.gatk.mpileup")
+        tuple val(meta), path("Mpileup/${meta.id}_${params.library_name}*.gatk.mpileup")
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
