@@ -1,17 +1,17 @@
 process TBPILE {
-    tag "${genomeFileName} - ${params.project}"
+    tag "${meta.id} - ${params.project}"
     label 'process_medium'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
     stageInMode 'copy'
 
     input:
-        tuple val(genomeFileName), path("GATK_Bam/*")
+        tuple val(meta.id), path("GATK_Bam/*")
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Mpileup/${genomeFileName}_${params.library_name}*.gatk.{mpileup,mpileuplog}")
-        tuple val(genomeFileName), path("Mpileup/${genomeFileName}_${params.library_name}*.gatk.mpileup"), emit: mpileup
+        path("Mpileup/${meta.id}_${params.library_name}*.gatk.{mpileup,mpileuplog}")
+        tuple val(meta.id), path("Mpileup/${meta.id}_${params.library_name}*.gatk.mpileup"), emit: mpileup
 
     script:
 
@@ -45,8 +45,8 @@ process TBPILE {
         sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
         mkdir Mpileup
-        touch Mpileup/${genomeFileName}_${params.library_name}.gatk.mpileup
-        touch Mpileup/${genomeFileName}_${params.library_name}.gatk.mpileuplog
+        touch Mpileup/${meta.id}_${params.library_name}.gatk.mpileup
+        touch Mpileup/${meta.id}_${params.library_name}.gatk.mpileuplog
 
         """
 

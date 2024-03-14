@@ -35,7 +35,7 @@ process TBFULL {
         """
 
     stub:
-        def genomeFileName = "stub"
+        def meta.id = "stub"
         """
         sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
@@ -57,26 +57,26 @@ process TBFULL {
 
 
         mkdir GATK_Bam
-        touch GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bam
-        touch GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bai
-        touch GATK_Bam/${genomeFileName}_${params.library_name}.gatk.bamlog
-        touch GATK_Bam/${genomeFileName}_${params.library_name}.gatk.grp
-        touch GATK_Bam/${genomeFileName}_${params.library_name}.gatk.intervals
+        touch GATK_Bam/${meta.id}_${params.library_name}.gatk.bam
+        touch GATK_Bam/${meta.id}_${params.library_name}.gatk.bai
+        touch GATK_Bam/${meta.id}_${params.library_name}.gatk.bamlog
+        touch GATK_Bam/${meta.id}_${params.library_name}.gatk.grp
+        touch GATK_Bam/${meta.id}_${params.library_name}.gatk.intervals
         mkdir Bam
-        mkdir Bam/${genomeFileName}
-        touch Bam/${genomeFileName}_${params.library_name}.bam
-        touch Bam/${genomeFileName}_${params.library_name}.bai
-        touch Bam/${genomeFileName}_${params.library_name}.bamlog
+        mkdir Bam/${meta.id}
+        touch Bam/${meta.id}_${params.library_name}.bam
+        touch Bam/${meta.id}_${params.library_name}.bai
+        touch Bam/${meta.id}_${params.library_name}.bamlog
         mkdir Called
-        touch Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
-        touch Called/${genomeFileName}_${params.library_name}.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+        touch Called/${meta.id}_${params.library_name}.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+        touch Called/${meta.id}_${params.library_name}.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
         mkdir Mpileup
-        touch Mpileup/${genomeFileName}_${params.library_name}.gatk.mpileup
-        touch Mpileup/${genomeFileName}_${params.library_name}.gatk.mpileuplog
+        touch Mpileup/${meta.id}_${params.library_name}.gatk.mpileup
+        touch Mpileup/${meta.id}_${params.library_name}.gatk.mpileuplog
         mkdir Classification
         touch Classification/Strain_Classification.tab
         mkdir Position_Tables
-        touch Position_Tables/${genomeFileName}_${params.library_name}.gatk_position_table.tab
+        touch Position_Tables/${meta.id}_${params.library_name}.gatk_position_table.tab
         mkdir Statistics
         touch Statistics/Mapping_and_Variant_Statistics.tab
 

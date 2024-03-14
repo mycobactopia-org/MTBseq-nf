@@ -1,17 +1,17 @@
 process TBLIST {
-    tag "${genomeFileName} - ${params.project}"
+    tag "${meta.id} - ${params.project}"
     label 'process_medium'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-        tuple val(genomeFileName), path("Mpileup/${genomeFileName}_${params.library_name}*.gatk.mpileup")
+        tuple val(meta.id), path("Mpileup/${meta.id}_${params.library_name}*.gatk.mpileup")
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: tbjoin_input
-        tuple val(genomeFileName), path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: position_table_tuple
-        path("Position_Tables/${genomeFileName}_${params.library_name}*.gatk_position_table.tab"), emit: position_table
+        path("Position_Tables/${meta.id}_${params.library_name}*.gatk_position_table.tab"), emit: tbjoin_input
+        tuple val(meta.id), path("Position_Tables/${meta.id}_${params.library_name}*.gatk_position_table.tab"), emit: position_table_tuple
+        path("Position_Tables/${meta.id}_${params.library_name}*.gatk_position_table.tab"), emit: position_table
 
     script:
         def args = task.ext.args ?: "--minbqual ${params.minbqual}"
@@ -49,11 +49,11 @@ process TBLIST {
             --basecalib ${ref_base_quality_recalibration}"
 
 
-        touch ${task.process}_${genomeFileName}_out.log
-        touch ${task.process}_${genomeFileName}_err.log
+        touch ${task.process}_${meta.id}_out.log
+        touch ${task.process}_${meta.id}_err.log
 
         mkdir Position_Tables
-        touch Position_Tables/${genomeFileName}_${params.library_name}.gatk_position_table.tab
+        touch Position_Tables/${meta.id}_${params.library_name}.gatk_position_table.tab
 
         """
 

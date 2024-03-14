@@ -1,5 +1,5 @@
 process TBBWA {
-    tag "${genomeFileName} - ${params.project}"
+    tag "${meta.id} - ${params.project}"
     label 'process_medium'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
@@ -9,9 +9,9 @@ process TBBWA {
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Bam/${genomeFileName}_${params.library_name}*.{bam,bai,bamlog}")
-        tuple val(genomeFileName), path("Bam/${genomeFileName}_${params.library_name}*.{bam,bai}"), emit: bam_tuple
-        path("Bam/${genomeFileName}_${params.library_name}*.bam"), emit: bam
+        path("Bam/${meta.id}_${params.library_name}*.{bam,bai,bamlog}")
+        tuple val(meta.id), path("Bam/${meta.id}_${params.library_name}*.{bam,bai}"), emit: bam_tuple
+        path("Bam/${meta.id}_${params.library_name}*.bam"), emit: bam
 
     script:
 
@@ -45,13 +45,13 @@ process TBBWA {
 
         sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
-        touch ${task.process}_${genomeFileName}_out.log
-        touch ${task.process}_${genomeFileName}_err.log
+        touch ${task.process}_${meta.id}_out.log
+        touch ${task.process}_${meta.id}_err.log
 
         mkdir Bam
-        touch Bam/${genomeFileName}_${params.library_name}.bam
-        touch Bam/${genomeFileName}_${params.library_name}.bai
-        touch Bam/${genomeFileName}_${params.library_name}.bamlog
+        touch Bam/${meta.id}_${params.library_name}.bam
+        touch Bam/${meta.id}_${params.library_name}.bai
+        touch Bam/${meta.id}_${params.library_name}.bamlog
 
         """
 

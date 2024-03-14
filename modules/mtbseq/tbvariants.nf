@@ -1,16 +1,16 @@
 process TBVARIANTS {
-    tag "${genomeFileName} - ${params.project}"
+    tag "${meta.id} - ${params.project}"
     label 'process_medium'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-        tuple val(genomeFileName), path("Position_Tables/*")
+        tuple val(meta.id), path("Position_Tables/*")
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Called/${genomeFileName}_${params.library_name}*gatk_position_{uncovered,variants}*.tab")
-        path("Called/${genomeFileName}_${params.library_name}*gatk_position_variants*.tab"), emit: tbjoin_input
+        path("Called/${meta.id}_${params.library_name}*gatk_position_{uncovered,variants}*.tab")
+        path("Called/${meta.id}_${params.library_name}*gatk_position_variants*.tab"), emit: tbjoin_input
 
     script:
         def args = task.ext.args ?: "--mincovf ${params.mincovf} --mincovr ${params.mincovr} --minphred ${params.minphred} --minfreq ${params.minfreq}"
@@ -51,8 +51,8 @@ process TBVARIANTS {
 
 
         mkdir Called
-        touch Called/${genomeFileName}_${params.library_name}.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
-        touch Called/${genomeFileName}_${params.library_name}.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+        touch Called/${meta.id}_${params.library_name}.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+        touch Called/${meta.id}_${params.library_name}.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
 
         """
 
