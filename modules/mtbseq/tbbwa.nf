@@ -4,7 +4,7 @@ process TBBWA {
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
-        tuple val(genomeFileName), path("${genomeFileName}_${params.library_name}_R?.fastq.gz")
+        tuple val(meta), path("${meta.id}_${params.library_name}_R?.fastq.gz")
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
