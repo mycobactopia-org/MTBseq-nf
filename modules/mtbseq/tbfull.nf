@@ -35,7 +35,6 @@ process TBFULL {
         """
 
     stub:
-        def meta.id = "stub"
         """
         sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
