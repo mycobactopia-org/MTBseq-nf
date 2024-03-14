@@ -10,7 +10,8 @@ include { paramsSummaryMap       } from 'plugin/nf-validation'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_mtbseqnf_pipeline'
-
+include { PARALLEL_ANALYSIS } from "../subworkflows/local/mtbseq-nf-modes/parallel_analysis.nf"
+include { NORMAL_ANALYSIS } from "../subworkflows/local/mtbseq-nf-modes/normal_analysis.nf"
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -35,6 +36,39 @@ workflow MTBSEQNF {
     )
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+
+    // MTBSEQ run modes
+
+    reads_ch = Channel.fromPath(params.input_samplesheet)
+            .splitCsv(header: false, skip: 1)
+            .map { row -> {
+                        sampleName        = row[0]
+                        read1             = row[1]
+                        read2             = row[2]
+                    }
+
+                return tuple(sampleName, tuple(file(read1), file(read2)))
+            }
+
+    if( params.parallel && !params.only_qc ) {
+
+                PARALLEL_ANALYSIS(reads_ch,
+                                  [params.resilist,
+                                   params.intregions,
+                                   params.categories,
+                                   params.basecalib])
+
+            } else {
+
+                //NOTE: Defaults to the normal analysis as implemented in MTBseq
+                NORMAL_ANALYSIS(reads_ch,
+                               [params.resilist,
+                                params.intregions,
+                                params.categories,
+                                params.basecalib])
+
+    }
+    /// END MTBSEQ ANALYSIS
 
     //
     // Collate and save software versions
