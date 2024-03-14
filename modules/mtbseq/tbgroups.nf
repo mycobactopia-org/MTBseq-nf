@@ -25,7 +25,7 @@ process TBGROUPS {
             --intregions ${ref_interesting_regions} \\
             --categories ${ref_gene_categories} \\
             --basecalib ${ref_base_quality_recalibration} \\
-            ${args}
+            ${args} \\
         1>>.command.out \\
         2>>.command.err \\
         || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
