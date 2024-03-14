@@ -1,6 +1,6 @@
 ## Introduction
 
-**mtbseq-nf/mtbseqnf** is a bioinformatics pipeline that ...
+**mycobactopia-org/MTBseq-nf** is a bioinformatics pipeline that ...
 
 <!-- TODO nf-core:
    Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
@@ -41,7 +41,7 @@ Now, you can run the pipeline using:
 <!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
 
 ```bash
-nextflow run mtbseq-nf/mtbseqnf \
+nextflow run mycobactopia-org/MTBseq-nf \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
    --outdir <OUTDIR>
@@ -53,7 +53,7 @@ nextflow run mtbseq-nf/mtbseqnf \
 
 ## Credits
 
-mtbseq-nf/mtbseqnf was originally written by Abhinav Sharma (@abhi18av) and Davi Marcon (@mxrcon).
+mycobactopia-org/MTBseq-nf was originally written by Abhinav Sharma (@abhi18av) and Davi Marcon (@mxrcon).
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
@@ -66,7 +66,7 @@ If you would like to contribute to this pipeline, please see the [contributing g
 ## Citations
 
 <!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
-<!-- If you use mtbseq-nf/mtbseqnf for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
+<!-- If you use mycobactopia-org/MTBseq-nf for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
 
 <!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
 

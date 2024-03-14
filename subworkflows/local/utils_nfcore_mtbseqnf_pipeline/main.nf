@@ -1,5 +1,5 @@
 //
-// Subworkflow with functionality specific to the mtbseq-nf/mtbseqnf pipeline
+// Subworkflow with functionality specific to the mycobactopia-org/MTBseq-nf pipeline
 //
 
 /*

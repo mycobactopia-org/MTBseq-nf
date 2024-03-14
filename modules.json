@@ -1,6 +1,6 @@
 {
-    "name": "mtbseq-nf/mtbseqnf",
-    "homePage": "https://github.com/mtbseq-nf/mtbseqnf",
+    "name": "mycobactopia-org/MTBseq-nf",
+    "homePage": "https://github.com/mycobactopia-org/MTBseq-nf",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {

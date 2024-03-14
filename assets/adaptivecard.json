@@ -17,7 +17,7 @@
                         "size": "Large",
                         "weight": "Bolder",
                         "color": "<% if (success) { %>Good<% } else { %>Attention<%} %>",
-                        "text": "mtbseq-nf/mtbseqnf v${version} - ${runName}",
+                        "text": "mycobactopia-org/MTBseq-nf v${version} - ${runName}",
                         "wrap": true
                     },
                     {

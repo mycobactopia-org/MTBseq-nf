@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/mtbseq-nf/mtbseqnf/master/nextflow_schema.json",
-    "title": "mtbseq-nf/mtbseqnf pipeline parameters",
+    "$id": "https://raw.githubusercontent.com/mycobactopia-org/MTBseq-nf/master/nextflow_schema.json",
+    "title": "mycobactopia-org/MTBseq-nf pipeline parameters",
     "description": "`MTBseq-nf` pipeline makes [MTBseq](https://github.com/ngs-fzb/MTBseq_source) simple and easy to use via [Nextflow](https://www.nextflow.io/) workflow manager.",
     "type": "object",
     "definitions": {

@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    mtbseq-nf/mtbseqnf
+    mycobactopia-org/MTBseq-nf
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/mtbseq-nf/mtbseqnf
+    Github : https://github.com/mycobactopia-org/MTBseq-nf
 ----------------------------------------------------------------------------------------
 */
 
