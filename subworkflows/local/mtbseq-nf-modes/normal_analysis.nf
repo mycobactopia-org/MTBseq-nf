@@ -13,7 +13,7 @@ workflow NORMAL_ANALYSIS {
     main:
 
         samples_tsv_file = reads_ch
-                .map {it -> it[0]}
+                .map {it -> it[0].id}
                 .collect()
                 .flatten()
                 .map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
