@@ -1,54 +1,81 @@
-# MTBseq-nf
+## Introduction
 
-`MTBseq-nf` pipeline makes [MTBseq](https://github.com/ngs-fzb/MTBseq_source) simple and easy to use via [Nextflow](https://www.nextflow.io/) workflow manager.
+**mycobactopia-org/MTBseq-nf** is a bioinformatics pipeline that ...
 
-# Benefits of the Nextflow wrapper
+<!-- TODO nf-core:
+   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
+   major pipeline sections and the types of output it produces. You're giving an overview to someone new
+   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
+-->
 
-- Ability to analyze genomes in **parallel** in addition to the default execution mode.
-- Fine-grain control over resource (CPU/Memory/Storage) allocation
-- Use of bioconda and biocontainers for installing packages for reproducibility
-- Ease of use on a range of infrastructure
-  - Local machine - A strong server/laptop
-  - Cloud - Azure / AWS
-  - On-prem clusters - SLURM / PBS
-- Resumability for failed processes
-- Centralized locations for specifying
-  - MTBseq parameters (`default_params.config`)
-  - Hardware requirements (`conf/standard.config`)
-  - Software requirements (`conf/docker.config` or `conf/conda.config`)
-- Dedicated user interface for all parameters for wider audience (`nextflow_schema.json`). This allows [Nextflow Tower](tower.nf/) to generate a launch form dynamically.
-- Easier customizability for the pipeline, using explicit parameters (`default_params.config`).
+<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
+     workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
+<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
-# Parallel execution of MTBseq via MTBseq-nf
+1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
+2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
 
-![](./docs/MTBseq-nf-modes.png)
+## Usage
 
-This pipeline add a new option for running MTBseq with paralellization using nextflow to control the resource utilization, as well optimizing the overall time to run it.
+> [!NOTE]
+> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-## Normal and Parallel workflows
+<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
+     Explain what rows and columns represent. For instance (please edit as appropriate):
 
-This pipeline has two execution types: normal and parallel and here is a visual representation.
+First, prepare a samplesheet with your input data that looks as follows:
 
-The execution type is determined by the presence of `parallel` parameter.
+`samplesheet.csv`:
 
-## What are the differences between `Normal` and `Parallel` analysis modes?
+```csv
+sample,fastq_1,fastq_2
+CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+```
 
-A normal MTBseq run would use `MTBseq --step full` and all samples would move to the next stage of the analysis in sync with each other, hence not allowing parallelization of analysis for samples which have been analyzed at a given step. Steps like `TB BWA` and `TB Variants` and leading to suboptimal usage of the available hardware.
+Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
 
-Using `--parallel` run we enforce the parallelization of each step. The main advantage of it is the precise resource usage as the steps are controlled by Nextflow, and some steps require less CPUs and RAM than other, this allow us to optimize the run time and resource costs.
+-->
 
-# Installation and Usage
+Now, you can run the pipeline using:
 
-For installation and usage please refer the dedicated [INSTALL](./docs/INSTALL.md) and [USAGE](./docs/USAGE.md) documents.
+<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
 
-# Contributions
+```bash
+nextflow run mycobactopia-org/MTBseq-nf \
+   -profile <docker/singularity/.../institute> \
+   --input samplesheet.csv \
+   --outdir <OUTDIR>
+```
 
-Contributions are warmly accepted!
+> [!WARNING]
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
+> see [docs](https://nf-co.re/usage/configuration#custom-configuration-files).
 
-# License
+## Credits
 
-The inspiration for this project is [MTBseq](https://github.com/ngs-fzb/MTBseq_source) which is released under a GPL-3 license as of [v1.0.3](https://github.com/ngs-fzb/MTBseq_source/blob/v1.0.3/LICENSE.md).
+mycobactopia-org/MTBseq-nf was originally written by Abhinav Sharma (@abhi18av) and Davi Marcon (@mxrcon).
 
-The components related to `MTBseq-nf` project itself (the Nextflow wrapper code) are licensed under the liberal MPL-2.0 license.
+We thank the following people for their extensive assistance in the development of this pipeline:
 
-We would like to thank the developers of MTBseq for putting in the initial effort!
+<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
+
+## Contributions and Support
+
+If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
+
+## Citations
+
+<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
+<!-- If you use mycobactopia-org/MTBseq-nf for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
+
+<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
+
+An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
+
+This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE).
+
+> **The nf-core framework for community-curated bioinformatics pipelines.**
+>
+> Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven Nahnsen.
+>
+> _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).

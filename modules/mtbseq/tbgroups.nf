@@ -1,5 +1,6 @@
 process TBGROUPS {
     tag "${params.project}"
+    label 'process_high'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
@@ -12,20 +13,21 @@ process TBGROUPS {
         path("Groups/*")
 
     script:
+        def args = task.ext.args ?: "--distance ${params.distance}"
         """
         mkdir Groups
 
-        ${params.mtbseq_path} --step TBgroups \
-            --threads ${task.cpus} \
-            --samples ${samplesheet_tsv} \
-            --project ${params.project} \
-            --resilist ${ref_resistance_list} \
-            --intregions ${ref_interesting_regions} \
-            --categories ${ref_gene_categories} \
-            --distance ${params.distance} \
-            --basecalib ${ref_base_quality_recalibration} \
-        1>>.command.out \
-        2>>.command.err \
+        ${params.mtbseq_path} --step TBgroups \\
+            --threads ${task.cpus} \\
+            --samples ${samplesheet_tsv} \\
+            --project ${params.project} \\
+            --resilist ${ref_resistance_list} \\
+            --intregions ${ref_interesting_regions} \\
+            --categories ${ref_gene_categories} \\
+            --basecalib ${ref_base_quality_recalibration} \\
+            ${args} \\
+        1>>.command.out \\
+        2>>.command.err \\
         || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
         """

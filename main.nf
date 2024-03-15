@@ -1,32 +1,97 @@
+#!/usr/bin/env nextflow
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    mycobactopia-org/MTBseq-nf
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Github : https://github.com/mycobactopia-org/MTBseq-nf
+----------------------------------------------------------------------------------------
+*/
+
 nextflow.enable.dsl = 2
 
-include { MTBSEQ_NF } from "./workflows/mtbseq.nf"
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    IMPORT FUNCTIONS / MODULES / SUBWORKFLOWS / WORKFLOWS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 
+include { MTBSEQNF  } from './workflows/mtbseqnf'
+include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_mtbseqnf_pipeline'
+include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_mtbseqnf_pipeline'
 
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    NAMED WORKFLOWS FOR PIPELINE
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+//
+// WORKFLOW: Run main analysis pipeline depending on type of input
+//
+workflow MTBSEQNF_MTBSEQNF {
+
+    take:
+    samplesheet // channel: samplesheet read in from --input
+
+    main:
+
+    //
+    // WORKFLOW: Run pipeline
+    //
+    MTBSEQNF (
+        samplesheet
+    )
+
+    emit:
+    multiqc_report = MTBSEQNF.out.multiqc_report // channel: /path/to/multiqc_report.html
+
+}
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    RUN MAIN WORKFLOW
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 
 workflow {
 
-//--------------------------------------------
-// Source the input reads
-//--------------------------------------------
+    main:
 
+    //
+    // SUBWORKFLOW: Run initialisation tasks
+    //
+    PIPELINE_INITIALISATION (
+        params.version,
+        params.help,
+        params.validate_params,
+        params.monochrome_logs,
+        args,
+        params.outdir,
+        params.input
+    )
 
-    //NOTE: Expected structure of input CSV samplesheet
-    // sampleName,read1,read2
-    // ERX1933967,/full/path/to/ERX1933967_R1.fastq.gz,/full/path/to/ERX1933967_R2.fastq.gz
+    //
+    // WORKFLOW: Run main workflow
+    //
+    MTBSEQNF_MTBSEQNF (
+        PIPELINE_INITIALISATION.out.samplesheet
+    )
 
-    reads_ch = Channel.fromPath(params.input_samplesheet)
-            .splitCsv(header: false, skip: 1)
-            .map { row -> {
-                        sampleName        = row[0]
-                        read1             = row[1]
-                        read2             = row[2]
-                    }
-
-                return tuple(sampleName, tuple(file(read1), file(read2)))
-            }
-
-
-    MTBSEQ_NF(reads_ch)
-
+    //
+    // SUBWORKFLOW: Run completion tasks
+    //
+    PIPELINE_COMPLETION (
+        params.email,
+        params.email_on_fail,
+        params.plaintext_email,
+        params.outdir,
+        params.monochrome_logs,
+        params.hook_url,
+        MTBSEQNF_MTBSEQNF.out.multiqc_report
+    )
 }
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    THE END
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/

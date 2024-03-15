@@ -1,4 +1,4 @@
-Sample,R1,R2
+sample,fastq_1,fastq_2
 AA01,data/mock_data/AA01_R1.fastq.gz,data/mock_data/AA01_R2.fastq.gz
 AB02,data/mock_data/AB02_R1.fastq.gz,data/mock_data/AB02_R2.fastq.gz
 AC03,data/mock_data/AC03_R1.fastq.gz,data/mock_data/AC03_R2.fastq.gz
