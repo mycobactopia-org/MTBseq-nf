@@ -50,6 +50,10 @@ workflow MTBSEQ_NF {
     /// END MTBSEQ ANALYSIS
 
     REPORT (QC.out.ch_multiqc_files, ch_versions)
+    multiqc_report = REPORT.out.multiqc_report
+
+    emit:
+    multiqc_report
 }
 
 /*
