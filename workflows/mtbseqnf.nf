@@ -37,10 +37,20 @@ workflow MTBSEQNF {
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
+    // Generate ch_reads
+    ch_samplesheet
+        .map {
+            meta, R1,R2 ->
+            return [meta.id, [R1, R2]]
+        }
+        .set { ch_reads }
+
+
+
     // MTBSEQ run modes
     if( params.parallel && !params.only_qc ) {
 
-                PARALLEL_ANALYSIS(ch_samplesheet,
+                PARALLEL_ANALYSIS(ch_reads,
                                   [params.resilist,
                                    params.intregions,
                                    params.categories,
@@ -49,7 +59,7 @@ workflow MTBSEQNF {
             } else {
 
                 //NOTE: Defaults to the normal analysis as implemented in MTBseq
-                NORMAL_ANALYSIS(ch_samplesheet,
+                NORMAL_ANALYSIS(ch_reads,
                                [params.resilist,
                                 params.intregions,
                                 params.categories,
