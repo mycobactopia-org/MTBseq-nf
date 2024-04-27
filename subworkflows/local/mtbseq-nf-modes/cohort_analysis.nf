@@ -10,9 +10,11 @@ workflow COHORT_ANALYSIS {
         references_ch
 
     main:
-        samples_tsv_file = genome_names
+            samples_tsv_file = reads_ch
+                .map {it -> it[0].id}
                 .collect()
-                .flatten().map { meta -> $meta.id + "\t" + "${params.library_name}" + "\n" }
+                .flatten()
+                .map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
                 .collectFile(name: params.cohort_tsv, newLine: false, storeDir: "${params.outdir}", cache: false)
 
         TBJOIN(position_variants.collect(),
