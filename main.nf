@@ -28,7 +28,7 @@ include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_mtbs
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow MTBSEQNF_MTBSEQNF {
+workflow MTBSEQ_NF {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -72,7 +72,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    MTBSEQNF_MTBSEQNF (
+    MTBSEQ_NF (
         PIPELINE_INITIALISATION.out.samplesheet
     )
 
@@ -86,7 +86,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        MTBSEQNF_MTBSEQNF.out.multiqc_report
+        MTBSEQ_NF.out.multiqc_report
     )
 }
 
