@@ -4,17 +4,15 @@ include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf' addParams (param
 
 workflow COHORT_ANALYSIS {
     take:
-        reads_ch
+        genome_names
         position_variants
         position_tables
         references_ch
 
     main:
-        samples_tsv_file = reads_ch
-                .map {it -> $it[0].id}
+        samples_tsv_file = genome_names
                 .collect()
-                .flatten()
-                .map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
+                .flatten().map { n -> $n.id + "\t" + "${params.library_name}" + "\n" }
                 .collectFile(name: params.cohort_tsv, newLine: false, storeDir: "${params.outdir}", cache: false)
 
         TBJOIN(position_variants.collect(),
