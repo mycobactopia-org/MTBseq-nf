@@ -10,8 +10,8 @@ workflow COHORT_ANALYSIS {
         references_ch
 
     main:
-            samples_tsv_file = reads_ch
-                .map {it -> it[0].id}
+        samples_tsv_file = reads_ch
+                .map {it -> $it[0].id}
                 .collect()
                 .flatten()
                 .map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
