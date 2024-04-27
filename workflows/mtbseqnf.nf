@@ -28,7 +28,7 @@ workflow MTBSEQ_NF {
     ch_versions = Channel.empty()
 
     QC(ch_samplesheet)
-    ch_versions.mix(QC.out.versions)
+    ch_versions.mix(QC.out.ch_versions)
 
     // MTBSEQ run modes
     if( params.parallel && !params.only_qc ) {
