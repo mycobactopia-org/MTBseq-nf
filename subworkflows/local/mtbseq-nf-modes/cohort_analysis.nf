@@ -4,7 +4,7 @@ include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf' addParams (param
 
 workflow COHORT_ANALYSIS {
     take:
-        genome_names
+        reads_ch
         position_variants
         position_tables
         references_ch
