@@ -1,4 +1,4 @@
-include { MULTIQC                 } from '../../modules/nf-core/fastqc/main'
+include { MULTIQC                 } from '../../../modules/nf-core/fastqc/main'
 
 workflow REPORT {
    take:
