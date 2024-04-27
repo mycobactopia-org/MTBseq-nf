@@ -30,7 +30,8 @@ workflow PER_SAMPLE_ANALYSIS {
                   references_ch)
 
     emit:
-        genome_names = reads_ch.map{ it -> it[0].id}
+        genome_names = reads_ch.map{ it -> $it[0].id}
+
         position_variants = TBVARIANTS.out.tbjoin_input.collect()
         position_tables = TBLIST.out.tbjoin_input.collect()
 }
