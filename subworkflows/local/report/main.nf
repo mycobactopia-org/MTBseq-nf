@@ -1,4 +1,9 @@
 include { MULTIQC                 } from '../../../modules/nf-core/multiqc/main'
+include { paramsSummaryMap       } from 'plugin/nf-validation'
+include { paramsSummaryMultiqc   } from '../nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML } from '../nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText } from '../local/utils_nfcore_mtbseqnf_pipeline'
+
 
 workflow REPORT {
    take:
