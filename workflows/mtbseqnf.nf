@@ -31,21 +31,22 @@ workflow MTBSEQNF {
     //
     // MODULE: Run FastQC
     //
-    FASTQC (
-        ch_samplesheet
-    )
-    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
-    ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
-    // Generate ch_reads
     ch_samplesheet
         .map {
-            meta, R1,R2 ->
-            return [meta.id, [R1, R2]]
+            meta, fastq_1,fastq_2 ->
+            return [meta, [fastq_1,fastq_2]]
         }
         .set { ch_reads }
 
 
+
+
+    FASTQC (
+        ch_reads
+    )
+    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
+    ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
     // MTBSEQ run modes
     if( params.parallel && !params.only_qc ) {
