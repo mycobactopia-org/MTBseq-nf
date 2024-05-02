@@ -1,6 +1,6 @@
 process TBVARIANTS {
-    tag "${meta.id} - ${params.project}"
-    label 'process_medium'
+    tag "${meta.id}"
+    label 'process_single'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:

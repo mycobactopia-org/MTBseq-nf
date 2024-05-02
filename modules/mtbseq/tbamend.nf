@@ -1,6 +1,6 @@
 process TBAMEND {
-    tag "${params.project}"
-    label 'process_high'
+    tag "cohort"
+    label 'process_single'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:

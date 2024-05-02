@@ -15,37 +15,10 @@ nextflow.enable.dsl = 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { MTBSEQNF  } from './workflows/mtbseqnf'
+include { MTBSEQ_NF  } from './workflows/mtbseqnf'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_mtbseqnf_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_mtbseqnf_pipeline'
 
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    NAMED WORKFLOWS FOR PIPELINE
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-//
-// WORKFLOW: Run main analysis pipeline depending on type of input
-//
-workflow MTBSEQNF_MTBSEQNF {
-
-    take:
-    samplesheet // channel: samplesheet read in from --input
-
-    main:
-
-    //
-    // WORKFLOW: Run pipeline
-    //
-    MTBSEQNF (
-        samplesheet
-    )
-
-    emit:
-    multiqc_report = MTBSEQNF.out.multiqc_report // channel: /path/to/multiqc_report.html
-
-}
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -72,7 +45,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    MTBSEQNF_MTBSEQNF (
+    MTBSEQ_NF (
         PIPELINE_INITIALISATION.out.samplesheet
     )
 
@@ -86,7 +59,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        MTBSEQNF_MTBSEQNF.out.multiqc_report
+        MTBSEQ_NF.out.multiqc_report
     )
 }
 

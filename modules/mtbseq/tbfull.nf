@@ -1,6 +1,6 @@
 process TBFULL {
-    tag "${params.project}"
-    label 'process_high'
+    tag "cohort"
+    label 'process_max'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
