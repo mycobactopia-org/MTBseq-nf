@@ -1,6 +1,6 @@
 process TBJOIN {
     tag "cohort"
-    label 'process_high_memory'
+    label 'process_max'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     input:
