@@ -13,4 +13,8 @@ workflow PARALLEL_ANALYSIS {
                         PER_SAMPLE_ANALYSIS.out.position_variants,
                         PER_SAMPLE_ANALYSIS.out.position_tables,
                         references_ch)
+        ch_versions = ch_versions.mix(COHORT_ANALYSIS.out.versions)
+
+    emit:
+        versions       = ch_versions
 }

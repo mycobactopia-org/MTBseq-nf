@@ -11,6 +11,7 @@ process TBGROUPS {
 
     output:
         path("Groups/*")
+        path "versions.yml", emit: versions
 
 
 
