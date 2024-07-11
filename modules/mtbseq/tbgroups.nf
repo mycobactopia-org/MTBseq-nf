@@ -12,6 +12,9 @@ process TBGROUPS {
     output:
         path("Groups/*")
 
+
+
+
     script:
         def args = task.ext.args ?: "--distance ${params.distance}"
         """
@@ -30,6 +33,12 @@ process TBGROUPS {
         2>>.command.err \\
         || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
+
+        
+       cat <<-END_VERSIONS > versions.yml
+       "${task.process}":
+          MTBseq: \$(${params.mtbseq_path} --version | cut -d " " -f 2)
+       END_VERSIONS
         """
 
     stub:
