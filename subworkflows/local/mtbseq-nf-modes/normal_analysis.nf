@@ -11,6 +11,8 @@ workflow NORMAL_ANALYSIS {
         references_ch
 
     main:
+        ch_versions = Channel.empty()
+        ch_multiqc_files = Channel.empty()
 
         samples_tsv_file = reads_ch
                 .map {it -> it[0].id}
@@ -46,6 +48,7 @@ workflow NORMAL_ANALYSIS {
                  
     emit:
         versions       = ch_versions
+        multiqc_files  = ch_multiqc_files
 
 
 }
