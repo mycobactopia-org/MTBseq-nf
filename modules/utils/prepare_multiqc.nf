@@ -1,6 +1,11 @@
 process PREPARE_MULTIQC {
+    
+    label 'process_medium'
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/fastqc:0.12.1--hdfd78af_0' :
+        'biocontainers/fastqc:0.12.1--hdfd78af_0' }"
 
-    input:
+ input:
         path(mapping_variants_statistics)
         path(Strain_Classification)
         path(groups)
@@ -8,7 +13,6 @@ process PREPARE_MULTIQC {
 
     output:
         path  "*.tsv"           , emit: multiqc_files
-
 
     script:
         """

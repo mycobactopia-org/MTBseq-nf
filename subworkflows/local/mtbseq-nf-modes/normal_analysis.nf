@@ -43,8 +43,14 @@ workflow NORMAL_ANALYSIS {
                  samples_tsv_file,
                  params.user,
                  references_ch)
-        ch_versions = ch_versions.mix(TBGROUPS.out.versions)
 
+        ch_versions = ch_versions.mix(TBGROUPS.out.versions)
+        ch_multiqc_files.mix(
+            TBJOIN.out.statistics,
+            TBJOIN.out.classification,
+            TBGROUPS.out.distance_matrix,
+            TBGROUPS.out.groups
+            )
                  
     emit:
         versions       = ch_versions

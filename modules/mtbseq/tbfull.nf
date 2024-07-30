@@ -13,6 +13,8 @@ process TBFULL {
         path("Position_Tables")
         path("Classification")
         path("Statistics")
+        path("Statistics/Mapping_and_Variant_Statistics.tab"), emit: statistics
+        path("Classification/Strain_Classification.tab"), emit: classification
         path("Called/*_${params.library_name}*gatk_position_variants*.tab"), emit: position_variants
         path("Position_Tables/*_${params.library_name}*.gatk_position_table.tab"), emit: position_tables
 

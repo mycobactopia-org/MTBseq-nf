@@ -9,7 +9,7 @@ process TBSTRAINS {
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Classification/Strain_Classification.tab")
+        path("Classification/Strain_Classification.tab"), emit: classification
 
     script:
         def args = task.ext.args ?: "--mincovf ${params.mincovf} --mincovr ${params.mincovr} --minphred ${params.minphred} --minfreq ${params.minfreq}"

@@ -40,5 +40,8 @@ workflow COHORT_ANALYSIS {
     emit:
         versions         = ch_versions
         ch_multiqc_files = ch_multiqc_files
+        
+        statistics = TBGROUPS.out.distance_matrix
+        groups =   TBGROUPS.out.groups
 
 }

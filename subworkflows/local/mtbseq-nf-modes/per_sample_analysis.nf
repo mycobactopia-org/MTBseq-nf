@@ -33,4 +33,7 @@ workflow PER_SAMPLE_ANALYSIS {
         genome_names = reads_ch.map{ it -> it[0].id}
         position_variants = TBVARIANTS.out.tbjoin_input.collect()
         position_tables = TBLIST.out.tbjoin_input.collect()
+        statistics = TBSTATS.out.statistics
+        classification = TBSTRAINS.out.classification
+
 }

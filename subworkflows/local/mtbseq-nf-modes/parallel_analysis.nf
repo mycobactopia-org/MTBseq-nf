@@ -16,15 +16,14 @@ workflow PARALLEL_ANALYSIS {
                         PER_SAMPLE_ANALYSIS.out.position_variants,
                         PER_SAMPLE_ANALYSIS.out.position_tables,
                         references_ch)
+
         ch_versions = ch_versions.mix(COHORT_ANALYSIS.out.versions)
-   
-    fn: "Strain_Classification.tsv"
-
-    fn: "Mapping_and_Variant_Statistics.tsv"
-
-    fn: "ClusterGroups.tsv"
- 
-    fn: "distance_matrix.txt"
+        ch_multiqc_files.mix(
+            PER_SAMPLE_ANALYSIS.out.statistics,
+            PER_SAMPLE_ANALYSIS.out.classification,
+            COHORT_ANALYSIS.out.distance_matrix,
+            COHORT_ANALYSIS.out.groups
+            )
 
     emit:
         versions       = ch_versions

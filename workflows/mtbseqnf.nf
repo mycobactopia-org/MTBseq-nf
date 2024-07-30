@@ -23,7 +23,6 @@ workflow MTBSEQ_NF {
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
-
     QC(ch_samplesheet)
     ch_versions.mix(QC.out.ch_versions)
     ch_multiqc_files.mix(QC.out.ch_multiqc_files)
@@ -38,7 +37,7 @@ workflow MTBSEQ_NF {
                                    params.basecalib])
 
                ch_versions = ch_versions.mix(PARALLEL_ANALYSIS.out.versions)
-
+               ch_mtbseq_multiqc_files = PARALLEL_ANALYSIS.out.multiqc_files
             } else {
 
                 //NOTE: Defaults to the normal analysis as implemented in MTBseq
@@ -49,9 +48,12 @@ workflow MTBSEQ_NF {
                                 params.basecalib])
 
                 ch_versions = ch_versions.mix(NORMAL_ANALYSIS.out.versions)
+                ch_mtbseq_multiqc_files = NORMAL_ANALYSIS.out.multiqc_files)
 
     }
     /// END MTBSEQ ANALYSIS
+    PREPARE_MULTIQC(ch_mtbseq_multiqc_files)
+    ch_multiqc_files.mix(PREPARE_MULTIQC.out.multiqc_files)
 
     REPORT (ch_multiqc_files, ch_versions)
     multiqc_report = REPORT.out.multiqc_report

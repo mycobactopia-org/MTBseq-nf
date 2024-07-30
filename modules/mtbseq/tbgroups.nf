@@ -11,6 +11,8 @@ process TBGROUPS {
 
     output:
         path("Groups/*")
+        path("Groups/*.matrix"), emit: distance_matrix
+        path("Groups/*.groups"), emit: groups
         path "versions.yml", emit: versions
 
 

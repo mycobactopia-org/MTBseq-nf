@@ -10,7 +10,7 @@ process TBSTATS {
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Statistics/Mapping_and_Variant_Statistics.tab")
+        path("Statistics/Mapping_and_Variant_Statistics.tab"), emit: statistics
 
     script:
 
