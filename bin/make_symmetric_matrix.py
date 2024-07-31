@@ -14,7 +14,7 @@ with open(input_file, 'r') as file:
 
 sample_names = [row[0] for row in data]
 
-n = len(data)  
+n = len(data)
 matrix = [['' for _ in range(n + 1)] for _ in range(n + 1)]
 
 for i in range(1, n + 1):
@@ -26,10 +26,10 @@ for i, row in enumerate(data):
     for j, value in enumerate(row[1:]):
         if i==j:
             matrix[i + 1][j + 1] = 0
-        if value: 
+        if value:
             matrix[i + 1][j + 1] = value
-            matrix[j + 1][i + 1] = value 
-        
+            matrix[j + 1][i + 1] = value
+
 
 with open('symmetric_matrix.txt', 'w') as file:
     writer = csv.writer(file, delimiter='\t')
