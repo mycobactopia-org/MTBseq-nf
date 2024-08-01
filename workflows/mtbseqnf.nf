@@ -6,6 +6,7 @@
 
 include { QC                     } from '../subworkflows/local/qc'
 include { REPORT                 } from '../subworkflows/local/report'
+include { PREPARE_MULTIQC } from '../modules/utils/prepare_multiqc'
 include { PARALLEL_ANALYSIS } from "../subworkflows/local/mtbseq-nf-modes/parallel_analysis.nf"
 include { NORMAL_ANALYSIS } from "../subworkflows/local/mtbseq-nf-modes/normal_analysis.nf"
 /*

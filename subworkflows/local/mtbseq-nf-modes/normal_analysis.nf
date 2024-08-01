@@ -3,6 +3,8 @@ include { TBFULL } from '../../../modules/mtbseq/tbfull.nf' addParams (params.TB
 include { TBJOIN } from '../../../modules/mtbseq/tbjoin.nf' addParams (params.TBJOIN)
 include { TBAMEND } from '../../../modules/mtbseq/tbamend.nf' addParams (params.TBAMEND)
 include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf' addParams (params.TBGROUPS)
+include { MULTIQC } from '../../../modules/mtbseq/tbamend.nf' addParams (params.TBAMEND)
+
 
 workflow NORMAL_ANALYSIS {
 
@@ -46,12 +48,12 @@ workflow NORMAL_ANALYSIS {
 
         ch_versions = ch_versions.mix(TBGROUPS.out.versions)
         ch_multiqc_files.mix(
-            TBJOIN.out.statistics,
-            TBJOIN.out.classification,
+            TBFULL.out.statistics,
+            TBFULL.out.classification,
             TBGROUPS.out.distance_matrix,
             TBGROUPS.out.groups
             )
-                 
+
     emit:
         versions       = ch_versions
         multiqc_files  = ch_multiqc_files
