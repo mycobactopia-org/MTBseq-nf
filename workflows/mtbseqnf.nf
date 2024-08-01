@@ -48,7 +48,7 @@ workflow MTBSEQ_NF {
                                 params.basecalib])
 
                 ch_versions = ch_versions.mix(NORMAL_ANALYSIS.out.versions)
-                ch_mtbseq_multiqc_files = NORMAL_ANALYSIS.out.multiqc_files)
+                ch_mtbseq_multiqc_files = NORMAL_ANALYSIS.out.multiqc_files
 
     }
     /// END MTBSEQ ANALYSIS
