@@ -3,8 +3,6 @@ include { TBFULL } from '../../../modules/mtbseq/tbfull.nf' addParams (params.TB
 include { TBJOIN } from '../../../modules/mtbseq/tbjoin.nf' addParams (params.TBJOIN)
 include { TBAMEND } from '../../../modules/mtbseq/tbamend.nf' addParams (params.TBAMEND)
 include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf' addParams (params.TBGROUPS)
-include { MULTIQC } from '../../../modules/mtbseq/tbamend.nf' addParams (params.TBAMEND)
-
 
 workflow NORMAL_ANALYSIS {
 

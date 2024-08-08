@@ -6,7 +6,6 @@
 
 include { QC                     } from '../subworkflows/local/qc'
 include { REPORT                 } from '../subworkflows/local/report'
-include { PREPARE_MULTIQC } from '../modules/utils/prepare_multiqc'
 include { PARALLEL_ANALYSIS } from "../subworkflows/local/mtbseq-nf-modes/parallel_analysis.nf"
 include { NORMAL_ANALYSIS } from "../subworkflows/local/mtbseq-nf-modes/normal_analysis.nf"
 /*
@@ -53,8 +52,7 @@ workflow MTBSEQ_NF {
 
     }
     /// END MTBSEQ ANALYSIS
-    PREPARE_MULTIQC(ch_mtbseq_multiqc_files)
-    ch_multiqc_files.mix(PREPARE_MULTIQC.out.multiqc_files)
+    ch_multiqc_files.mix(ch_mtbseq_multiqc_files)
 
     REPORT (ch_multiqc_files, ch_versions)
     multiqc_report = REPORT.out.multiqc_report
