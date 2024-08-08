@@ -3,6 +3,8 @@ process TBJOIN {
     label 'process_high_memory'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
+    conda "bioconda::mtbseq=1.1.0"
+    container "${'bquay.io/biocontainers/mtbseq:1.1.0--hdfd78af_0'}"
     input:
         path("Called/*")
         path("Position_Tables/*")
