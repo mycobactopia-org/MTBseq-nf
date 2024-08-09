@@ -55,7 +55,7 @@ workflow PARALLEL_ANALYSIS {
                         SAMPLE_ANALYSIS.out.position_tables,
                         references_ch)
 
-        ch_versions = ch_versions.mix(COHORT_ANALYSIS.out.versions)
+        ch_versions = Channel.empty().mix(COHORT_ANALYSIS.out.versions)
         ch_multiqc_files.mix(SAMPLE_ANALYSIS.out.statistics)
         ch_multiqc_files.mix(SAMPLE_ANALYSIS.out.classification)
         ch_multiqc_files.mix(COHORT_ANALYSIS.out.distance_matrix)
