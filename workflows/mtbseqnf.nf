@@ -24,13 +24,16 @@ workflow MTBSEQ_NF {
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
 
+
     QUALITY_CONTROL(ch_samplesheet)
 
-    ch_versions.mix(QUALITY_CONTROL.out.versions)
-    ch_multiqc_files.mix(QUALITY_CONTROL.out.multiqc_files)
+    ch_versions = ch_versions.mix(QUALITY_CONTROL.out.versions)
+    ch_multiqc_files = ch_multiqc_files.mix(QUALITY_CONTROL.out.multiqc_files)
 
-    // MTBSEQ run modes
-    if( params.parallel ) {
+
+    if(!params.only_qc) {
+        // MTBSEQ run modes
+        if( params.parallel ) {
 
                 PARALLEL_ANALYSIS(ch_samplesheet,
                                   [params.resilist,
@@ -42,7 +45,6 @@ workflow MTBSEQ_NF {
                 ch_versions.mix(PARALLEL_ANALYSIS.out.versions)
                 ch_multiqc_files.mix(PARALLEL_ANALYSIS.out.multiqc_files)
 
-                REPORT (ch_multiqc_files.collect(), ch_versions.collect())
             } else {
 
                 //NOTE: Defaults to the normal analysis as implemented in MTBseq
@@ -52,17 +54,10 @@ workflow MTBSEQ_NF {
                                 params.categories,
                                 params.basecalib])
 
-                ch_versions = Channel.empty()
-                ch_multiqc_files = Channel.empty()
-
-                ch_versions.mix(QC.out.ch_versions)
-                ch_multiqc_files.mix(QC.out.ch_multiqc_files)
-
-
                 ch_versions.mix(NORMAL_ANALYSIS.out.versions)
                 ch_multiqc_files.mix(NORMAL_ANALYSIS.out.multiqc_files)
 
-                REPORT (ch_multiqc_files.collect(), ch_versions.collect())
+        }
     }
 
 

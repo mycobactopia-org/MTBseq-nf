@@ -32,7 +32,7 @@ custom_data:
             - condition: "value.startswith('2')"
               color: "#FFA500"
             - condition: "value.startswith('3')"
-              color: "#FFFF00" 
+              color: "#FFFF00"
             - condition: "value.startswith('4')"
               color: "#008000"
             - condition: "value.startswith('5')"
@@ -54,7 +54,7 @@ custom_data:
             - condition: "value.startswith('2')"
               color: "#FFA500"
             - condition: "value.startswith('3')"
-              color: "#FFFF00" 
+              color: "#FFFF00"
             - condition: "value.startswith('4')"
               color: "#008000"
             - condition: "value.startswith('5')"
@@ -75,13 +75,13 @@ custom_data:
               color: "#00FF00"
             - condition: "value == 'bad'"
               color: "#FF0000"
-        "Coll quality (easy)"":
+        "Coll quality (easy)":
           rules:
             - condition: "value == 'good'"
               color: "#00FF00"
             - condition: "value == 'bad'"
               color: "#FF0000"
-        "Coll quality (branch)"":
+        "Coll quality (branch)":
           rules:
             - condition: "value == 'good'"
               color: "#00FF00"
@@ -109,8 +109,8 @@ custom_data:
     pconfig:
       id: 'groups'
       namespace: "Sample Clustering Groups"
-   
-  
+
+
   distance_matrix:
     section_name: "Sample SNP distance"
     plot_type: 'heatmap'

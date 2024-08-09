@@ -9,6 +9,7 @@ workflow REPORT {
    take:
    ch_multiqc_files
    ch_versions
+
    main:
    softwareVersionsToYAML(ch_versions)
         .collectFile(storeDir: "${params.outdir}/pipeline_info", name: 'nf_core_pipeline_software_mqc_versions.yml', sort: true, newLine: true)

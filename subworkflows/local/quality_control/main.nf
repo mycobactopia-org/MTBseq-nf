@@ -13,8 +13,8 @@ workflow QUALITY_CONTROL {
 
     emit:
 
-    multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
-    versions = ch_versions.mix(FASTQC.out.versions.first())
+    multiqc_files = FASTQC.out.zip.collect{it[1]}
+    versions = FASTQC.out.versions.first()
 
 
 }

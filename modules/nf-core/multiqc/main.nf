@@ -26,9 +26,12 @@ process MULTIQC {
     def config = multiqc_config ? "--config $multiqc_config" : ''
     def extra_config = extra_multiqc_config ? "--config $extra_multiqc_config" : ''
     def logo = multiqc_logo ? /--cl-config 'custom_logo: "${multiqc_logo}"'/ : ''
+
+    def prepare_multiqc_reports = params.only_qc ? "" : "prepare_multiqc.py --mapping Mapping_and_Variant_Statistics.tab --strain Strain_Classification.tab --groups *.groups --matrix *.matrix"
+
     """
 
-    prepare_multiqc.py --mapping Mapping_and_Variant_Statistics.tab --strain Strain_Classification.tab --groups *.groups --matrix *.matrix
+    $prepare_multiqc_reports
 
     multiqc \\
         --force \\
