@@ -18,11 +18,10 @@ workflow PARALLEL_ANALYSIS {
                         references_ch)
 
         ch_versions = ch_versions.mix(COHORT_ANALYSIS.out.versions)
-        ch_multiqc_files.mix(
-            PER_SAMPLE_ANALYSIS.out.statistics,
-            PER_SAMPLE_ANALYSIS.out.classification,
-            COHORT_ANALYSIS.out.distance_matrix,
-            COHORT_ANALYSIS.out.groups
+        ch_multiqc_files.mix(PER_SAMPLE_ANALYSIS.out.statistics)
+        ch_multiqc_files.mix(PER_SAMPLE_ANALYSIS.out.classification)
+        ch_multiqc_files.mix(COHORT_ANALYSIS.out.distance_matrix)
+        ch_multiqc_files.mix(COHORT_ANALYSIS.out.groups)
             )
 
     emit:

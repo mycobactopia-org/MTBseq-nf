@@ -12,7 +12,7 @@ workflow COHORT_ANALYSIS {
     main:
         ch_versions = Channel.empty()
         ch_multiqc_files = Channel.empty()
-    
+
         samples_tsv_file = genome_names
                 .collect()
                 .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
@@ -34,14 +34,12 @@ workflow COHORT_ANALYSIS {
                  params.user,
                  references_ch)
         ch_versions = ch_versions.mix(TBGROUPS.out.versions)
-        
 
-                 
+
+
     emit:
         versions         = ch_versions
         ch_multiqc_files = ch_multiqc_files
-        
-        statistics = TBGROUPS.out.distance_matrix
         groups =   TBGROUPS.out.groups
-
+        distance_matrix = TBGROUPS.out.distance_matrix
 }
