@@ -52,7 +52,7 @@ workflow MTBSEQ_NF {
 
     }
 
-    REPORT (ch_multiqc_files, ch_versions)
+    REPORT (ch_multiqc_files.collect(), ch_versions.collect())
     multiqc_report = REPORT.out.multiqc_report
 
     emit:
