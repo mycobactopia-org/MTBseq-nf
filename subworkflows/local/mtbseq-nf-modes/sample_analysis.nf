@@ -6,7 +6,7 @@ include { TBVARIANTS } from '../../../modules/mtbseq/tbvariants.nf' addParams (p
 include { TBSTATS } from '../../../modules/mtbseq/tbstats.nf' addParams (params.TBSTATS)
 include { TBSTRAINS } from '../../../modules/mtbseq/tbstrains.nf' addParams (params.TBSTRAINS)
 
-workflow PER_SAMPLE_ANALYSIS {
+workflow SAMPLE_ANALYSIS {
     take:
         reads_ch
         references_ch
