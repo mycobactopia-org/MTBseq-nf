@@ -48,9 +48,6 @@ workflow PARALLEL_ANALYSIS {
         references_ch
 
     main:
-        ch_versions = Channel.empty()
-        ch_multiqc_files = Channel.empty()
-
         SAMPLE_ANALYSIS(reads_ch, references_ch)
 
         COHORT_ANALYSIS(SAMPLE_ANALYSIS.out.genome_names,

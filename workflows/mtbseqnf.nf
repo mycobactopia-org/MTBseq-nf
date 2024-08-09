@@ -4,10 +4,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { QC                     } from '../subworkflows/local/qc'
+include { QUALITY_CONTROL        } from '../subworkflows/local/quality_control'
 include { REPORT                 } from '../subworkflows/local/report'
-include { PARALLEL_ANALYSIS } from "../subworkflows/local/mtbseq-nf-modes/parallel_analysis.nf"
-include { NORMAL_ANALYSIS } from "../subworkflows/local/mtbseq-nf-modes/normal_analysis.nf"
+include { PARALLEL_ANALYSIS      } from "../subworkflows/local/mtbseq-nf-modes/parallel_analysis.nf"
+include { NORMAL_ANALYSIS        } from "../subworkflows/local/mtbseq-nf-modes/normal_analysis.nf"
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -21,10 +21,16 @@ workflow MTBSEQ_NF {
 
     main:
 
-    QC(ch_samplesheet)
+    ch_versions = Channel.empty()
+    ch_multiqc_files = Channel.empty()
+
+    QUALITY_CONTROL(ch_samplesheet)
+
+    ch_versions.mix(QUALITY_CONTROL.out.versions)
+    ch_multiqc_files.mix(QUALITY_CONTROL.out.multiqc_files)
 
     // MTBSEQ run modes
-    if( params.parallel && !params.only_qc ) {
+    if( params.parallel ) {
 
                 PARALLEL_ANALYSIS(ch_samplesheet,
                                   [params.resilist,
@@ -33,16 +39,8 @@ workflow MTBSEQ_NF {
                                    params.basecalib])
 
 
-                //ch_versions = Channel.empty()
-                //ch_multiqc_files = Channel.empty()
-
-                //ch_versions.mix(QC.out.ch_versions)
-                //ch_multiqc_files.mix(QC.out.ch_multiqc_files)
-
-                ch_versions = Channel.empty().mix(PARALLEL_ANALYSIS.out.versions)
-                ch_multiqc_files = Channel.empty().mix(PARALLEL_ANALYSIS.out.multiqc_files)
-
-                ch_multiqc_files.view()
+                ch_versions.mix(PARALLEL_ANALYSIS.out.versions)
+                ch_multiqc_files.mix(PARALLEL_ANALYSIS.out.multiqc_files)
 
                 REPORT (ch_multiqc_files.collect(), ch_versions.collect())
             } else {
