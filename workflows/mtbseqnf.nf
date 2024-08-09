@@ -33,8 +33,8 @@ workflow MTBSEQ_NF {
                                    params.basecalib])
 
 
-                ch_versions = Channel.empty()
-                ch_multiqc_files = Channel.empty()
+                //ch_versions = Channel.empty()
+                //ch_multiqc_files = Channel.empty()
 
                 //ch_versions.mix(QC.out.ch_versions)
                 //ch_multiqc_files.mix(QC.out.ch_multiqc_files)
