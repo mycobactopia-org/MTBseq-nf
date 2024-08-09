@@ -58,7 +58,8 @@ workflow {
         params.plaintext_email,
         params.outdir,
         params.monochrome_logs,
-        params.hook_url //, MTBSEQ_NF.out.multiqc_report
+        params.hook_url,
+        MTBSEQ_NF.out.multiqc_report
     )
 }
 
