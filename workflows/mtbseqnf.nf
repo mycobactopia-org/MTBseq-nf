@@ -51,8 +51,6 @@ workflow MTBSEQ_NF {
                 ch_multiqc_files.mix(NORMAL_ANALYSIS.out.multiqc_files)
 
     }
-    /// END MTBSEQ ANALYSIS
-    ch_multiqc_files.mix(ch_mtbseq_multiqc_files)
 
     REPORT (ch_multiqc_files, ch_versions)
     multiqc_report = REPORT.out.multiqc_report
