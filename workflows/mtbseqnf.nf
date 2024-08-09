@@ -42,8 +42,8 @@ workflow MTBSEQ_NF {
                                    params.basecalib])
 
 
-                ch_versions.mix(PARALLEL_ANALYSIS.out.versions)
-                ch_multiqc_files.mix(PARALLEL_ANALYSIS.out.multiqc_files)
+                ch_versions =  ch_versions.mix(PARALLEL_ANALYSIS.out.versions)
+                ch_multiqc_files =  ch_multiqc_files.mix(PARALLEL_ANALYSIS.out.multiqc_files)
 
             } else {
 
@@ -54,8 +54,8 @@ workflow MTBSEQ_NF {
                                 params.categories,
                                 params.basecalib])
 
-                ch_versions.mix(NORMAL_ANALYSIS.out.versions)
-                ch_multiqc_files.mix(NORMAL_ANALYSIS.out.multiqc_files)
+                ch_versions =  ch_versions.mix(NORMAL_ANALYSIS.out.versions)
+                ch_multiqc_files =  ch_multiqc_files.mix(NORMAL_ANALYSIS.out.multiqc_files)
 
         }
     }
