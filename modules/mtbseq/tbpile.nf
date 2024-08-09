@@ -5,7 +5,7 @@ process TBPILE {
     stageInMode 'copy'
 
     conda "bioconda::mtbseq=1.1.0"
-    container "${'bquay.io/biocontainers/mtbseq:1.1.0--hdfd78af_0'}"
+    container "${'quay.io/biocontainers/mtbseq:1.1.0--hdfd78af_0'}"
     input:
         tuple val(meta), path("GATK_Bam/*")
         env(USER)
