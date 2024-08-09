@@ -22,7 +22,6 @@ workflow PARALLEL_ANALYSIS {
         ch_multiqc_files.mix(PER_SAMPLE_ANALYSIS.out.classification)
         ch_multiqc_files.mix(COHORT_ANALYSIS.out.distance_matrix)
         ch_multiqc_files.mix(COHORT_ANALYSIS.out.groups)
-            )
 
     emit:
         versions       = ch_versions
