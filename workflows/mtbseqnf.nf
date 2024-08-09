@@ -39,8 +39,8 @@ workflow MTBSEQ_NF {
                 //ch_versions.mix(QC.out.ch_versions)
                 //ch_multiqc_files.mix(QC.out.ch_multiqc_files)
 
-                ch_versions.mix(PARALLEL_ANALYSIS.out.versions)
-                ch_multiqc_files.mix(PARALLEL_ANALYSIS.out.multiqc_files)
+                ch_versions = Channel.empty().mix(PARALLEL_ANALYSIS.out.versions)
+                ch_multiqc_files = Channel.empty().mix(PARALLEL_ANALYSIS.out.multiqc_files)
                 REPORT (ch_multiqc_files.collect(), ch_versions.collect())
             } else {
 
