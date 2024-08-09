@@ -7,7 +7,7 @@ process MULTIQC {
         'biocontainers/multiqc:1.21--pyhdfd78af_0' }"
 
     input:
-    path  multiqc_files, stageAs: "?/*"
+    path(multiqc_files, stageAs: "?/*")
     path(multiqc_config)
     path(extra_multiqc_config)
     path(multiqc_logo)
@@ -30,7 +30,7 @@ process MULTIQC {
 
     prepare_multiqc.py --mapping Mapping_and_Variant_Statistics.tab --strain Strain_Classification.tab --groups *.groups --matrix *.matrix
 
-	multiqc \\
+    multiqc \\
         --force \\
         $args \\
         $config \\
