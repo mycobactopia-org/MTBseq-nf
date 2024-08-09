@@ -1,0 +1,4 @@
+sample,fastq_1,fastq_2
+6639-04,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR552/ERR552979/ERR552979_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR552/ERR552979/ERR552979_2.fastq.gz
+6640-04,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR552/ERR552647/ERR552647_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR552/ERR552647/ERR552647_2.fastq.gz
+6769-04,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR550/ERR550942/ERR550942_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR550/ERR550942/ERR550942_2.fastq.gz
