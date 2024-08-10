@@ -33,7 +33,7 @@ workflow COHORT_ANALYSIS {
                  samples_tsv_file,
                  params.user,
                  references_ch)
-        ch_versions = ch_versions.mix(TBGROUPS.out.versions)
+        ch_versions = ch_versions.mix(TBGROUPS.out.versions.first())
 
 
 
