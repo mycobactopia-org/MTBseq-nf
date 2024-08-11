@@ -10,13 +10,16 @@ workflow COHORT_ANALYSIS {
         references_ch
 
     main:
+        ch_versions = Channel.empty()
+        ch_multiqc_files = Channel.empty()
+
         samples_tsv_file = genome_names
                 .collect()
                 .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
                 .collectFile(name: params.cohort_tsv, newLine: false, storeDir: "${params.outdir}", cache: false)
 
-        TBJOIN(position_variants.collect(),
-               position_tables.collect(),
+        TBJOIN(position_variants.collect(sort:true),
+               position_tables.collect(sort:true),
                samples_tsv_file,
                params.user,
                references_ch)
@@ -30,5 +33,13 @@ workflow COHORT_ANALYSIS {
                  samples_tsv_file,
                  params.user,
                  references_ch)
+        ch_versions = ch_versions.mix(TBGROUPS.out.versions.first())
 
+
+
+    emit:
+        versions         = ch_versions
+        ch_multiqc_files = ch_multiqc_files
+        groups           = TBGROUPS.out.groups
+        distance_matrix  = TBGROUPS.out.distance_matrix
 }

@@ -3,6 +3,8 @@ process TBFULL {
     label 'process_max'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
+    conda "bioconda::mtbseq=1.1.0"
+    container "${'quay.io/biocontainers/mtbseq:1.1.0--hdfd78af_0'}"
     input:
         path("*")
         env(USER)
@@ -13,6 +15,8 @@ process TBFULL {
         path("Position_Tables")
         path("Classification")
         path("Statistics")
+        path("Statistics/Mapping_and_Variant_Statistics.tab"), emit: statistics
+        path("Classification/Strain_Classification.tab"), emit: classification
         path("Called/*_${params.library_name}*gatk_position_variants*.tab"), emit: position_variants
         path("Position_Tables/*_${params.library_name}*.gatk_position_table.tab"), emit: position_tables
 

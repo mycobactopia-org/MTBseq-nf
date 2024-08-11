@@ -3,13 +3,15 @@ process TBSTRAINS {
     label 'process_single'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
+    conda "bioconda::mtbseq=1.1.0"
+    container "${'quay.io/biocontainers/mtbseq:1.1.0--hdfd78af_0'}"
     input:
         path("Position_Tables/*")
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Classification/Strain_Classification.tab")
+        path("Classification/Strain_Classification.tab"), emit: classification
 
     script:
         def args = task.ext.args ?: "--mincovf ${params.mincovf} --mincovr ${params.mincovr} --minphred ${params.minphred} --minfreq ${params.minfreq}"

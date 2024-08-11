@@ -11,6 +11,8 @@ workflow NORMAL_ANALYSIS {
         references_ch
 
     main:
+        ch_versions = Channel.empty()
+        ch_multiqc_files = Channel.empty()
 
         samples_tsv_file = reads_ch
                 .map {it -> it[0].id}
@@ -41,6 +43,17 @@ workflow NORMAL_ANALYSIS {
                  samples_tsv_file,
                  params.user,
                  references_ch)
+
+        ch_versions = ch_versions.mix(TBGROUPS.out.versions)
+        ch_multiqc_files.mix(TBFULL.out.statistics)
+        ch_multiqc_files.mix(TBFULL.out.classification)
+        ch_multiqc_files.mix(TBGROUPS.out.distance_matrix)
+        ch_multiqc_files.mix(TBGROUPS.out.groups)
+
+
+    emit:
+        versions       = ch_versions
+        multiqc_files  = ch_multiqc_files
 
 
 }

@@ -3,6 +3,9 @@ process TBAMEND {
     label 'process_single'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
+    conda "bioconda::mtbseq=1.1.0"
+    container "${'quay.io/biocontainers/mtbseq:1.1.0--hdfd78af_0'}"
+
     input:
         path("Joint/*")
         path(samplesheet_tsv)
