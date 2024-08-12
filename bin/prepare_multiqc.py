@@ -4,14 +4,15 @@ import sys
 import os
 import csv
 import argparse
+import fnmatch
 
 
-def find_file_in_subfolders(filename, root_folder='.'):
+def find_file_in_subfolders(pattern, root_folder='.'):
+    matched_files = []
     for root, dirs, files in os.walk(root_folder):
-        if filename in files:
-            return os.path.join(root, filename)
-    return None
-
+        for filename in fnmatch.filter(files, pattern):
+            matched_files.append(os.path.join(root, filename))
+    return matched_files[0]
 
 def process_matrix_file(input_file, output_file):
 

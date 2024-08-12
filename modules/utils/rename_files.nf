@@ -1,5 +1,7 @@
 process RENAME_FILES {
     tag "${meta.id}"
+    conda "bioconda::mtbseq=1.1.0"
+    container "${'quay.io/biocontainers/mtbseq:1.1.0--hdfd78af_0'}"
 
     input:
         tuple val(meta), path(reads)

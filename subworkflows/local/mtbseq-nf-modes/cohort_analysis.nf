@@ -2,7 +2,7 @@ include { TBJOIN } from '../../../modules/mtbseq/tbjoin.nf' addParams (params.TB
 include { TBAMEND } from '../../../modules/mtbseq/tbamend.nf' addParams (params.TBAMEND)
 include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf' addParams (params.TBGROUPS)
 
-workflow COHORT_ANALYSIS {
+workflow COHORT {
     take:
         genome_names
         position_variants
@@ -11,10 +11,9 @@ workflow COHORT_ANALYSIS {
 
     main:
         ch_versions = Channel.empty()
-        ch_multiqc_files = Channel.empty()
 
         samples_tsv_file = genome_names
-                .collect()
+                .collect(sort:true)
                 .flatten().map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
                 .collectFile(name: params.cohort_tsv, newLine: false, storeDir: "${params.outdir}", cache: false)
 
@@ -39,7 +38,6 @@ workflow COHORT_ANALYSIS {
 
     emit:
         versions         = ch_versions
-        ch_multiqc_files = ch_multiqc_files
-        groups           = TBGROUPS.out.groups
-        distance_matrix  = TBGROUPS.out.distance_matrix
+        groups           = TBGROUPS.out.groups.first()
+        distance_matrix  = TBGROUPS.out.distance_matrix.first()
 }

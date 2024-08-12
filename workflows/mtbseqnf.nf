@@ -112,6 +112,9 @@ workflow MTBSEQ_NF {
         )
     )
 
+
+    ch_multiqc_files.collect().dump(tag: "mtbseqnf: ch_multiqc_files ")
+
     MULTIQC (
         ch_multiqc_files.collect(),
         ch_multiqc_config.toList(),

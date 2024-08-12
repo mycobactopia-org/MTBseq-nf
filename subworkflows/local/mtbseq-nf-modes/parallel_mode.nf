@@ -6,11 +6,11 @@ include { TBVARIANTS } from '../../../modules/mtbseq/tbvariants.nf' addParams (p
 include { TBSTATS } from '../../../modules/mtbseq/tbstats.nf' addParams (params.TBSTATS)
 include { TBSTRAINS } from '../../../modules/mtbseq/tbstrains.nf' addParams (params.TBSTRAINS)
 
-include { COHORT_ANALYSIS } from "./cohort_analysis.nf"
+include { COHORT } from "./cohort_analysis.nf"
 
 
 //Local subworkflow, used only within PARALLEL_MODE
-workflow SAMPLE_ANALYSIS {
+workflow SAMPLE {
     take:
         reads_ch
         references_ch
@@ -50,20 +50,24 @@ workflow PARALLEL_MODE {
         references_ch
 
     main:
-        SAMPLE_ANALYSIS(reads_ch, references_ch)
 
-        COHORT_ANALYSIS(SAMPLE_ANALYSIS.out.genome_names,
-                        SAMPLE_ANALYSIS.out.position_variants,
-                        SAMPLE_ANALYSIS.out.position_tables,
+        ch_versions = Channel.empty()
+        ch_multiqc_files = Channel.empty()
+
+        SAMPLE(reads_ch, references_ch)
+
+        COHORT(SAMPLE.out.genome_names,
+                        SAMPLE.out.position_variants,
+                        SAMPLE.out.position_tables,
                         references_ch)
 
-        ch_versions = Channel.empty().mix(COHORT_ANALYSIS.out.versions)
-        ch_multiqc_files = Channel.empty().mix(SAMPLE_ANALYSIS.out.statistics)
-        ch_multiqc_files.mix(SAMPLE_ANALYSIS.out.classification)
-        ch_multiqc_files.mix(COHORT_ANALYSIS.out.distance_matrix)
-        ch_multiqc_files.mix(COHORT_ANALYSIS.out.groups)
+        ch_versions = ch_versions.mix(COHORT.out.versions)
+        ch_multiqc_files = ch_multiqc_files.mix(SAMPLE.out.statistics)
+                                .mix(SAMPLE.out.classification)
+                                .mix(COHORT.out.distance_matrix)
+                                .mix(COHORT.out.groups)
 
     emit:
         versions       = ch_versions
-        multiqc_files  = ch_multiqc_files
+        multiqc_files  = ch_multiqc_files.collect()
 }

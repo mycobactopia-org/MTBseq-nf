@@ -19,6 +19,7 @@ process TBFULL {
         path("Classification/Strain_Classification.tab"), emit: classification
         path("Called/*_${params.library_name}*gatk_position_variants*.tab"), emit: position_variants
         path("Position_Tables/*_${params.library_name}*.gatk_position_table.tab"), emit: position_tables
+        path "versions.yml", emit: versions
 
     script:
         def args = task.ext.args ?: " --minbqual ${params.minbqual} --mincovf ${params.mincovf} --mincovr ${params.mincovr} --minphred ${params.minphred} --minfreq ${params.minfreq} --resilist ${ref_resistance_list} --unambig ${params.unambig} --window ${params.window} --distance ${params.distance}"
@@ -35,6 +36,13 @@ process TBFULL {
         1>>.command.out \\
         2>>.command.err \\
         || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
+
+
+
+       cat <<-END_VERSIONS > versions.yml
+       "${task.process}":
+          MTBseq: \$(${params.mtbseq_path} --version | cut -d " " -f 2)
+       END_VERSIONS
 
         """
 

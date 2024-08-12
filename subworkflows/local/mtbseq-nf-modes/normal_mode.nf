@@ -1,8 +1,7 @@
 include { RENAME_FILES } from '../../../modules/utils/rename_files.nf' addParams (params.RENAME_FILES)
 include { TBFULL } from '../../../modules/mtbseq/tbfull.nf' addParams (params.TBFULL)
-include { TBJOIN } from '../../../modules/mtbseq/tbjoin.nf' addParams (params.TBJOIN)
-include { TBAMEND } from '../../../modules/mtbseq/tbamend.nf' addParams (params.TBAMEND)
-include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf' addParams (params.TBGROUPS)
+
+include { COHORT } from "./cohort_analysis.nf"
 
 workflow NORMAL_MODE {
 
@@ -13,6 +12,8 @@ workflow NORMAL_MODE {
     main:
         ch_versions = Channel.empty()
         ch_multiqc_files = Channel.empty()
+
+        ch_genome_names = reads_ch.map{ it -> it[0].id}
 
         samples_tsv_file = reads_ch
                 .map {it -> it[0].id}
@@ -28,32 +29,23 @@ workflow NORMAL_MODE {
                params.user,
                references_ch)
 
-        TBJOIN(TBFULL.out.position_variants.collect(),
-               TBFULL.out.position_tables.collect(),
-               samples_tsv_file,
-               params.user,
-               references_ch)
 
-        TBAMEND(TBJOIN.out.joint_samples,
-                samples_tsv_file,
-                params.user,
-                references_ch)
+        COHORT(ch_genome_names,
+                        TBFULL.out.position_variants,
+                        TBFULL.out.position_tables,
+                        references_ch)
 
-        TBGROUPS(TBAMEND.out.samples_amended,
-                 samples_tsv_file,
-                 params.user,
-                 references_ch)
 
-        ch_versions = ch_versions.mix(TBGROUPS.out.versions)
-        ch_multiqc_files.mix(TBFULL.out.statistics)
-        ch_multiqc_files.mix(TBFULL.out.classification)
-        ch_multiqc_files.mix(TBGROUPS.out.distance_matrix)
-        ch_multiqc_files.mix(TBGROUPS.out.groups)
+        ch_versions = ch_versions.mix(TBFULL.out.versions)
+        ch_multiqc_files = ch_multiqc_files.mix(TBFULL.out.statistics)
+                                .mix(TBFULL.out.classification)
+                                .mix(COHORT.out.distance_matrix)
+                                .mix(COHORT.out.groups)
 
 
     emit:
         versions       = ch_versions
-        multiqc_files  = ch_multiqc_files
+        multiqc_files  = ch_multiqc_files.collect()
 
 
 }
