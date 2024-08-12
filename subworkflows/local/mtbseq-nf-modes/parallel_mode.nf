@@ -9,7 +9,7 @@ include { TBSTRAINS } from '../../../modules/mtbseq/tbstrains.nf' addParams (par
 include { COHORT_ANALYSIS } from "./cohort_analysis.nf"
 
 
-//Local subworkflow, used only within PARALLEL_ANALYSIS
+//Local subworkflow, used only within PARALLEL_MODE
 workflow SAMPLE_ANALYSIS {
     take:
         reads_ch
@@ -44,7 +44,7 @@ workflow SAMPLE_ANALYSIS {
 
 
 
-workflow PARALLEL_ANALYSIS {
+workflow PARALLEL_MODE {
     take:
         reads_ch
         references_ch

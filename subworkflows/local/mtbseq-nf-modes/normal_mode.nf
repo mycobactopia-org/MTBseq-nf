@@ -4,7 +4,7 @@ include { TBJOIN } from '../../../modules/mtbseq/tbjoin.nf' addParams (params.TB
 include { TBAMEND } from '../../../modules/mtbseq/tbamend.nf' addParams (params.TBAMEND)
 include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf' addParams (params.TBGROUPS)
 
-workflow NORMAL_ANALYSIS {
+workflow NORMAL_MODE {
 
     take:
         reads_ch

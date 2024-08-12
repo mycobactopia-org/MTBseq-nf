@@ -5,8 +5,8 @@
 */
 
 include { QUALITY_CONTROL        } from '../subworkflows/local/quality_control'
-include { PARALLEL_ANALYSIS      } from "../subworkflows/local/mtbseq-nf-modes/parallel_analysis.nf"
-include { NORMAL_ANALYSIS        } from "../subworkflows/local/mtbseq-nf-modes/normal_analysis.nf"
+include { PARALLEL_MODE      } from "../subworkflows/local/mtbseq-nf-modes/parallel_mode.nf"
+include { NORMAL_MODE        } from "../subworkflows/local/mtbseq-nf-modes/normal_mode.nf"
 
 
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
@@ -44,27 +44,27 @@ workflow MTBSEQ_NF {
         // MTBSEQ run modes
         if( params.parallel ) {
 
-                PARALLEL_ANALYSIS(ch_samplesheet,
+                PARALLEL_MODE(ch_samplesheet,
                                   [params.resilist,
                                    params.intregions,
                                    params.categories,
                                    params.basecalib])
 
 
-                ch_versions =  ch_versions.mix(PARALLEL_ANALYSIS.out.versions)
-                ch_multiqc_files =  ch_multiqc_files.mix(PARALLEL_ANALYSIS.out.multiqc_files)
+                ch_versions =  ch_versions.mix(PARALLEL_MODE.out.versions)
+                ch_multiqc_files =  ch_multiqc_files.mix(PARALLEL_MODE.out.multiqc_files)
 
             } else {
 
                 //NOTE: Defaults to the normal analysis as implemented in MTBseq
-                NORMAL_ANALYSIS(ch_samplesheet,
+                NORMAL_MODE(ch_samplesheet,
                                [params.resilist,
                                 params.intregions,
                                 params.categories,
                                 params.basecalib])
 
-                ch_versions =  ch_versions.mix(NORMAL_ANALYSIS.out.versions)
-                ch_multiqc_files =  ch_multiqc_files.mix(NORMAL_ANALYSIS.out.multiqc_files)
+                ch_versions =  ch_versions.mix(NORMAL_MODE.out.versions)
+                ch_multiqc_files =  ch_multiqc_files.mix(NORMAL_MODE.out.multiqc_files)
 
         }
     }
