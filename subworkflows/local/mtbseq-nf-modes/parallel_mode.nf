@@ -16,6 +16,11 @@ workflow SAMPLE {
         references_ch
 
     main:
+
+        samples_tsv_file = reads_ch
+                .map {it -> it[0].id+"\t"+it[0].library}
+                .collectFile(name: params.cohort_tsv, newLine: true, storeDir: "${params.outdir}", cache: false)
+
         TBBWA(reads_ch, params.user, references_ch)
         TBREFINE(TBBWA.out.bam_tuple, params.user, references_ch)
         TBPILE(TBREFINE.out.gatk_bam, params.user, references_ch)
@@ -34,7 +39,7 @@ workflow SAMPLE {
                   references_ch)
 
     emit:
-        genome_names = reads_ch.map{ it -> it[0].id}
+        samples_tsv_file
         position_variants = TBVARIANTS.out.tbjoin_input.collect()
         position_tables = TBLIST.out.tbjoin_input.collect()
         statistics = TBSTATS.out.statistics
@@ -56,7 +61,7 @@ workflow PARALLEL_MODE {
 
         SAMPLE(reads_ch, references_ch)
 
-        COHORT(SAMPLE.out.genome_names,
+        COHORT(SAMPLE.out.samples_tsv_file,
                         SAMPLE.out.position_variants,
                         SAMPLE.out.position_tables,
                         references_ch)
