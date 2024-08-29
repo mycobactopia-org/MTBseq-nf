@@ -6,14 +6,14 @@ process TBLIST {
     conda "bioconda::mtbseq=1.1.0"
     container "${'quay.io/biocontainers/mtbseq:1.1.0--hdfd78af_0'}"
     input:
-        tuple val(meta), path("Mpileup/${meta.id}_${params.library_name}*.gatk.mpileup")
+        tuple val(meta), path("Mpileup/${meta.id}_${meta.library}*.gatk.mpileup")
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Position_Tables/${meta.id}_${params.library_name}*.gatk_position_table.tab"), emit: tbjoin_input
-        tuple val(meta), path("Position_Tables/${meta.id}_${params.library_name}*.gatk_position_table.tab"), emit: position_table_tuple
-        path("Position_Tables/${meta.id}_${params.library_name}*.gatk_position_table.tab"), emit: position_table
+        path("Position_Tables/${meta.id}_${meta.library}*.gatk_position_table.tab"), emit: tbjoin_input
+        tuple val(meta), path("Position_Tables/${meta.id}_${meta.library}*.gatk_position_table.tab"), emit: position_table_tuple
+        path("Position_Tables/${meta.id}_${meta.library}*.gatk_position_table.tab"), emit: position_table
 
     script:
         def args = task.ext.args ?: "--minbqual ${params.minbqual}"
@@ -55,7 +55,7 @@ process TBLIST {
         touch ${task.process}_${meta.id}_err.log
 
         mkdir Position_Tables
-        touch Position_Tables/${meta.id}_${params.library_name}.gatk_position_table.tab
+        touch Position_Tables/${meta.id}_${meta.library}.gatk_position_table.tab
 
         """
 

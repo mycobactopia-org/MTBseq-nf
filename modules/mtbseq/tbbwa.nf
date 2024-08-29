@@ -6,14 +6,14 @@ process TBBWA {
     conda "bioconda::mtbseq=1.1.0"
     container "${'quay.io/biocontainers/mtbseq:1.1.0--hdfd78af_0'}"
     input:
-        tuple val(meta), path("${meta.id}_${params.library_name}_R?.fastq.gz")
+        tuple val(meta), path("${meta.id}_${meta.library}_R?.fastq.gz")
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Bam/${meta.id}_${params.library_name}*.{bam,bai,bamlog}")
-        tuple val(meta), path("Bam/${meta.id}_${params.library_name}*.{bam,bai}"), emit: bam_tuple
-        path("Bam/${meta.id}_${params.library_name}*.bam"), emit: bam
+        path("Bam/${meta.id}_${meta.library}*.{bam,bai,bamlog}")
+        tuple val(meta), path("Bam/${meta.id}_${meta.library}*.{bam,bai}"), emit: bam_tuple
+        path("Bam/${meta.id}_${meta.library}*.bam"), emit: bam
 
     script:
 
@@ -51,9 +51,9 @@ process TBBWA {
         touch ${task.process}_${meta.id}_err.log
 
         mkdir Bam
-        touch Bam/${meta.id}_${params.library_name}.bam
-        touch Bam/${meta.id}_${params.library_name}.bai
-        touch Bam/${meta.id}_${params.library_name}.bamlog
+        touch Bam/${meta.id}_${meta.library}.bam
+        touch Bam/${meta.id}_${meta.library}.bai
+        touch Bam/${meta.id}_${meta.library}.bamlog
 
         """
 
