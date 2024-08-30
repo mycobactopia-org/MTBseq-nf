@@ -19,8 +19,8 @@ process TBFULL {
         path("Statistics")
         path("Statistics/Mapping_and_Variant_Statistics.tab"), emit: statistics
         path("Classification/Strain_Classification.tab"), emit: classification
-        path("Called/*_${meta.library}*gatk_position_variants*.tab"), emit: position_variants
-        path("Position_Tables/*_${meta.library}*.gatk_position_table.tab"), emit: position_tables
+        path("Called/*gatk_position_variants*.tab"), emit: position_variants
+        path("Position_Tables/*.gatk_position_table.tab"), emit: position_tables
         path "versions.yml", emit: versions
 
     script:
@@ -70,26 +70,25 @@ process TBFULL {
 
 
         mkdir GATK_Bam
-        touch GATK_Bam/${meta.id}_${meta.library}.gatk.bam
-        touch GATK_Bam/${meta.id}_${meta.library}.gatk.bai
-        touch GATK_Bam/${meta.id}_${meta.library}.gatk.bamlog
-        touch GATK_Bam/${meta.id}_${meta.library}.gatk.grp
-        touch GATK_Bam/${meta.id}_${meta.library}.gatk.intervals
+        touch GATK_Bam/stub.gatk.bam
+        touch GATK_Bam/stub.gatk.bai
+        touch GATK_Bam/stub.gatk.bamlog
+        touch GATK_Bam/stub.gatk.grp
+        touch GATK_Bam/stub.gatk.intervals
         mkdir Bam
-        mkdir Bam/${meta.id}
-        touch Bam/${meta.id}_${meta.library}.bam
-        touch Bam/${meta.id}_${meta.library}.bai
-        touch Bam/${meta.id}_${meta.library}.bamlog
+        touch Bam/stub.bam
+        touch Bam/stub.bai
+        touch Bam/stub.bamlog
         mkdir Called
-        touch Called/${meta.id}_${meta.library}.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
-        touch Called/${meta.id}_${meta.library}.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+        touch Called/stub.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+        touch Called/stub.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
         mkdir Mpileup
-        touch Mpileup/${meta.id}_${meta.library}.gatk.mpileup
-        touch Mpileup/${meta.id}_${meta.library}.gatk.mpileuplog
+        touch Mpileup/stub.gatk.mpileup
+        touch Mpileup/stub.gatk.mpileuplog
         mkdir Classification
         touch Classification/Strain_Classification.tab
         mkdir Position_Tables
-        touch Position_Tables/${meta.id}_${meta.library}.gatk_position_table.tab
+        touch Position_Tables/stub.gatk_position_table.tab
         mkdir Statistics
         touch Statistics/Mapping_and_Variant_Statistics.tab
 
