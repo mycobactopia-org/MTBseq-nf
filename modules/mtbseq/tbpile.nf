@@ -12,8 +12,8 @@ process TBPILE {
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Mpileup/${meta.id}_${params.library_name}*.gatk.{mpileup,mpileuplog}")
-        tuple val(meta), path("Mpileup/${meta.id}_${params.library_name}*.gatk.mpileup"), emit: mpileup
+        path("Mpileup/${meta.id}_${meta.library}*.gatk.{mpileup,mpileuplog}")
+        tuple val(meta), path("Mpileup/${meta.id}_${meta.library}*.gatk.mpileup"), emit: mpileup
 
     script:
 
@@ -47,8 +47,8 @@ process TBPILE {
         sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
         mkdir Mpileup
-        touch Mpileup/${meta.id}_${params.library_name}.gatk.mpileup
-        touch Mpileup/${meta.id}_${params.library_name}.gatk.mpileuplog
+        touch Mpileup/${meta.id}_${meta.library}.gatk.mpileup
+        touch Mpileup/${meta.id}_${meta.library}.gatk.mpileuplog
 
         """
 

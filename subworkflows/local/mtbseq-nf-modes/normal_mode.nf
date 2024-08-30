@@ -13,14 +13,10 @@ workflow NORMAL_MODE {
         ch_versions = Channel.empty()
         ch_multiqc_files = Channel.empty()
 
-        ch_genome_names = reads_ch.map{ it -> it[0].id}
 
         samples_tsv_file = reads_ch
-                .map {it -> it[0].id}
-                .collect()
-                .flatten()
-                .map { n -> "$n" + "\t" + "${params.library_name}" + "\n" }
-                .collectFile(name: params.cohort_tsv, newLine: false, storeDir: "${params.outdir}", cache: false)
+                .map {it -> it[0].id+"\t"+it[0].library}
+                .collectFile(name: params.cohort_tsv, newLine: true, storeDir: "${params.outdir}", cache: false)
 
         RENAME_FILES(reads_ch)
 
@@ -30,7 +26,7 @@ workflow NORMAL_MODE {
                references_ch)
 
 
-        COHORT(ch_genome_names,
+        COHORT(samples_tsv_file,
                         TBFULL.out.position_variants,
                         TBFULL.out.position_tables,
                         references_ch)
