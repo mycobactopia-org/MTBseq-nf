@@ -1,6 +1,6 @@
 process TBFULL {
     tag "cohort"
-    label 'process_max'
+    label 'process_high_memory'
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     conda "bioconda::mtbseq=1.1.0"
