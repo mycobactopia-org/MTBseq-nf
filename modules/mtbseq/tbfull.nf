@@ -1,6 +1,8 @@
 process TBFULL {
     tag "cohort"
     label 'process_high_memory'
+    label 'error_retry'
+
     publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     conda "bioconda::mtbseq=1.1.0"
