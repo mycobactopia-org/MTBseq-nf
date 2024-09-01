@@ -15,8 +15,6 @@ workflow QUALITY_CONTROL {
                     .collectFile(name: params.cohort_tsv, newLine: true, storeDir: "${params.outdir}/misc", cache: false)
 
 
-
-
         RENAME_FILES (ch_samplesheet)
 
         RENAME_FILES.out.files.collect().dump(tag: 'RENAME_FILES.out.files')
@@ -25,11 +23,10 @@ workflow QUALITY_CONTROL {
         FASTQC (RENAME_FILES.out.meta_and_files)
 
     emit:
-    samples_tsv_file
     reads_and_meta_ch      = RENAME_FILES.out.meta_and_files.collect()
     reads_ch               = RENAME_FILES.out.files.collect()
     multiqc_files          = FASTQC.out.zip.collect{it[1]}
     versions               = FASTQC.out.versions.first()
-
+    derived_cohort_tsv     = samples_tsv_file
 
 }

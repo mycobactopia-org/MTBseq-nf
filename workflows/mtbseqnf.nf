@@ -43,7 +43,7 @@ workflow MTBSEQ_NF {
     if(!params.only_qc) {
 
 
-        QUALITY_CONTROL.out.samples_tsv_file.dump(tag: 'QUALITY_CONTROL.out.samples_tsv_file')
+        QUALITY_CONTROL.out.derived_cohort_tsv.dump(tag: 'QUALITY_CONTROL.out.samples_tsv_file')
 
         QUALITY_CONTROL.out.reads_ch.dump(tag: 'QUALITY_CONTROL.out.reads_ch')
 
@@ -53,7 +53,7 @@ workflow MTBSEQ_NF {
         if( params.parallel ) {
 
                 PARALLEL_MODE(QUALITY_CONTROL.out.reads_and_meta_ch,
-                              QUALITY_CONTROL.out.samples_tsv_file,
+                              QUALITY_CONTROL.out.derived_cohort_tsv,
                                   [params.resilist,
                                    params.intregions,
                                    params.categories,
@@ -67,7 +67,7 @@ workflow MTBSEQ_NF {
 
                 //NOTE: Defaults to the normal analysis as implemented in MTBseq
                 NORMAL_MODE(QUALITY_CONTROL.out.reads_ch,
-                            QUALITY_CONTROL.out.samples_tsv_file,
+                            QUALITY_CONTROL.out.derived_cohort_tsv,
                                [params.resilist,
                                 params.intregions,
                                 params.categories,
