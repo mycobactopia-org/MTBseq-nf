@@ -44,7 +44,7 @@ workflow MTBSEQ_NF {
         // MTBSEQ run modes
         if( params.parallel ) {
 
-                PARALLEL_MODE(QUALITY_CONTROL.out.reads_ch,
+                PARALLEL_MODE(QUALITY_CONTROL.out.reads_and_meta_ch,
                               QUALITY_CONTROL.out.samples_tsv_file,
                                   [params.resilist,
                                    params.intregions,
