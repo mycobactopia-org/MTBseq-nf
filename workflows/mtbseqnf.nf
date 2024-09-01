@@ -43,6 +43,8 @@ workflow MTBSEQ_NF {
     if(!params.only_qc) {
 
 
+        QUALITY_CONTROL.out.samples_tsv_file.dump(tag: 'QUALITY_CONTROL.out.samples_tsv_file')
+
         QUALITY_CONTROL.out.reads_ch.dump(tag: 'QUALITY_CONTROL.out.reads_ch')
 
         QUALITY_CONTROL.out.reads_and_meta_ch.dump(tag: 'QUALITY_CONTROL.out.reads_and_meta_ch')
