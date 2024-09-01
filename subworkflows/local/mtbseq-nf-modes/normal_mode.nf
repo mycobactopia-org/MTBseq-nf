@@ -24,8 +24,8 @@ workflow NORMAL_MODE {
     // COHORT STEPS
 
 
-        TBJOIN(TBVARIANTS.out.tbjoin_input.collect(sort:true),
-               TBLIST.out.position_table.collect(sort:true),
+        TBJOIN(TBFULL.out.position_variants.collect(sort:true),
+               TBFULL.out.position_tables.collect(sort:true),
                derived_cohort_tsv,
                params.user,
                references_ch)
