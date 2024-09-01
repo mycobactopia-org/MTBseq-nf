@@ -20,7 +20,7 @@ workflow QUALITY_CONTROL {
 
             samples_tsv_file = ch_samplesheet
                         .map {it -> it[0].id+"\t"+it[0].library}
-                        .collectFile(name: "derived_cohort.tsv", newLine: true, sort: true, storeDir: ".temp", cache: true)
+                        .collectFile(name: "derived_cohort.tsv", newLine: true, sort: true, tempDir: "temp", storeDir: "${params.outdir}/misc", cache: true)
 
 
         } else {
