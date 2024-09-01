@@ -1,10 +1,10 @@
-include { TBBWA } from '../../../modules/mtbseq/tbbwa.nf' addParams (params.TBBWA)
-include { TBREFINE } from '../../../modules/mtbseq/tbrefine.nf' addParams (params.TBREFINE)
-include { TBPILE } from '../../../modules/mtbseq/tbpile.nf' addParams (params.TBPILE)
-include { TBLIST } from '../../../modules/mtbseq/tblist.nf' addParams (params.TBLIST)
-include { TBVARIANTS } from '../../../modules/mtbseq/tbvariants.nf' addParams (params.TBVARIANTS)
-include { TBSTATS } from '../../../modules/mtbseq/tbstats.nf' addParams (params.TBSTATS)
-include { TBSTRAINS } from '../../../modules/mtbseq/tbstrains.nf' addParams (params.TBSTRAINS)
+include { TBBWA } from '../../../modules/mtbseq/tbbwa.nf'
+include { TBREFINE } from '../../../modules/mtbseq/tbrefine.nf'
+include { TBPILE } from '../../../modules/mtbseq/tbpile.nf'
+include { TBLIST } from '../../../modules/mtbseq/tblist.nf'
+include { TBVARIANTS } from '../../../modules/mtbseq/tbvariants.nf'
+include { TBSTATS } from '../../../modules/mtbseq/tbstats.nf'
+include { TBSTRAINS } from '../../../modules/mtbseq/tbstrains.nf'
 
 include { COHORT } from "./cohort_analysis.nf"
 

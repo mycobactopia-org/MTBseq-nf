@@ -1,4 +1,4 @@
-include { TBFULL } from '../../../modules/mtbseq/tbfull.nf' addParams (params.TBFULL)
+include { TBFULL } from '../../../modules/mtbseq/tbfull.nf'
 
 include { COHORT } from "./cohort_analysis.nf"
 
