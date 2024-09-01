@@ -42,7 +42,7 @@ workflow NORMAL_MODE {
 
         ch_versions = ch_versions.mix(TBFULL.out.versions)
         ch_multiqc_files = ch_multiqc_files.mix(TBFULL.out.statistics)
-                                .mix(TBSTATS.out.statistics)
+                                .mix(TBFULL.out.statistics)
                                 .mix(TBGROUPS.out.distance_matrix.first())
                                 .mix(TBGROUPS.out.groups.first())
 
