@@ -13,7 +13,6 @@ include { COHORT } from "./cohort_analysis.nf"
 workflow SAMPLE {
     take:
         reads_ch
-        samples_tsv_file
         references_ch
 
     main:
