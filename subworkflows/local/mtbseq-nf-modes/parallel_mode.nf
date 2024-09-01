@@ -47,8 +47,8 @@ workflow SAMPLE {
 workflow PARALLEL_MODE {
     take:
         reads_ch
+        derived_cohort_tsv
         references_ch
-        samples_tsv_file
 
     main:
 
@@ -57,7 +57,7 @@ workflow PARALLEL_MODE {
 
         SAMPLE(reads_ch, references_ch)
 
-        COHORT(samples_tsv_file,
+        COHORT(derived_cohort_tsv,
                SAMPLE.out.position_variants,
                SAMPLE.out.position_tables,
                references_ch)
