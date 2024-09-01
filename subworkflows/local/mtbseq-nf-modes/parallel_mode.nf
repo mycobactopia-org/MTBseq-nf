@@ -9,13 +9,17 @@ include { TBSTRAINS } from '../../../modules/mtbseq/tbstrains.nf'
 include { COHORT } from "./cohort_analysis.nf"
 
 
-//Local subworkflow, used only within PARALLEL_MODE
-workflow SAMPLE {
+workflow PARALLEL_MODE {
     take:
         reads_ch
+        derived_cohort_tsv
         references_ch
 
     main:
+
+        ch_versions = Channel.empty()
+        ch_multiqc_files = Channel.empty()
+
 
         TBBWA(reads_ch, params.user, references_ch)
         TBREFINE(TBBWA.out.bam_tuple, params.user, references_ch)
@@ -34,39 +38,30 @@ workflow SAMPLE {
                   params.user,
                   references_ch)
 
-    emit:
-        position_variants = TBVARIANTS.out.tbjoin_input.collect()
-        position_tables   = TBLIST.out.tbjoin_input.collect()
-        statistics        = TBSTATS.out.statistics
-        classification    = TBSTRAINS.out.classification
-
-}
+    // COHORT STEPS
 
 
-
-workflow PARALLEL_MODE {
-    take:
-        reads_ch
-        derived_cohort_tsv
-        references_ch
-
-    main:
-
-        ch_versions = Channel.empty()
-        ch_multiqc_files = Channel.empty()
-
-        SAMPLE(reads_ch, references_ch)
-
-        COHORT(derived_cohort_tsv,
-               SAMPLE.out.position_variants,
-               SAMPLE.out.position_tables,
+        TBJOIN(TBVARIANTS.out.tbjoin_input.collect(sort:true),
+               TBLIST.out.position_table.collect(sort:true),
+               derived_cohort_tsv,
+               params.user,
                references_ch)
 
-        ch_versions = ch_versions.mix(COHORT.out.versions)
+        TBAMEND(TBJOIN.out.joint_samples,
+                derived_cohort_tsv,
+                params.user,
+                references_ch)
+
+        TBGROUPS(TBAMEND.out.samples_amended,
+                 derived_cohort_tsv,
+                 params.user,
+                 references_ch)
+
+        ch_versions = ch_versions.mix(TBGROUPS.out.versions.first())
         ch_multiqc_files = ch_multiqc_files.mix(SAMPLE.out.statistics)
-                                .mix(SAMPLE.out.classification)
-                                .mix(COHORT.out.distance_matrix)
-                                .mix(COHORT.out.groups)
+                                .mix(TBSTATS.out.statistics)
+                                .mix(TBGROUPS.out.distance_matrix.first())
+                                .mix(TBGROUPS.out.groups.first())
 
     emit:
         versions       = ch_versions

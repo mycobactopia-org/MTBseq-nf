@@ -6,7 +6,7 @@ workflow NORMAL_MODE {
 
     take:
         reads_ch
-        samples_tsv_file
+        derived_cohort_tsv
         references_ch
 
     main:
@@ -19,17 +19,32 @@ workflow NORMAL_MODE {
                references_ch)
 
 
-        COHORT(samples_tsv_file,
-               TBFULL.out.position_variants,
-               TBFULL.out.position_tables,
+    // COHORT STEPS
+
+
+        TBJOIN(TBVARIANTS.out.tbjoin_input.collect(sort:true),
+               TBLIST.out.position_table.collect(sort:true),
+               derived_cohort_tsv,
+               params.user,
                references_ch)
 
+        TBAMEND(TBJOIN.out.joint_samples,
+                derived_cohort_tsv,
+                params.user,
+                references_ch)
+
+        TBGROUPS(TBAMEND.out.samples_amended,
+                 derived_cohort_tsv,
+                 params.user,
+                 references_ch)
 
         ch_versions = ch_versions.mix(TBFULL.out.versions)
         ch_multiqc_files = ch_multiqc_files.mix(TBFULL.out.statistics)
-                                .mix(TBFULL.out.classification)
-                                .mix(COHORT.out.distance_matrix)
-                                .mix(COHORT.out.groups)
+                                .mix(TBSTATS.out.statistics)
+                                .mix(TBGROUPS.out.distance_matrix.first())
+                                .mix(TBGROUPS.out.groups.first())
+
+
 
 
     emit:
