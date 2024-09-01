@@ -41,6 +41,12 @@ workflow MTBSEQ_NF {
 
 
     if(!params.only_qc) {
+
+
+        QUALITY_CONTROL.out.reads_ch.dump(tag: 'QUALITY_CONTROL.out.reads_ch')
+
+        QUALITY_CONTROL.out.reads_and_meta_ch.dump(tag: 'QUALITY_CONTROL.out.reads_and_meta_ch')
+
         // MTBSEQ run modes
         if( params.parallel ) {
 
