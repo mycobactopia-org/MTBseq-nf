@@ -12,12 +12,14 @@ workflow QUALITY_CONTROL {
 
         samples_tsv_file = ch_samplesheet
                     .map {it -> it[0].id+"\t"+it[0].library}
-                    .collectFile(name: params.cohort_tsv, newLine: true, storeDir: "${params.outdir}", cache: false)
+                    .collectFile(name: params.cohort_tsv, newLine: true, storeDir: "${params.outdir}/misc", cache: false)
 
 
 
 
         RENAME_FILES (ch_samplesheet)
+
+        RENAME_FILES (ch_samplesheet).out.files.dump(tag: 'RENAME_FILES.out.files')
 
         FASTQC (RENAME_FILES.out.meta_and_files)
 
