@@ -37,14 +37,6 @@ workflow MTBSEQ_NF {
     QUALITY_CONTROL(ch_samplesheet)
 
 
-    QUALITY_CONTROL.out.derived_cohort_tsv.dump(tag: 'QUALITY_CONTROL.out.derived_cohort_tsv')
-
-    QUALITY_CONTROL.out.reads_ch.dump(tag: 'QUALITY_CONTROL.out.reads_ch')
-
-    QUALITY_CONTROL.out.reads_and_meta_ch.dump(tag: 'QUALITY_CONTROL.out.reads_and_meta_ch')
-
-
-
     ch_versions = ch_versions.mix(QUALITY_CONTROL.out.versions)
     ch_multiqc_files = ch_multiqc_files.mix(QUALITY_CONTROL.out.multiqc_files)
 
