@@ -12,11 +12,11 @@ workflow QUALITY_CONTROL {
         samples_tsv_file = Channel.empty()
 
         if (!params.cohort_tsv) {
+
             samples_tsv_file = ch_samplesheet
                         .map {it -> it[0].id+"\t"+it[0].library}
-                        .collectFile(name: "derived_cohort.tsv", newLine: true, storeDir: "${params.outdir}/misc", cache: false)
+                        .collectFile(name: "derived_cohort.tsv", newLine: true, storeDir: "${params.outdir}/misc", cache: true)
 
-            samples_tsv_file = Channel.fromPath( "${params.outdir}/misc/derived_cohort.tsv" )
 
         } else {
             samples_tsv_file = Channel.fromPath( params.cohort_tsv )
