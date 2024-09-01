@@ -19,7 +19,7 @@ workflow QUALITY_CONTROL {
 
         RENAME_FILES (ch_samplesheet)
 
-        RENAME_FILES (ch_samplesheet).out.files.dump(tag: 'RENAME_FILES.out.files')
+        RENAME_FILES.out.files.dump(tag: 'RENAME_FILES.out.files')
 
         FASTQC (RENAME_FILES.out.meta_and_files)
 
