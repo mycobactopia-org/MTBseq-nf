@@ -271,14 +271,6 @@
             "type": "string",
             "default": "mtbseqnf_cohort.tsv"
         },
-        "save_mode": {
-            "type": "string",
-            "default": "copy"
-        },
-        "should_publish": {
-            "type": "boolean",
-            "default": true
-        },
         "all_vars": {
             "type": "boolean"
         },
@@ -324,5 +316,29 @@
             "type": "integer",
             "default": 8
         },
+        "user": {
+            "type": "string",
+            "default": "root"
+        },
+        "ref_and_indexes_path": {
+            "type": "string",
+            "default": "/Users/abhi/projects/MTBseq-nf/data/references/ref/"
+        },
+        "resilist": {
+            "type": "string",
+            "default": "/Users/abhi/projects/MTBseq-nf/data/references/res/MTB_Resistance_Mediating.txt"
+        },
+        "intregions": {
+            "type": "string",
+            "default": "/Users/abhi/projects/MTBseq-nf/data/references/res/MTB_Extended_Resistance_Mediating.txt"
+        },
+        "categories": {
+            "type": "string",
+            "default": "/Users/abhi/projects/MTBseq-nf/data/references/cat/MTB_Gene_Categories.txt"
+        },
+        "basecalib": {
+            "type": "string",
+            "default": "/Users/abhi/projects/MTBseq-nf/data/references/res/MTB_Base_Calibration_List.vcf"
+        }
     }
 }
