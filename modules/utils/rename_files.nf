@@ -7,7 +7,8 @@ process RENAME_FILES {
         tuple val(meta), path(reads)
 
     output:
-        path("${meta.id}_${meta.library}_R?.fastq.gz")
+        path("${meta.id}_${meta.library}_R?.fastq.gz")                 , emit: files
+        tuple val(meta), path("${meta.id}_${meta.library}_R?.fastq.gz"), emit: meta_and_files
 
     script:
         """
