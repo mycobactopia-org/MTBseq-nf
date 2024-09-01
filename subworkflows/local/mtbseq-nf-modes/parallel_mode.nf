@@ -5,8 +5,10 @@ include { TBLIST } from '../../../modules/mtbseq/tblist.nf'
 include { TBVARIANTS } from '../../../modules/mtbseq/tbvariants.nf'
 include { TBSTATS } from '../../../modules/mtbseq/tbstats.nf'
 include { TBSTRAINS } from '../../../modules/mtbseq/tbstrains.nf'
+include { TBJOIN } from '../../../modules/mtbseq/tbjoin.nf'
+include { TBAMEND } from '../../../modules/mtbseq/tbamend.nf'
+include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf'
 
-include { COHORT } from "./cohort_analysis.nf"
 
 
 workflow PARALLEL_MODE {

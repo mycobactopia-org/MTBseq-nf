@@ -1,6 +1,8 @@
 include { TBFULL } from '../../../modules/mtbseq/tbfull.nf'
+include { TBJOIN } from '../../../modules/mtbseq/tbjoin.nf'
+include { TBAMEND } from '../../../modules/mtbseq/tbamend.nf'
+include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf'
 
-include { COHORT } from "./cohort_analysis.nf"
 
 workflow NORMAL_MODE {
 
