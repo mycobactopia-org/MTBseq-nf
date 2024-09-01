@@ -11,6 +11,11 @@ workflow QUALITY_CONTROL {
 
         samples_tsv_file = Channel.empty()
 
+        RENAME_FILES (ch_samplesheet)
+
+        FASTQC (RENAME_FILES.out.meta_and_files)
+
+
         if (!params.cohort_tsv) {
 
             samples_tsv_file = ch_samplesheet
@@ -22,10 +27,6 @@ workflow QUALITY_CONTROL {
             samples_tsv_file = Channel.fromPath( params.cohort_tsv )
         }
 
-
-        RENAME_FILES (ch_samplesheet)
-
-        FASTQC (RENAME_FILES.out.meta_and_files)
 
     emit:
     reads_and_meta_ch      = RENAME_FILES.out.meta_and_files
