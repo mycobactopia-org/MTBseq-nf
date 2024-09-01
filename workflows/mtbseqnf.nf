@@ -45,6 +45,7 @@ workflow MTBSEQ_NF {
         if( params.parallel ) {
 
                 PARALLEL_MODE(QUALITY_CONTROL.out.reads_ch,
+                              QUALITY_CONTROL.out.samples_tsv_file,
                                   [params.resilist,
                                    params.intregions,
                                    params.categories,
@@ -58,6 +59,7 @@ workflow MTBSEQ_NF {
 
                 //NOTE: Defaults to the normal analysis as implemented in MTBseq
                 NORMAL_MODE(QUALITY_CONTROL.out.reads_ch,
+                            QUALITY_CONTROL.out.samples_tsv_file,
                                [params.resilist,
                                 params.intregions,
                                 params.categories,

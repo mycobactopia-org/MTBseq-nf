@@ -6,6 +6,7 @@ workflow NORMAL_MODE {
 
     take:
         reads_ch
+        samples_tsv_file
         references_ch
 
     main:
