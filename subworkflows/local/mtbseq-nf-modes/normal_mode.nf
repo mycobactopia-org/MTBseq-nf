@@ -41,7 +41,7 @@ workflow NORMAL_MODE {
                  references_ch)
 
         ch_versions = ch_versions.mix(TBFULL.out.versions)
-        ch_multiqc_files = ch_multiqc_files.mix(TBFULL.out.statistics)
+        ch_multiqc_files = ch_multiqc_files.mix(TBFULL.out.classification)
                                 .mix(TBFULL.out.statistics)
                                 .mix(TBGROUPS.out.distance_matrix.first())
                                 .mix(TBGROUPS.out.groups.first())
