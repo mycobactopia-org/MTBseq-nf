@@ -36,18 +36,21 @@ workflow MTBSEQ_NF {
 
     QUALITY_CONTROL(ch_samplesheet)
 
+
+    QUALITY_CONTROL.out.derived_cohort_tsv.dump(tag: 'QUALITY_CONTROL.out.derived_cohort_tsv')
+
+    QUALITY_CONTROL.out.reads_ch.dump(tag: 'QUALITY_CONTROL.out.reads_ch')
+
+    QUALITY_CONTROL.out.reads_and_meta_ch.dump(tag: 'QUALITY_CONTROL.out.reads_and_meta_ch')
+
+
+
     ch_versions = ch_versions.mix(QUALITY_CONTROL.out.versions)
     ch_multiqc_files = ch_multiqc_files.mix(QUALITY_CONTROL.out.multiqc_files)
 
 
+
     if(!params.only_qc) {
-
-
-        QUALITY_CONTROL.out.derived_cohort_tsv.dump(tag: 'QUALITY_CONTROL.out.samples_tsv_file')
-
-        QUALITY_CONTROL.out.reads_ch.dump(tag: 'QUALITY_CONTROL.out.reads_ch')
-
-        QUALITY_CONTROL.out.reads_and_meta_ch.dump(tag: 'QUALITY_CONTROL.out.reads_and_meta_ch')
 
         // MTBSEQ run modes
         if( params.parallel ) {

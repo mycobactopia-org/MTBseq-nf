@@ -17,9 +17,6 @@ workflow QUALITY_CONTROL {
 
         RENAME_FILES (ch_samplesheet)
 
-        RENAME_FILES.out.files.collect().dump(tag: 'RENAME_FILES.out.files')
-        RENAME_FILES.out.meta_and_files.collect().dump(tag: 'RENAME_FILES.out.meta_and_files')
-
         FASTQC (RENAME_FILES.out.meta_and_files)
 
     emit:
