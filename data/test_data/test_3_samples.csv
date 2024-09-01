@@ -1,4 +1,4 @@
 sample,library,fastq_1,fastq_2
-6639-04,illumina,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR552/ERR552979/ERR552979_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR552/ERR552979/ERR552979_2.fastq.gz
-6640-04,illumina,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR552/ERR552647/ERR552647_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR552/ERR552647/ERR552647_2.fastq.gz
-6769-04,illumina,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR550/ERR550942/ERR550942_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR550/ERR550942/ERR550942_2.fastq.gz
+1327-04,lib957,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR553/ERR553286/ERR553286_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR553/ERR553286/ERR553286_2.fastq.gz
+4781-04,lib908,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR551/ERR551038/ERR551038_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR551/ERR551038/ERR551038_2.fastq.gz
+3494-04,lib953,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR551/ERR551566/ERR551566_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR551/ERR551566/ERR551566_2.fastq.gz
