@@ -10,7 +10,7 @@ workflow QUALITY_CONTROL {
     main:
 
 
-        samples_tsv_file = reads_ch
+        samples_tsv_file = ch_samplesheet
                     .map {it -> it[0].id+"\t"+it[0].library}
                     .collectFile(name: params.cohort_tsv, newLine: true, storeDir: "${params.outdir}", cache: false)
 
