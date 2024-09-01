@@ -1,10 +1,16 @@
 process TBBWA {
     tag "${meta.id}"
     label 'process_medium'
-    publishDir params.results_dir, mode: params.save_mode, enabled: params.should_publish
 
     conda "bioconda::mtbseq=1.1.0"
-    container "${'quay.io/biocontainers/mtbseq:1.1.0--hdfd78af_0'}"
+
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/mtbseq:1.1.0--hdfd78af_0' :
+        'biocontainers/mtbseq:1.1.0--hdfd78af_0' }"
+
+
+
+
     input:
         tuple val(meta), path("${meta.id}_${meta.library}_R?.fastq.gz")
         env(USER)
@@ -58,4 +64,3 @@ process TBBWA {
         """
 
 }
-
