@@ -60,7 +60,7 @@ workflow PARALLEL_MODE {
                  references_ch)
 
         ch_versions = ch_versions.mix(TBGROUPS.out.versions.first())
-        ch_multiqc_files = ch_multiqc_files.mix(SAMPLE.out.classification)
+        ch_multiqc_files = ch_multiqc_files.mix(TBSTRAINS.out.classification)
                                 .mix(TBSTATS.out.statistics)
                                 .mix(TBGROUPS.out.distance_matrix.first())
                                 .mix(TBGROUPS.out.groups.first())
