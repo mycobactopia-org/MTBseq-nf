@@ -14,7 +14,7 @@ workflow NORMAL_MODE {
         ch_multiqc_files = Channel.empty()
 
 
-        TBFULL(reads_ch.out.collect(),
+        TBFULL(reads_ch.collect(),
                params.user,
                references_ch)
 
