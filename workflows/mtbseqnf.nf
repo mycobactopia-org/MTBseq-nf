@@ -52,7 +52,6 @@ workflow MTBSEQ_NF {
 
     if(!params.only_qc) {
 
-        // MTBSEQ run modes
         if( params.parallel ) {
 
                 PARALLEL_MODE(QUALITY_CONTROL.out.reads_and_meta_ch,
