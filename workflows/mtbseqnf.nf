@@ -37,7 +37,7 @@ workflow MTBSEQ_NF {
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
 
-    ch_reference_files = Channel.of([params.resilist,
+    ch_reference_files = channel.of([params.resilist,
                                      params.intregions,
                                      params.categories,
                                      params.basecalib])
