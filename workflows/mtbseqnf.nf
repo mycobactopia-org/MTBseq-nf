@@ -55,7 +55,7 @@ workflow MTBSEQ_NF {
         // MTBSEQ run modes
         if( params.parallel ) {
 
-                PARALLEL_MODE(QUALITY_CONTROL.out.reads_and_meta_ch,
+                PARALLEL_MODE(QUALITY_CONTROL.out.reads_and_meta_ch.collate(2),
                               QUALITY_CONTROL.out.derived_cohort_tsv,
                               ch_reference_files)
 
