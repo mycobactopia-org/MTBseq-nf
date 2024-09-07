@@ -6,10 +6,14 @@
 
 include { QUALITY_CONTROL        } from '../subworkflows/local/quality_control'
 include { PARALLEL_MODE      } from "../subworkflows/local/mtbseq-nf-modes/parallel_mode.nf"
-include { NORMAL_MODE        } from "../subworkflows/local/mtbseq-nf-modes/normal_mode.nf"
 
-
+include { TBFULL } from '../../../modules/mtbseq/tbfull.nf'
+include { TBJOIN } from '../../../modules/mtbseq/tbjoin.nf'
+include { TBAMEND } from '../../../modules/mtbseq/tbamend.nf'
+include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf'
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
+
+
 include { paramsSummaryMap       } from 'plugin/nf-validation'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -33,6 +37,10 @@ workflow MTBSEQ_NF {
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
 
+    ch_reference_files = Channel.of([params.resilist,
+                                     params.intregions,
+                                     params.categories,
+                                     params.basecalib])
 
     QUALITY_CONTROL(ch_samplesheet)
 
@@ -49,10 +57,7 @@ workflow MTBSEQ_NF {
 
                 PARALLEL_MODE(QUALITY_CONTROL.out.reads_and_meta_ch,
                               QUALITY_CONTROL.out.derived_cohort_tsv,
-                                  [params.resilist,
-                                   params.intregions,
-                                   params.categories,
-                                   params.basecalib])
+                              ch_reference_files)
 
 
                 ch_versions =  ch_versions.mix(PARALLEL_MODE.out.versions)
@@ -60,16 +65,36 @@ workflow MTBSEQ_NF {
 
             } else {
 
-                //NOTE: Defaults to the normal analysis as implemented in MTBseq
-                NORMAL_MODE(QUALITY_CONTROL.out.reads_ch,
-                            QUALITY_CONTROL.out.derived_cohort_tsv,
-                               [params.resilist,
-                                params.intregions,
-                                params.categories,
-                                params.basecalib])
 
-                ch_versions =  ch_versions.mix(NORMAL_MODE.out.versions)
-                ch_multiqc_files =  ch_multiqc_files.mix(NORMAL_MODE.out.multiqc_files)
+                //NOTE: Defaults to the normal analysis as implemented in MTBseq
+                TBFULL( QUALITY_CONTROL.out.reads_ch.collect(),
+                        params.user,
+                        ch_reference_files )
+
+
+                // COHORT STEPS
+
+                TBJOIN( TBFULL.out.position_variants.collect(sort:true),
+                        TBFULL.out.position_tables.collect(sort:true),
+                        QUALITY_CONTROL.out.derived_cohort_tsv,
+                        params.user,
+                        ch_reference_files)
+
+                TBAMEND(TBJOIN.out.joint_samples,
+                        QUALITY_CONTROL.out.derived_cohort_tsv,
+                        params.user,
+                        ch_reference_files)
+
+                TBGROUPS(TBAMEND.out.samples_amended,
+                        QUALITY_CONTROL.out.derived_cohort_tsv,
+                        params.user,
+                        ch_reference_files)
+
+                ch_versions = ch_versions.mix(TBFULL.out.versions)
+                ch_multiqc_files = ch_multiqc_files.mix(TBFULL.out.classification)
+                                        .mix(TBFULL.out.statistics)
+                                        .mix(TBGROUPS.out.distance_matrix.first())
+                                        .mix(TBGROUPS.out.groups.first())
 
         }
     }
@@ -117,8 +142,6 @@ workflow MTBSEQ_NF {
         )
     )
 
-
-    ch_multiqc_files.collect().dump(tag: "mtbseqnf: ch_multiqc_files ")
 
     MULTIQC (
         ch_multiqc_files.collect(),
