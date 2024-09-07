@@ -56,9 +56,7 @@ workflow MTBSEQ_NF {
 
         if( params.parallel ) {
 
-                ch_reads =  QUALITY_CHECK.out.reads_and_meta_ch.collate()
-
-
+                ch_reads =  QUALITY_CHECK.out.reads_and_meta_ch.collate(1)
 
                 ch_reads.dump(tag: 'ch_reads')
 
