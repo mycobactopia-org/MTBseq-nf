@@ -56,7 +56,13 @@ workflow MTBSEQ_NF {
 
         if( params.parallel ) {
 
-                PARALLEL_MODE(QUALITY_CHECK.out.reads_and_meta_ch,
+                ch_reads =  QUALITY_CHECK.out.reads_and_meta_ch.collate()
+
+
+
+                ch_reads.dump(tag: 'ch_reads')
+
+                PARALLEL_MODE(ch_reads,
                               QUALITY_CHECK.out.derived_cohort_tsv,
                               ch_reference_files)
 
@@ -68,7 +74,10 @@ workflow MTBSEQ_NF {
 
 
                 //NOTE: Defaults to the normal analysis as implemented in MTBseq
-                TBFULL( QUALITY_CHECK.out.reads_ch.collect(),
+
+                ch_reads =  QUALITY_CHECK.out.reads_ch.collect()
+
+                TBFULL( ch_reads,
                         params.user,
                         ch_reference_files )
 
