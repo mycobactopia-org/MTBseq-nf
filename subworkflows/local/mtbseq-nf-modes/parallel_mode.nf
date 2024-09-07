@@ -23,9 +23,9 @@ workflow PARALLEL_MODE {
         ch_multiqc_files = Channel.empty()
 
 
-        reads_ch.dump(tag:'PARALLEL_MODE.reads_ch')
+        reads_ch.collate(2).dump(tag:'PARALLEL_MODE.reads_ch')
 
-        TBBWA(reads_ch.collate(2), params.user, references_ch)
+        TBBWA(reads_ch, params.user, references_ch)
         TBREFINE(TBBWA.out.bam_tuple, params.user, references_ch)
         TBPILE(TBREFINE.out.gatk_bam, params.user, references_ch)
         TBLIST(TBPILE.out.mpileup, params.user, references_ch)
