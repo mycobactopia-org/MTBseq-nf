@@ -23,6 +23,7 @@ workflow PARALLEL_MODE {
         ch_multiqc_files = Channel.empty()
 
 
+        references_ch.dump(tag:'PARALLEL_MODE.references_ch')
         reads_ch.collate(2).dump(tag:'PARALLEL_MODE.reads_ch')
 
         TBBWA(reads_ch, params.user, references_ch)
