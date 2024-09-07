@@ -24,7 +24,7 @@ workflow PARALLEL_MODE {
 
 
         references_ch.dump(tag:'PARALLEL_MODE.references_ch')
-        reads_ch.collate(2).dump(tag:'PARALLEL_MODE.reads_ch')
+        reads_ch.dump(tag:'PARALLEL_MODE.reads_ch')
 
         TBBWA(reads_ch, params.user, references_ch)
         TBREFINE(TBBWA.out.bam_tuple, params.user, references_ch)
