@@ -4,7 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { QUALITY_CONTROL        } from '../subworkflows/local/quality_control'
+include { QUALITY_CHECK        } from '../subworkflows/local/quality_check'
 include { PARALLEL_MODE      } from "../subworkflows/local/mtbseq-nf-modes/parallel_mode.nf"
 
 include { TBFULL } from '../modules/mtbseq/tbfull.nf'
@@ -42,11 +42,11 @@ workflow MTBSEQ_NF {
                                      params.categories,
                                      params.basecalib])
 
-    QUALITY_CONTROL(ch_samplesheet)
+    QUALITY_CHECK(ch_samplesheet)
 
 
-    ch_versions = ch_versions.mix(QUALITY_CONTROL.out.versions)
-    ch_multiqc_files = ch_multiqc_files.mix(QUALITY_CONTROL.out.multiqc_files)
+    ch_versions = ch_versions.mix(QUALITY_CHECK.out.versions)
+    ch_multiqc_files = ch_multiqc_files.mix(QUALITY_CHECK.out.multiqc_files)
 
 
 
@@ -54,8 +54,8 @@ workflow MTBSEQ_NF {
 
         if( params.parallel ) {
 
-                PARALLEL_MODE(QUALITY_CONTROL.out.reads_and_meta_ch,
-                              QUALITY_CONTROL.out.derived_cohort_tsv,
+                PARALLEL_MODE(QUALITY_CHECK.out.reads_and_meta_ch,
+                              QUALITY_CHECK.out.derived_cohort_tsv,
                               ch_reference_files)
 
 
@@ -66,7 +66,7 @@ workflow MTBSEQ_NF {
 
 
                 //NOTE: Defaults to the normal analysis as implemented in MTBseq
-                TBFULL( QUALITY_CONTROL.out.reads_ch.collect(),
+                TBFULL( QUALITY_CHECK.out.reads_ch.collect(),
                         params.user,
                         ch_reference_files )
 
@@ -75,17 +75,17 @@ workflow MTBSEQ_NF {
 
                 TBJOIN( TBFULL.out.position_variants.collect(sort:true),
                         TBFULL.out.position_tables.collect(sort:true),
-                        QUALITY_CONTROL.out.derived_cohort_tsv,
+                        QUALITY_CHECK.out.derived_cohort_tsv,
                         params.user,
                         ch_reference_files)
 
                 TBAMEND(TBJOIN.out.joint_samples,
-                        QUALITY_CONTROL.out.derived_cohort_tsv,
+                        QUALITY_CHECK.out.derived_cohort_tsv,
                         params.user,
                         ch_reference_files)
 
                 TBGROUPS(TBAMEND.out.samples_amended,
-                        QUALITY_CONTROL.out.derived_cohort_tsv,
+                        QUALITY_CHECK.out.derived_cohort_tsv,
                         params.user,
                         ch_reference_files)
 

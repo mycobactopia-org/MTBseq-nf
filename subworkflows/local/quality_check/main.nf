@@ -3,7 +3,7 @@ include { RENAME_FILES           } from '../../../modules/utils/rename_files.nf'
 
 
 
-workflow QUALITY_CONTROL {
+workflow QUALITY_CHECK {
     take:
         ch_samplesheet
 
@@ -29,7 +29,7 @@ workflow QUALITY_CONTROL {
 
 
     emit:
-    reads_and_meta_ch      = RENAME_FILES.out.meta_and_files.collect()
+    reads_and_meta_ch      = RENAME_FILES.out.meta_and_files.collect(it[0])
     reads_ch               = RENAME_FILES.out.files.collect()
     multiqc_files          = FASTQC.out.zip.collect{it[1]}
     versions               = FASTQC.out.versions.first()
