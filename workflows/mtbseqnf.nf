@@ -49,6 +49,8 @@ workflow MTBSEQ_NF {
     ch_multiqc_files = ch_multiqc_files.mix(QUALITY_CHECK.out.multiqc_files)
 
 
+    QUALITY_CHECK.out.reads_and_meta_ch.dump(tag: 'QUALITY_CHECK.out.reads_and_meta_ch')
+
 
     if(!params.only_qc) {
 
