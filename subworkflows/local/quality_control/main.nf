@@ -29,8 +29,8 @@ workflow QUALITY_CONTROL {
 
 
     emit:
-    reads_and_meta_ch      = RENAME_FILES.out.meta_and_files
-    reads_ch               = RENAME_FILES.out.files
+    reads_and_meta_ch      = RENAME_FILES.out.meta_and_files.collect()
+    reads_ch               = RENAME_FILES.out.files.collect()
     multiqc_files          = FASTQC.out.zip.collect{it[1]}
     versions               = FASTQC.out.versions.first()
     derived_cohort_tsv     = samples_tsv_file

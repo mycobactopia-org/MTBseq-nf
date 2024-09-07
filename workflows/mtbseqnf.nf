@@ -67,7 +67,7 @@ workflow MTBSEQ_NF {
 
 
                 //NOTE: Defaults to the normal analysis as implemented in MTBseq
-                TBFULL( QUALITY_CONTROL.out.reads_ch.collect(),
+                TBFULL( QUALITY_CONTROL.out.reads_ch,
                         params.user,
                         ch_reference_files )
 
