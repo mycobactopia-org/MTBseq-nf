@@ -33,6 +33,6 @@ workflow QUALITY_CHECK {
     reads_ch               = RENAME_FILES.out.files.collect()
     multiqc_files          = FASTQC.out.zip.collect{it[1]}
     versions               = FASTQC.out.versions.first()
-    derived_cohort_tsv     = samples_tsv_file.first()
+    derived_cohort_tsv     = samples_tsv_file
 
 }

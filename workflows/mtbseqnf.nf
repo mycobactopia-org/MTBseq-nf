@@ -37,10 +37,10 @@ workflow MTBSEQ_NF {
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
 
-    ch_reference_files = Channel.of([params.resilist,
-                                     params.intregions,
-                                     params.categories,
-                                     params.basecalib])
+    ch_reference_files = Channel.value([params.resilist,
+                                        params.intregions,
+                                        params.categories,
+                                        params.basecalib])
 
     QUALITY_CHECK(ch_samplesheet)
 
@@ -62,10 +62,7 @@ workflow MTBSEQ_NF {
 
                 PARALLEL_MODE(ch_reads,
                               QUALITY_CHECK.out.derived_cohort_tsv,
-                                    [params.resilist,
-                                     params.intregions,
-                                     params.categories,
-                                     params.basecalib])
+                              ch_reference_files)
 
 
                 ch_versions =  ch_versions.mix(PARALLEL_MODE.out.versions)
