@@ -49,9 +49,6 @@ workflow MTBSEQ_NF {
     ch_multiqc_files = ch_multiqc_files.mix(QUALITY_CHECK.out.multiqc_files)
 
 
-    QUALITY_CHECK.out.reads_and_meta_ch.dump(tag: 'QUALITY_CHECK.out.reads_and_meta_ch')
-
-
     if(!params.only_qc) {
 
         if( params.parallel ) {
@@ -74,6 +71,8 @@ workflow MTBSEQ_NF {
                 //NOTE: Defaults to the normal analysis as implemented in MTBseq
 
                 ch_reads =  QUALITY_CHECK.out.reads_ch.collect()
+
+                ch_reads.dump(tag: 'ch_reads')
 
                 TBFULL( ch_reads,
                         params.user,
