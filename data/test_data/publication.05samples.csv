@@ -1,0 +1,6 @@
+sample,library,fastq_1,fastq_2
+10010-03,lib951,/home/ubuntu/DATASET/publication/fastq/ERX511674_ERR552605_1.fastq.gz,/home/ubuntu/DATASET/publication/fastq/ERX511674_ERR552605_2.fastq.gz
+10011-03,lib914,/home/ubuntu/DATASET/publication/fastq/ERX511328_ERR552259_1.fastq.gz,/home/ubuntu/DATASET/publication/fastq/ERX511328_ERR552259_2.fastq.gz
+10012-03,lib970,/home/ubuntu/DATASET/publication/fastq/ERX511201_ERR552132_1.fastq.gz,/home/ubuntu/DATASET/publication/fastq/ERX511201_ERR552132_2.fastq.gz
+10205-03,lib915,/home/ubuntu/DATASET/publication/fastq/ERX511378_ERR552309_1.fastq.gz,/home/ubuntu/DATASET/publication/fastq/ERX511378_ERR552309_2.fastq.gz
+10206-03,lib916,/home/ubuntu/DATASET/publication/fastq/ERX510467_ERR551398_1.fastq.gz,/home/ubuntu/DATASET/publication/fastq/ERX510467_ERR551398_2.fastq.gz
