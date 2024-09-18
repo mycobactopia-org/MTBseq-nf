@@ -1,6 +1,0 @@
-name: mtbseq-nf-env
-channels:
-  - conda-forge
-  - bioconda
-dependencies:
-  - bioconda::mtbseq=1.0.4

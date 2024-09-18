@@ -1,4 +1,0 @@
-sample,library,fastq_1,fastq_2
-1327-04,lib957,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR553/ERR553286/ERR553286_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR553/ERR553286/ERR553286_2.fastq.gz
-4781-04,lib908,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR551/ERR551038/ERR551038_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR551/ERR551038/ERR551038_2.fastq.gz
-3494-04,lib953,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR551/ERR551566/ERR551566_1.fastq.gz,ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR551/ERR551566/ERR551566_2.fastq.gz
