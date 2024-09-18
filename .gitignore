@@ -1,0 +1,16 @@
+*/**/*fastq.gz
+*/**/*fasta
+*/**/*gbk
+
+.idea
+
+resources/GenomeAnalysisTK*
+work/
+data/full_data
+results*
+*.nextflow*
+
+conda_envs/mtbseq-nf-env*
+containers/**/*yml
+
+_resources
