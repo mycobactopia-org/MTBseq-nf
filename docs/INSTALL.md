@@ -11,7 +11,7 @@ For a successful Installation of this pipeline, you'll need the following progra
 ## Clone the project from Github
 
 ```terminal
-git clone https://github.com/mtb-bioinformatics/MTBseq-nf.git
+git clone https://github.com/mycobactopia-org/MTBseq-nf.git
 ```
 
 > **Note**
