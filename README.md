@@ -50,12 +50,15 @@ We thank the following people for their extensive assistance in the development 
 
 If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
 
+## Documentation
+
+For detailed instructions on installation, usage, and output interpretation, please refer to the [documentation](docs/README.md).
+
 ## Citations
 
-<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
-<!-- If you use mycobactopia-org/MTBseq-nf for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
+If you use mycobactopia-org/MTBseq-nf for your analysis, please cite it using the following publication:
 
-<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
+> Sharma, A.; Marcon, D.J.; Loubser, J.; Lima, K.V.B.; van der Spuy, G.; Conceição, E.C. MTBseq-nf: Enabling Scalable Tuberculosis Genomics "Big Data" Analysis Through a User-Friendly Nextflow Wrapper for MTBseq Pipeline. *Microorganisms* 2025, 13, 2685. [https://doi.org/10.3390/microorganisms13122685](https://doi.org/10.3390/microorganisms13122685)
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 
