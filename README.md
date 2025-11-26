@@ -60,6 +60,22 @@ If you use mycobactopia-org/MTBseq-nf for your analysis, please cite it using th
 
 > Sharma, A.; Marcon, D.J.; Loubser, J.; Lima, K.V.B.; van der Spuy, G.; Conceição, E.C. MTBseq-nf: Enabling Scalable Tuberculosis Genomics "Big Data" Analysis Through a User-Friendly Nextflow Wrapper for MTBseq Pipeline. *Microorganisms* 2025, 13, 2685. [https://doi.org/10.3390/microorganisms13122685](https://doi.org/10.3390/microorganisms13122685)
 
+BibTeX entry:
+
+```bibtex
+@article{Sharma2025,
+   author = {Sharma, Abhinav and Marcon, Davi Josué and Loubser, Johannes and Lima, Karla Valéria Batista and van der Spuy, Gian and Conceição, Emilyn Costa},
+   title = {MTBseq-nf: Enabling Scalable Tuberculosis Genomics "Big Data" Analysis Through a User-Friendly Nextflow Wrapper for MTBseq Pipeline},
+   journal = {Microorganisms},
+   volume = {13},
+   number = {12},
+   ISSN = {2076-2607},
+   DOI = {10.3390/microorganisms13122685},
+   year = {2025},
+   type = {Journal Article}
+}
+```
+
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 
 This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE).

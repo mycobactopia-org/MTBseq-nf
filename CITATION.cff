@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "MTBseq-nf: Enabling Scalable Tuberculosis Genomics 'Big Data' Analysis Through a User-Friendly Nextflow Wrapper for MTBseq Pipeline"
+type: article
+authors:
+  - family-names: Sharma
+    given-names: Abhinav
+  - family-names: Marcon
+    given-names: Davi Josué
+  - family-names: Loubser
+    given-names: Johannes
+  - family-names: Lima
+    given-names: Karla Valéria Batista
+  - family-names: van der Spuy
+    given-names: Gian
+  - family-names: Conceição
+    given-names: Emilyn Costa
+journal: Microorganisms
+volume: 13
+issue: 12
+year: 2025
+doi: 10.3390/microorganisms13122685
+url: https://doi.org/10.3390/microorganisms13122685
