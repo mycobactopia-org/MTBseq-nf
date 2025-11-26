@@ -14,3 +14,4 @@ conda_envs/mtbseq-nf-env*
 containers/**/*yml
 
 _resources
+_site
