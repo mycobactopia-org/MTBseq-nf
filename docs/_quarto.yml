@@ -1,0 +1,20 @@
+project:
+  type: website
+
+website:
+  title: "MTBseq-nf"
+
+  sidebar:
+      style: "docked"
+      search: true
+      contents:
+        - text: "Usage"
+          href: USAGE.md
+        - text: "Output"
+          href: OUTPUT.md
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
