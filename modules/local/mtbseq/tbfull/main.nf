@@ -98,6 +98,8 @@ process TBFULL {
         mkdir Statistics
         touch Statistics/Mapping_and_Variant_Statistics.tab
 
+        printf '"%s":\\n    MTBseq: 1.1.0\\n' "${task.process}" > versions.yml
+
         """
 
 }

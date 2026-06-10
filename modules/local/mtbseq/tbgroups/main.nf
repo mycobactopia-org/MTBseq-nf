@@ -67,5 +67,7 @@ process TBGROUPS {
         touch Groups/mtbseqnf_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.matrix
         touch Groups/mtbseqnf_joint_cf4_cr4_fr75_ph4_samples35_amended_u95_phylo_w12_d12.groups
 
+        printf '"%s":\\n    MTBseq: 1.1.0\\n' "${task.process}" > versions.yml
+
         """
 }
