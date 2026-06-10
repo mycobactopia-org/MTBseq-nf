@@ -22,21 +22,21 @@ workflow PARALLEL_MODE {
         ch_versions = Channel.empty()
         ch_multiqc_files = Channel.empty()
 
-        TBBWA(reads_ch, params.user, references_ch)
-        TBREFINE(TBBWA.out.bam_tuple, params.user, references_ch)
-        TBPILE(TBREFINE.out.gatk_bam, params.user, references_ch)
-        TBLIST(TBPILE.out.mpileup, params.user, references_ch)
-        TBVARIANTS(TBLIST.out.position_table_tuple, params.user, references_ch)
+        TBBWA(reads_ch, params.mtbseq_user, references_ch)
+        TBREFINE(TBBWA.out.bam_tuple, params.mtbseq_user, references_ch)
+        TBPILE(TBREFINE.out.gatk_bam, params.mtbseq_user, references_ch)
+        TBLIST(TBPILE.out.mpileup, params.mtbseq_user, references_ch)
+        TBVARIANTS(TBLIST.out.position_table_tuple, params.mtbseq_user, references_ch)
 
     // NOTE: These are part of per-sample-analysis but they need the output from
     // all other processes to compute the metrics for the cohort.
         TBSTATS(TBBWA.out.bam.collect(),
                 TBLIST.out.position_table.collect(),
-                params.user,
+                params.mtbseq_user,
                 references_ch)
 
         TBSTRAINS(TBLIST.out.position_table.collect(),
-                  params.user,
+                  params.mtbseq_user,
                   references_ch)
 
     // COHORT STEPS
@@ -45,17 +45,17 @@ workflow PARALLEL_MODE {
         TBJOIN(TBVARIANTS.out.tbjoin_input.collect(sort:true),
                TBLIST.out.position_table.collect(sort:true),
                derived_cohort_tsv,
-               params.user,
+               params.mtbseq_user,
                references_ch)
 
         TBAMEND(TBJOIN.out.joint_samples,
                 derived_cohort_tsv,
-                params.user,
+                params.mtbseq_user,
                 references_ch)
 
         TBGROUPS(TBAMEND.out.samples_amended,
                  derived_cohort_tsv,
-                 params.user,
+                 params.mtbseq_user,
                  references_ch)
 
         ch_versions = ch_versions.mix(TBGROUPS.out.versions.first())

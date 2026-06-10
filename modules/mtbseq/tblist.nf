@@ -20,13 +20,13 @@ process TBLIST {
         path("Position_Tables/${meta.id}_${meta.library}*.gatk_position_table.tab"), emit: position_table
 
     script:
-        def args = task.ext.args ?: "--minbqual ${params.minbqual}"
+        def args = task.ext.args ?: "--minbqual ${params.mtbseq_minbqual}"
         """
         mkdir Position_Tables
 
         ${params.mtbseq_path} --step TBlist \\
             --threads ${task.cpus} \\
-            --project ${params.project} \\
+            --project ${params.mtbseq_project} \\
             --resilist ${ref_resistance_list} \\
             --intregions ${ref_interesting_regions} \\
             --categories ${ref_gene_categories} \\
@@ -47,8 +47,8 @@ process TBLIST {
 
         echo "${params.mtbseq_path} --step TBlist \
             --threads ${task.cpus} \
-            --project ${params.project} \
-            --minbqual ${params.minbqual} \
+            --project ${params.mtbseq_project} \
+            --minbqual ${params.mtbseq_minbqual} \
             --resilist ${ref_resistance_list} \
             --intregions ${ref_interesting_regions} \
             --categories ${ref_gene_categories} \

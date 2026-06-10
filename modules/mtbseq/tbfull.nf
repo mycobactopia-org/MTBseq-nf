@@ -30,13 +30,13 @@ process TBFULL {
         path "versions.yml", emit: versions
 
     script:
-        def args = task.ext.args ?: " --minbqual ${params.minbqual} --mincovf ${params.mincovf} --mincovr ${params.mincovr} --minphred ${params.minphred} --minfreq ${params.minfreq} --resilist ${ref_resistance_list} --unambig ${params.unambig} --window ${params.window} --distance ${params.distance}"
+        def args = task.ext.args ?: " --minbqual ${params.mtbseq_minbqual} --mincovf ${params.mtbseq_mincovf} --mincovr ${params.mtbseq_mincovr} --minphred ${params.mtbseq_minphred} --minfreq ${params.mtbseq_minfreq} --resilist ${ref_resistance_list} --unambig ${params.mtbseq_unambig} --window ${params.mtbseq_window} --distance ${params.mtbseq_distance}"
 
         """
 
         ${params.mtbseq_path} --step TBfull \\
             --thread ${task.cpus} \\
-            --project ${params.project} \\
+            --project ${params.mtbseq_project} \\
             --intregions ${ref_interesting_regions} \\
             --categories ${ref_gene_categories} \\
             --basecalib ${ref_base_quality_recalibration} \\
@@ -60,15 +60,15 @@ process TBFULL {
 
         echo " ${params.mtbseq_path} --step TBfull \
             --thread ${task.cpus} \
-            --project ${params.project} \
-            --minbqual ${params.minbqual} \
-            --mincovf ${params.mincovf} \
-            --mincovr ${params.mincovr} \
-            --minphred ${params.minphred} \
-            --minfreq ${params.minfreq} \
-            --unambig ${params.unambig} \
-            --window ${params.window} \
-            --distance ${params.distance} \
+            --project ${params.mtbseq_project} \
+            --minbqual ${params.mtbseq_minbqual} \
+            --mincovf ${params.mtbseq_mincovf} \
+            --mincovr ${params.mtbseq_mincovr} \
+            --minphred ${params.mtbseq_minphred} \
+            --minfreq ${params.mtbseq_minfreq} \
+            --unambig ${params.mtbseq_unambig} \
+            --window ${params.mtbseq_window} \
+            --distance ${params.mtbseq_distance} \
             --resilist ${ref_resistance_list} \
             --intregions ${ref_interesting_regions} \
             --categories ${ref_gene_categories} \
@@ -86,8 +86,8 @@ process TBFULL {
         touch Bam/stub.bai
         touch Bam/stub.bamlog
         mkdir Called
-        touch Called/stub.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
-        touch Called/stub.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+        touch Called/stub.gatk_position_uncovered_cf${params.mtbseq_mincovf}_cr${params.mtbseq_mincovr}_fr${params.mtbseq_minfreq}_ph${params.mtbseq_minphred}_outmode000.tab
+        touch Called/stub.gatk_position_variants_cf${params.mtbseq_mincovf}_cr${params.mtbseq_mincovr}_fr${params.mtbseq_minfreq}_ph${params.mtbseq_minphred}_outmode000.tab
         mkdir Mpileup
         touch Mpileup/stub.gatk.mpileup
         touch Mpileup/stub.gatk.mpileuplog

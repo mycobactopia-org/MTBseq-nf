@@ -1,20 +1,20 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://raw.githubusercontent.com/mycobactopia-org/MTBseq-nf/master/nextflow_schema.json",
     "title": "mycobactopia-org/MTBseq-nf pipeline parameters",
     "description": "`MTBseq-nf` pipeline makes [MTBseq](https://github.com/ngs-fzb/MTBseq_source) simple and easy to use via [Nextflow](https://www.nextflow.io/) workflow manager.",
     "type": "object",
-    "definitions": {
+    "$defs": {
         "execution_modes": {
             "title": "Execution modes",
             "type": "object",
             "description": "",
             "default": "",
             "properties": {
-                "only_qc": {
+                "mtbseq_only_qc": {
                     "type": "boolean"
                 },
-                "parallel": {
+                "mtbseq_parallel": {
                     "type": "boolean"
                 }
             }
@@ -156,6 +156,19 @@
                     "fa_icon": "fas fa-question-circle",
                     "hidden": true
                 },
+                "help_full": {
+                    "type": "boolean",
+                    "description": "Display help text for all parameters, including hidden ones.",
+                    "fa_icon": "fas fa-question-circle",
+                    "hidden": true
+                },
+                "show_hidden": {
+                    "type": "boolean",
+                    "description": "Show all params when using `--help`.",
+                    "fa_icon": "far fa-eye-slash",
+                    "hidden": true,
+                    "help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters."
+                },
                 "version": {
                     "type": "boolean",
                     "description": "Display version and exit.",
@@ -237,27 +250,6 @@
                     "default": true,
                     "fa_icon": "fas fa-check-square",
                     "hidden": true
-                },
-                "validationShowHiddenParams": {
-                    "type": "boolean",
-                    "fa_icon": "far fa-eye-slash",
-                    "description": "Show all params when using `--help`",
-                    "hidden": true,
-                    "help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters."
-                },
-                "validationFailUnrecognisedParams": {
-                    "type": "boolean",
-                    "fa_icon": "far fa-check-circle",
-                    "description": "Validation of parameters fails when an unrecognised parameter is found.",
-                    "hidden": true,
-                    "help_text": "By default, when an unrecognised parameter is found, it returns a warinig."
-                },
-                "validationLenientMode": {
-                    "type": "boolean",
-                    "fa_icon": "far fa-check-circle",
-                    "description": "Validation of parameters in lenient more.",
-                    "hidden": true,
-                    "help_text": "Allows string values that are parseable as numbers or booleans. For further information see [JSONSchema docs](https://github.com/everit-org/json-schema#lenient-mode)."
                 }
             }
         },
@@ -272,101 +264,101 @@
                     "default": "MTBseq",
                     "hidden": true
                 },
-                "cohort_tsv": {
+                "mtbseq_cohort_tsv": {
                     "type": "string"
                 },
-                "snp_vars": {
+                "mtbseq_snp_vars": {
                     "type": "boolean"
                 },
-                "lowfreq_vars": {
+                "mtbseq_lowfreq_vars": {
                     "type": "boolean"
                 },
-                "minbqual": {
+                "mtbseq_minbqual": {
                     "type": "integer",
                     "default": 13
                 },
-                "mincovf": {
+                "mtbseq_mincovf": {
                     "type": "integer",
                     "default": 4
                 },
-                "project": {
+                "mtbseq_project": {
                     "type": "string",
                     "default": "mtbseqnf"
                 },
-                "minphred": {
+                "mtbseq_minphred": {
                     "type": "integer",
                     "default": 4
                 },
-                "minfreq": {
+                "mtbseq_minfreq": {
                     "type": "integer",
                     "default": 75
                 },
-                "unambig": {
+                "mtbseq_unambig": {
                     "type": "integer",
                     "default": 95
                 },
-                "window": {
+                "mtbseq_window": {
                     "type": "integer",
                     "default": 12
                 },
-                "distance": {
+                "mtbseq_distance": {
                     "type": "integer",
                     "default": 12
                 },
-                "mincovr": {
+                "mtbseq_mincovr": {
                     "type": "integer",
                     "default": 4
                 },
-                "user": {
+                "mtbseq_user": {
                     "type": "string",
                     "default": "root",
                     "hidden": true
                 },
-                "ref_and_indexes_path": {
+                "mtbseq_ref_and_indexes_path": {
                     "type": "string",
-                    "default": "/Users/abhi/projects/MTBseq-nf/data/references/ref/"
+                    "default": "data/references/ref/"
                 },
-                "resilist": {
+                "mtbseq_resilist": {
                     "type": "string",
-                    "default": "/Users/abhi/projects/MTBseq-nf/data/references/res/MTB_Resistance_Mediating.txt"
+                    "default": "data/references/res/MTB_Resistance_Mediating.txt"
                 },
-                "intregions": {
+                "mtbseq_intregions": {
                     "type": "string",
-                    "default": "/Users/abhi/projects/MTBseq-nf/data/references/res/MTB_Extended_Resistance_Mediating.txt"
+                    "default": "data/references/res/MTB_Extended_Resistance_Mediating.txt"
                 },
-                "threads": {
+                "mtbseq_threads": {
                     "type": "integer",
                     "default": 8
                 },
-                "categories": {
+                "mtbseq_categories": {
                     "type": "string",
-                    "default": "/Users/abhi/projects/MTBseq-nf/data/references/cat/MTB_Gene_Categories.txt"
+                    "default": "data/references/cat/MTB_Gene_Categories.txt"
                 },
-                "basecalib": {
+                "mtbseq_basecalib": {
                     "type": "string",
-                    "default": "/Users/abhi/projects/MTBseq-nf/data/references/res/MTB_Base_Calibration_List.vcf"
+                    "default": "data/references/res/MTB_Base_Calibration_List.vcf"
                 }
             }
         }
     },
     "allOf": [
         {
-            "$ref": "#/definitions/execution_modes"
+            "$ref": "#/$defs/execution_modes"
         },
         {
-            "$ref": "#/definitions/input_output_options"
+            "$ref": "#/$defs/input_output_options"
         },
         {
-            "$ref": "#/definitions/institutional_config_options"
+            "$ref": "#/$defs/institutional_config_options"
         },
         {
-            "$ref": "#/definitions/max_job_request_options"
+            "$ref": "#/$defs/max_job_request_options"
         },
         {
-            "$ref": "#/definitions/generic_options"
+            "$ref": "#/$defs/generic_options"
         },
         {
-            "$ref": "#/definitions/mtbseq_options"
+            "$ref": "#/$defs/mtbseq_options"
         }
     ]
 }

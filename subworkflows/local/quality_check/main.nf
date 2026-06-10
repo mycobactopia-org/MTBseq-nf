@@ -16,7 +16,7 @@ workflow QUALITY_CHECK {
         FASTQC (RENAME_FILES.out.meta_and_files)
 
 
-        if (!params.cohort_tsv) {
+        if (!params.mtbseq_cohort_tsv) {
 
             samples_tsv_file = ch_samplesheet
                         .map {it -> it[0].id+"\t"+it[0].library}
@@ -24,7 +24,7 @@ workflow QUALITY_CHECK {
 
 
         } else {
-            samples_tsv_file = Channel.fromPath( params.cohort_tsv )
+            samples_tsv_file = Channel.fromPath( params.mtbseq_cohort_tsv )
         }
 
 

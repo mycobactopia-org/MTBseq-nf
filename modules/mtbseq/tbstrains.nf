@@ -18,14 +18,14 @@ process TBSTRAINS {
         path("Classification/Strain_Classification.tab"), emit: classification
 
     script:
-        def args = task.ext.args ?: "--mincovf ${params.mincovf} --mincovr ${params.mincovr} --minphred ${params.minphred} --minfreq ${params.minfreq}"
+        def args = task.ext.args ?: "--mincovf ${params.mtbseq_mincovf} --mincovr ${params.mtbseq_mincovr} --minphred ${params.mtbseq_minphred} --minfreq ${params.mtbseq_minfreq}"
 
         """
         mkdir Classification
 
         ${params.mtbseq_path} --step TBstrains \\
             --threads ${task.cpus} \\
-            --project ${params.project} \\
+            --project ${params.mtbseq_project} \\
             --resilist ${ref_resistance_list} \\
             --intregions ${ref_interesting_regions} \\
             --categories ${ref_gene_categories} \\
@@ -45,11 +45,11 @@ process TBSTRAINS {
 
         echo "${params.mtbseq_path} --step TBstrains \
             --threads ${task.cpus} \
-            --project ${params.project} \
-            --mincovf ${params.mincovf} \
-            --mincovr ${params.mincovr} \
-            --minphred ${params.minphred} \
-            --minfreq ${params.minfreq} \
+            --project ${params.mtbseq_project} \
+            --mincovf ${params.mtbseq_mincovf} \
+            --mincovr ${params.mtbseq_mincovr} \
+            --minphred ${params.mtbseq_minphred} \
+            --minfreq ${params.mtbseq_minfreq} \
             --resilist ${ref_resistance_list} \
             --intregions ${ref_interesting_regions} \
             --categories ${ref_gene_categories} \

@@ -25,14 +25,14 @@ process TBGROUPS {
 
 
     script:
-        def args = task.ext.args ?: "--distance ${params.distance}"
+        def args = task.ext.args ?: "--distance ${params.mtbseq_distance}"
         """
         mkdir Groups
 
         ${params.mtbseq_path} --step TBgroups \\
             --threads ${task.cpus} \\
             --samples ${samplesheet_tsv} \\
-            --project ${params.project} \\
+            --project ${params.mtbseq_project} \\
             --resilist ${ref_resistance_list} \\
             --intregions ${ref_interesting_regions} \\
             --categories ${ref_gene_categories} \\
@@ -55,18 +55,18 @@ process TBGROUPS {
         echo "${params.mtbseq_path} --step TBgroups \
             --threads ${task.cpus} \
             --samples ${samplesheet_tsv} \
-            --project ${params.project} \
+            --project ${params.mtbseq_project} \
             --resilist ${ref_resistance_list} \
             --intregions ${ref_interesting_regions} \
             --categories ${ref_gene_categories} \
-            --distance ${params.distance} \
+            --distance ${params.mtbseq_distance} \
             --basecalib ${ref_base_quality_recalibration}"
 
         sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
         mkdir Groups
-        touch Groups/${params.project}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.matrix
-        touch Groups/${params.project}_joint_cf4_cr4_fr75_ph4_samples35_amended_u95_phylo_w12_d12.groups
+        touch Groups/${params.mtbseq_project}_joint_cf4_cr4_fr75_ph4_samples5_amended_u95_phylo_w12.matrix
+        touch Groups/${params.mtbseq_project}_joint_cf4_cr4_fr75_ph4_samples35_amended_u95_phylo_w12_d12.groups
 
         """
 }

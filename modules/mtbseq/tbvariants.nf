@@ -19,14 +19,14 @@ process TBVARIANTS {
         path("Called/${meta.id}_${meta.library}*gatk_position_variants*.tab"), emit: tbjoin_input
 
     script:
-        def args = task.ext.args ?: "--mincovf ${params.mincovf} --mincovr ${params.mincovr} --minphred ${params.minphred} --minfreq ${params.minfreq}"
+        def args = task.ext.args ?: "--mincovf ${params.mtbseq_mincovf} --mincovr ${params.mtbseq_mincovr} --minphred ${params.mtbseq_minphred} --minfreq ${params.mtbseq_minfreq}"
 
         """
         mkdir Called
 
         ${params.mtbseq_path} --step TBvariants \\
             --threads ${task.cpus} \\
-            --project ${params.project} \\
+            --project ${params.mtbseq_project} \\
             --resilist ${ref_resistance_list} \\
             --intregions ${ref_interesting_regions} \\
             --categories ${ref_gene_categories} \\
@@ -45,11 +45,11 @@ process TBVARIANTS {
 
         echo "${params.mtbseq_path} --step TBvariants \
             --threads ${task.cpus} \
-            --project ${params.project} \
-            --mincovf ${params.mincovf} \
-            --mincovr ${params.mincovr} \
-            --minphred ${params.minphred} \
-            --minfreq ${params.minfreq} \
+            --project ${params.mtbseq_project} \
+            --mincovf ${params.mtbseq_mincovf} \
+            --mincovr ${params.mtbseq_mincovr} \
+            --minphred ${params.mtbseq_minphred} \
+            --minfreq ${params.mtbseq_minfreq} \
             --resilist ${ref_resistance_list} \
             --intregions ${ref_interesting_regions} \
             --categories ${ref_gene_categories} \
@@ -57,8 +57,8 @@ process TBVARIANTS {
 
 
         mkdir Called
-        touch Called/${meta.id}_${meta.library}.gatk_position_uncovered_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
-        touch Called/${meta.id}_${meta.library}.gatk_position_variants_cf${params.mincovf}_cr${params.mincovr}_fr${params.minfreq}_ph${params.minphred}_outmode000.tab
+        touch Called/${meta.id}_${meta.library}.gatk_position_uncovered_cf${params.mtbseq_mincovf}_cr${params.mtbseq_mincovr}_fr${params.mtbseq_minfreq}_ph${params.mtbseq_minphred}_outmode000.tab
+        touch Called/${meta.id}_${meta.library}.gatk_position_variants_cf${params.mtbseq_mincovf}_cr${params.mtbseq_mincovr}_fr${params.mtbseq_minfreq}_ph${params.mtbseq_minphred}_outmode000.tab
 
         """
 

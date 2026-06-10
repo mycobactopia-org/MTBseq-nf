@@ -28,7 +28,7 @@ process TBBWA {
 
         ${params.mtbseq_path} --step TBbwa \\
             --threads ${task.cpus} \\
-            --project ${params.project} \\
+            --project ${params.mtbseq_project} \\
             --resilist ${ref_resistance_list} \\
             --intregions ${ref_interesting_regions} \\
             --categories ${ref_gene_categories} \\
@@ -45,7 +45,7 @@ process TBBWA {
         """
         echo " ${params.mtbseq_path} --step TBbwa \
             --threads ${task.cpus} \
-            --project ${params.project} \
+            --project ${params.mtbseq_project} \
             --resilist ${ref_resistance_list} \
             --intregions ${ref_interesting_regions} \
             --categories ${ref_gene_categories} \
