@@ -4,7 +4,7 @@ process TBFULL {
     label 'error_retry'
 
 
-    conda "bioconda::mtbseq=1.1.0"
+    conda "${moduleDir}/environment.yml"
 
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

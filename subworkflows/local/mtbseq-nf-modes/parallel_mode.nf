@@ -1,13 +1,13 @@
-include { TBBWA } from '../../../modules/mtbseq/tbbwa.nf'
-include { TBREFINE } from '../../../modules/mtbseq/tbrefine.nf'
-include { TBPILE } from '../../../modules/mtbseq/tbpile.nf'
-include { TBLIST } from '../../../modules/mtbseq/tblist.nf'
-include { TBVARIANTS } from '../../../modules/mtbseq/tbvariants.nf'
-include { TBSTATS } from '../../../modules/mtbseq/tbstats.nf'
-include { TBSTRAINS } from '../../../modules/mtbseq/tbstrains.nf'
-include { TBJOIN } from '../../../modules/mtbseq/tbjoin.nf'
-include { TBAMEND } from '../../../modules/mtbseq/tbamend.nf'
-include { TBGROUPS } from '../../../modules/mtbseq/tbgroups.nf'
+include { TBBWA } from '../../../modules/local/mtbseq/tbbwa/main'
+include { TBREFINE } from '../../../modules/local/mtbseq/tbrefine/main'
+include { TBPILE } from '../../../modules/local/mtbseq/tbpile/main'
+include { TBLIST } from '../../../modules/local/mtbseq/tblist/main'
+include { TBVARIANTS } from '../../../modules/local/mtbseq/tbvariants/main'
+include { TBSTATS } from '../../../modules/local/mtbseq/tbstats/main'
+include { TBSTRAINS } from '../../../modules/local/mtbseq/tbstrains/main'
+include { TBJOIN } from '../../../modules/local/mtbseq/tbjoin/main'
+include { TBAMEND } from '../../../modules/local/mtbseq/tbamend/main'
+include { TBGROUPS } from '../../../modules/local/mtbseq/tbgroups/main'
 
 
 

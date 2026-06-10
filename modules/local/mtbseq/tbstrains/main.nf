@@ -1,8 +1,8 @@
-process TBLIST {
-    tag "${meta.id}"
-    label 'process_single_high_memory'
+process TBSTRAINS {
+    tag "cohort"
+    label 'process_single'
 
-    conda "bioconda::mtbseq=1.1.0"
+    conda "${moduleDir}/environment.yml"
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/mtbseq:1.1.0--hdfd78af_0' :
@@ -10,21 +10,20 @@ process TBLIST {
 
 
     input:
-        tuple val(meta), path("Mpileup/${meta.id}_${meta.library}*.gatk.mpileup")
+        path("Position_Tables/*")
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Position_Tables/${meta.id}_${meta.library}*.gatk_position_table.tab"), emit: tbjoin_input
-        tuple val(meta), path("Position_Tables/${meta.id}_${meta.library}*.gatk_position_table.tab"), emit: position_table_tuple
-        path("Position_Tables/${meta.id}_${meta.library}*.gatk_position_table.tab"), emit: position_table
+        path("Classification/Strain_Classification.tab"), emit: classification
 
     script:
-        def args = task.ext.args ?: "--minbqual ${params.mtbseq_minbqual}"
-        """
-        mkdir Position_Tables
+        def args = task.ext.args ?: "--mincovf ${params.mtbseq_mincovf} --mincovr ${params.mtbseq_mincovr} --minphred ${params.mtbseq_minphred} --minfreq ${params.mtbseq_minfreq}"
 
-        ${params.mtbseq_path} --step TBlist \\
+        """
+        mkdir Classification
+
+        ${params.mtbseq_path} --step TBstrains \\
             --threads ${task.cpus} \\
             --project ${params.mtbseq_project} \\
             --resilist ${ref_resistance_list} \\
@@ -37,7 +36,6 @@ process TBLIST {
         || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
 
 
-
         """
 
     stub:
@@ -45,21 +43,20 @@ process TBLIST {
         """
         sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
-        echo "${params.mtbseq_path} --step TBlist \
+        echo "${params.mtbseq_path} --step TBstrains \
             --threads ${task.cpus} \
             --project ${params.mtbseq_project} \
-            --minbqual ${params.mtbseq_minbqual} \
+            --mincovf ${params.mtbseq_mincovf} \
+            --mincovr ${params.mtbseq_mincovr} \
+            --minphred ${params.mtbseq_minphred} \
+            --minfreq ${params.mtbseq_minfreq} \
             --resilist ${ref_resistance_list} \
             --intregions ${ref_interesting_regions} \
             --categories ${ref_gene_categories} \
             --basecalib ${ref_base_quality_recalibration}"
 
-
-        touch ${task.process}_${meta.id}_out.log
-        touch ${task.process}_${meta.id}_err.log
-
-        mkdir Position_Tables
-        touch Position_Tables/${meta.id}_${meta.library}.gatk_position_table.tab
+        mkdir Classification
+        touch Classification/Strain_Classification.tab
 
         """
 

@@ -1,37 +1,34 @@
-process TBVARIANTS {
+process TBREFINE {
     tag "${meta.id}"
-    label 'process_single'
+    label 'process_medium'
 
-    conda "bioconda::mtbseq=1.1.0"
-
+    conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/mtbseq:1.1.0--hdfd78af_0' :
         'biocontainers/mtbseq:1.1.0--hdfd78af_0' }"
 
 
+
     input:
-        tuple val(meta), path("Position_Tables/*")
+        tuple val(meta), path("Bam/")
         env(USER)
         tuple path(ref_resistance_list), path(ref_interesting_regions), path(ref_gene_categories), path(ref_base_quality_recalibration)
 
     output:
-        path("Called/${meta.id}_${meta.library}*gatk_position_{uncovered,variants}*.tab")
-        path("Called/${meta.id}_${meta.library}*gatk_position_variants*.tab"), emit: tbjoin_input
+        tuple val(meta), path("GATK_Bam/${meta.id}_${meta.library}*gatk.{bam,bai,bamlog,grp,intervals}"), emit: gatk_bam
 
     script:
-        def args = task.ext.args ?: "--mincovf ${params.mtbseq_mincovf} --mincovr ${params.mtbseq_mincovr} --minphred ${params.mtbseq_minphred} --minfreq ${params.mtbseq_minfreq}"
 
         """
-        mkdir Called
+        mkdir GATK_Bam
 
-        ${params.mtbseq_path} --step TBvariants \\
+        ${params.mtbseq_path} --step TBrefine \\
             --threads ${task.cpus} \\
             --project ${params.mtbseq_project} \\
             --resilist ${ref_resistance_list} \\
             --intregions ${ref_interesting_regions} \\
             --categories ${ref_gene_categories} \\
             --basecalib ${ref_base_quality_recalibration} \\
-            ${args} \\
         1>>.command.out \\
         2>>.command.err \\
         || true               # NOTE This is a hack to overcome the exit status 1 thrown by mtbseq
@@ -43,23 +40,20 @@ process TBVARIANTS {
         """
         sleep \$[ ( \$RANDOM % 10 )  + 1 ]s
 
-        echo "${params.mtbseq_path} --step TBvariants \
+        echo " ${params.mtbseq_path} --step TBrefine \
             --threads ${task.cpus} \
             --project ${params.mtbseq_project} \
-            --mincovf ${params.mtbseq_mincovf} \
-            --mincovr ${params.mtbseq_mincovr} \
-            --minphred ${params.mtbseq_minphred} \
-            --minfreq ${params.mtbseq_minfreq} \
             --resilist ${ref_resistance_list} \
             --intregions ${ref_interesting_regions} \
             --categories ${ref_gene_categories} \
             --basecalib ${ref_base_quality_recalibration}"
 
 
-        mkdir Called
-        touch Called/${meta.id}_${meta.library}.gatk_position_uncovered_cf${params.mtbseq_mincovf}_cr${params.mtbseq_mincovr}_fr${params.mtbseq_minfreq}_ph${params.mtbseq_minphred}_outmode000.tab
-        touch Called/${meta.id}_${meta.library}.gatk_position_variants_cf${params.mtbseq_mincovf}_cr${params.mtbseq_mincovr}_fr${params.mtbseq_minfreq}_ph${params.mtbseq_minphred}_outmode000.tab
-
+        mkdir GATK_Bam
+        touch GATK_Bam/${meta.id}_${meta.library}.gatk.bam
+        touch GATK_Bam/${meta.id}_${meta.library}.gatk.bai
+        touch GATK_Bam/${meta.id}_${meta.library}.gatk.bamlog
+        touch GATK_Bam/${meta.id}_${meta.library}.gatk.grp
+        touch GATK_Bam/${meta.id}_${meta.library}.gatk.intervals
         """
-
 }

@@ -1,6 +1,6 @@
 process RENAME_FILES {
     tag "${meta.id}"
-    conda "bioconda::mtbseq=1.1.0"
+    conda "${moduleDir}/environment.yml"
     container "${'quay.io/biocontainers/mtbseq:1.1.0--hdfd78af_0'}"
 
     input:

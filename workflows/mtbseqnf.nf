@@ -7,10 +7,10 @@
 include { QUALITY_CHECK        } from '../subworkflows/local/quality_check'
 include { PARALLEL_MODE      } from "../subworkflows/local/mtbseq-nf-modes/parallel_mode.nf"
 
-include { TBFULL } from '../modules/mtbseq/tbfull.nf'
-include { TBJOIN } from '../modules/mtbseq/tbjoin.nf'
-include { TBAMEND } from '../modules/mtbseq/tbamend.nf'
-include { TBGROUPS } from '../modules/mtbseq/tbgroups.nf'
+include { TBFULL } from '../modules/local/mtbseq/tbfull/main'
+include { TBJOIN } from '../modules/local/mtbseq/tbjoin/main'
+include { TBAMEND } from '../modules/local/mtbseq/tbamend/main'
+include { TBGROUPS } from '../modules/local/mtbseq/tbgroups/main'
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 
 
