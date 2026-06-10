@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    mtbseq-nf/mtbseq-nf
+    mycobactopia-org/mtbseqnf
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/mtbseq-nf/mtbseq-nf
+    Github : https://github.com/mycobactopia-org/mtbseqnf
 ----------------------------------------------------------------------------------------
 */
 
@@ -13,9 +13,9 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { MTBSEQ-NF  } from './workflows/mtbseq-nf'
-include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_mtbseq-nf_pipeline'
-include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_mtbseq-nf_pipeline'
+include { MTBSEQNF  } from './workflows/mtbseqnf'
+include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_mtbseqnf_pipeline'
+include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_mtbseqnf_pipeline'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     NAMED WORKFLOWS FOR PIPELINE
@@ -25,7 +25,7 @@ include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_mtbs
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow MTBSEQNF_MTBSEQ-NF {
+workflow MYCOBACTOPIAORG_MTBSEQNF {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -35,7 +35,7 @@ workflow MTBSEQNF_MTBSEQ-NF {
     //
     // WORKFLOW: Run pipeline
     //
-    MTBSEQ-NF (
+    MTBSEQNF (
         samplesheet,
         params.multiqc_config,
         params.multiqc_logo,
@@ -43,7 +43,7 @@ workflow MTBSEQNF_MTBSEQ-NF {
         params.outdir,
     )
     emit:
-    multiqc_report = MTBSEQ-NF.out.multiqc_report // channel: /path/to/multiqc_report.html
+    multiqc_report = MTBSEQNF.out.multiqc_report // channel: /path/to/multiqc_report.html
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -72,7 +72,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    MTBSEQNF_MTBSEQ-NF (
+    MYCOBACTOPIAORG_MTBSEQNF (
         PIPELINE_INITIALISATION.out.samplesheet
     )
     //
@@ -84,7 +84,7 @@ workflow {
         params.plaintext_email,
         params.outdir,
         params.monochrome_logs,
-        MTBSEQNF_MTBSEQ-NF.out.multiqc_report
+        MYCOBACTOPIAORG_MTBSEQNF.out.multiqc_report
     )
 }
 

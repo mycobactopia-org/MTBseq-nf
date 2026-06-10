@@ -1,4 +1,4 @@
-# mtbseq-nf/mtbseq-nf: Citations
+# mycobactopia-org/mtbseqnf: Citations
 
 ## [nf-core](https://pubmed.ncbi.nlm.nih.gov/32055031/)
 

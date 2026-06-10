@@ -1,4 +1,4 @@
-# mtbseq-nf/mtbseq-nf: Output
+# mycobactopia-org/mtbseqnf: Output
 
 ## Introduction
 

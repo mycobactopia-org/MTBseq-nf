@@ -20,9 +20,6 @@ lint:
     - conf/igenomes.config
   files_unchanged:
     - CODE_OF_CONDUCT.md
-    - assets/nf-core-mtbseqnf_logo_light.png
-    - docs/images/nf-core-mtbseqnf_logo_light.png
-    - docs/images/nf-core-mtbseqnf_logo_dark.png
     - .github/ISSUE_TEMPLATE/bug_report.yml
     - .github/ISSUE_TEMPLATE/config.yml
     - .github/ISSUE_TEMPLATE/feature_request.yml
@@ -32,7 +29,6 @@ lint:
     - .github/workflows/linting.yml
     - .github/CONTRIBUTING.md
     - .github/.dockstore.yml
-    - .github/ISSUE_TEMPLATE/bug_report.yml
   multiqc_config:
     - report_comment
   nextflow_config:
@@ -43,13 +39,12 @@ lint:
 nf_core_version: 4.0.2
 repository_type: pipeline
 template:
-  author: Abhinav Sharma, Davi Marcon
-  description: "`MTBseq-nf` pipeline makes [MTBseq](https://github.com/ngs-fzb/MTBseq_source)
-    simple and easy to use via [Nextflow](https://www.nextflow.io/) workflow manager."
+  author: Abhinav Sharma (@abhi18av) and Davi Marcon (@mxrcon)
+  description: MTBseq-nf pipeline makes MTBseq simple and easy to use via Nextflow
   force: false
   is_nfcore: false
-  name: MTBseq-nf
-  org: mtbseq-nf
+  name: mtbseqnf
+  org: mycobactopia-org
   outdir: .
   skip_features:
     - github
