@@ -1,10 +1,10 @@
 Run Name: $runName
 
 <% if (success){
-    out << "## mycobactopia-org/MTBseq-nf execution completed successfully! ##"
+    out << "## mycobactopia-org/mtbseqnf execution completed successfully! ##"
 } else {
     out << """####################################################
-## mycobactopia-org/MTBseq-nf execution completed unsuccessfully! ##
+## mycobactopia-org/mtbseqnf execution completed unsuccessfully! ##
 ####################################################
 The exit status of the task that caused the workflow execution to fail was: $exitStatus.
 The full error message was:
@@ -27,5 +27,5 @@ Pipeline Configuration:
 <% out << summary.collect{ k,v -> " - $k: $v" }.join("\n") %>
 
 --
-mycobactopia-org/MTBseq-nf
-https://github.com/mycobactopia-org/MTBseq-nf
+mycobactopia-org/mtbseqnf
+https://github.com/mycobactopia-org/mtbseqnf
