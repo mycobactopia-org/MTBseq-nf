@@ -8,14 +8,18 @@
         "execution_modes": {
             "title": "Execution modes",
             "type": "object",
-            "description": "",
-            "default": "",
+            "description": "Select which part of the MTBseq workflow to run.",
+            "fa_icon": "fas fa-cogs",
             "properties": {
                 "mtbseq_only_qc": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Run read QC only and stop before the MTBseq analysis.",
+                    "fa_icon": "fas fa-check-circle"
                 },
                 "mtbseq_parallel": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Run the per-sample MTBseq steps as separate parallel processes instead of the single TBfull step.",
+                    "fa_icon": "fas fa-project-diagram"
                 }
             }
         },
@@ -256,58 +260,95 @@
         "mtbseq_options": {
             "title": "MTBseq options",
             "type": "object",
-            "description": "",
-            "default": "",
+            "description": "MTBseq variant-calling and reference settings. These are exposed as parameters so they can be swept via a -params-file for parameter optimization.",
+            "fa_icon": "fas fa-dna",
             "properties": {
                 "mtbseq_path": {
                     "type": "string",
                     "default": "MTBseq",
+                    "description": "Name/path of the MTBseq executable inside the container. Rarely needs changing.",
+                    "fa_icon": "fas fa-terminal",
                     "hidden": true
                 },
                 "mtbseq_cohort_tsv": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Optional cohort TSV (sample/library per line) for the joint analysis. Derived from the samplesheet when not provided.",
+                    "fa_icon": "fas fa-file-alt"
                 },
                 "mtbseq_snp_vars": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Add an additional filter that excludes all variants except SNPs.",
+                    "fa_icon": "fas fa-filter"
                 },
                 "mtbseq_lowfreq_vars": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Call low-frequency / subpopulation variants distinct from wild type. Output from this detection mode must not be used for phylogenetic analysis.",
+                    "fa_icon": "fas fa-filter"
                 },
                 "mtbseq_minbqual": {
                     "type": "integer",
-                    "default": 13
+                    "default": 13,
+                    "minimum": 0,
+                    "description": "Minimum base quality used for the mpileup creation.",
+                    "fa_icon": "fas fa-sliders-h"
                 },
                 "mtbseq_mincovf": {
                     "type": "integer",
-                    "default": 4
+                    "default": 4,
+                    "minimum": 0,
+                    "description": "Minimum forward read coverage threshold. Alleles with lower forward coverage are not considered.",
+                    "fa_icon": "fas fa-sliders-h"
                 },
                 "mtbseq_project": {
                     "type": "string",
-                    "default": "mtbseqnf"
+                    "default": "mtbseqnf",
+                    "description": "Project/analysis name used by MTBseq to label output files.",
+                    "fa_icon": "fas fa-tag"
                 },
                 "mtbseq_minphred": {
                     "type": "integer",
-                    "default": 4
+                    "default": 4,
+                    "minimum": 0,
+                    "description": "Minimum number of reads indicating an allele with a phred score of at least 20.",
+                    "fa_icon": "fas fa-sliders-h"
                 },
                 "mtbseq_minfreq": {
                     "type": "integer",
-                    "default": 75
+                    "default": 75,
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Minimum allele frequency (percentage) for an allele to be called.",
+                    "fa_icon": "fas fa-percent"
                 },
                 "mtbseq_unambig": {
                     "type": "integer",
-                    "default": 95
+                    "default": 95,
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Minimum percentage of samples with unambiguous information for a position.",
+                    "fa_icon": "fas fa-percent"
                 },
                 "mtbseq_window": {
                     "type": "integer",
-                    "default": 12
+                    "default": 12,
+                    "minimum": 0,
+                    "description": "Window size in which multiple variants within the same sample cause the positions to be excluded.",
+                    "fa_icon": "fas fa-sliders-h"
                 },
                 "mtbseq_distance": {
                     "type": "integer",
-                    "default": 12
+                    "default": 12,
+                    "minimum": 0,
+                    "description": "SNP distance used to classify samples into groups via agglomerative clustering.",
+                    "fa_icon": "fas fa-sliders-h"
                 },
                 "mtbseq_mincovr": {
                     "type": "integer",
-                    "default": 4
+                    "default": 4,
+                    "minimum": 0,
+                    "description": "Minimum reverse read coverage threshold. Alleles with lower reverse coverage are not considered.",
+                    "fa_icon": "fas fa-sliders-h"
                 },
                 "mtbseq_user": {
                     "type": "string",
@@ -316,27 +357,46 @@
                 },
                 "mtbseq_ref_and_indexes_path": {
                     "type": "string",
-                    "default": "data/references/ref/"
+                    "format": "directory-path",
+                    "default": "data/references/ref/",
+                    "description": "Directory holding the reference genome and its BWA indexes.",
+                    "fa_icon": "fas fa-folder-open"
                 },
                 "mtbseq_resilist": {
                     "type": "string",
-                    "default": "data/references/res/MTB_Resistance_Mediating.txt"
+                    "format": "file-path",
+                    "default": "data/references/res/MTB_Resistance_Mediating.txt",
+                    "description": "List of known resistance-associated variant positions for resistance prediction.",
+                    "fa_icon": "fas fa-file-alt"
                 },
                 "mtbseq_intregions": {
                     "type": "string",
-                    "default": "data/references/res/MTB_Extended_Resistance_Mediating.txt"
+                    "format": "file-path",
+                    "default": "data/references/res/MTB_Extended_Resistance_Mediating.txt",
+                    "description": "List of interesting regions used for annotation of detected variants.",
+                    "fa_icon": "fas fa-file-alt"
                 },
                 "mtbseq_threads": {
                     "type": "integer",
-                    "default": 8
+                    "default": 8,
+                    "minimum": 1,
+                    "description": "Maximum number of CPUs MTBseq may use within a step (MTBseq supports up to 8).",
+                    "fa_icon": "fas fa-microchip",
+                    "hidden": true
                 },
                 "mtbseq_categories": {
                     "type": "string",
-                    "default": "data/references/cat/MTB_Gene_Categories.txt"
+                    "format": "file-path",
+                    "default": "data/references/cat/MTB_Gene_Categories.txt",
+                    "description": "Gene categories file annotating essential/non-essential genes and repetitive regions (excluded from phylogeny).",
+                    "fa_icon": "fas fa-file-alt"
                 },
                 "mtbseq_basecalib": {
                     "type": "string",
-                    "default": "data/references/res/MTB_Base_Calibration_List.vcf"
+                    "format": "file-path",
+                    "default": "data/references/res/MTB_Base_Calibration_List.vcf",
+                    "description": "VCF of known SNPs used for base quality recalibration.",
+                    "fa_icon": "fas fa-file-alt"
                 }
             }
         }
