@@ -2,6 +2,16 @@
 
 **MTBseq-nf**: Enabling Scalable Tuberculosis Genomics “Big Data” Analysis Through a User-Friendly Nextflow Wrapper for MTBseq Pipeline
 
+> [!IMPORTANT]
+> **For reproducing the publication-specific analysis, use the [`v1.0.0`](https://github.com/mycobactopia-org/MTBseq-nf/releases/tag/v1.0.0) tag of the pipeline:**
+>
+> ```bash
+> nextflow run mycobactopia-org/MTBseq-nf -r v1.0.0 -profile <docker/singularity/.../institute> --input samplesheet.csv --outdir <OUTDIR>
+> ```
+
+> [!NOTE]
+> This pipeline is being actively maintained and updated to follow the [nf-core](https://nf-co.re) community standards. The `master` branch (i.e. everything after the `v1.0.0` tag) reflects the latest changes and may differ from the published version.
+
 ## Usage
 
 > [!NOTE]
