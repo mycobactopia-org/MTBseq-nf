@@ -62,6 +62,30 @@ workflow PIPELINE_INITIALISATION {
 
     command = "nextflow run ${workflow.manifest.name} -profile <docker/singularity/.../institute> --input samplesheet.csv --outdir <OUTDIR>"
 
+    //
+    // Renamed parameters: fail with the new name rather than the generic
+    // "unrecognised parameter" message.
+    //
+    // `--parallel` was the name up to and including v1.0.0, which is the release
+    // the publication analysis pins. Anyone following those instructions passes
+    // `--parallel`, and before failUnrecognisedParams was enabled it was dropped
+    // in silence -- the run then used the single-process TBFULL path while
+    // appearing to have been asked for the parallel one. Name the replacement so
+    // the fix is one edit rather than a search.
+    //
+    def renamed = [
+        'parallel': 'mtbseq_parallel',
+    ]
+    def used = renamed.keySet().findAll { params.containsKey(it) }
+    if (used) {
+        error(
+            "Renamed parameter${used.size() > 1 ? 's' : ''} detected:\n" +
+            used.collect { "  --${it} was renamed to --${renamed[it]}" }.join("\n") +
+            "\n\nThe old name${used.size() > 1 ? 's are' : ' is'} no longer read. Update the " +
+            "command and re-run."
+        )
+    }
+
     UTILS_NFSCHEMA_PLUGIN (
         workflow,
         validate_params,
